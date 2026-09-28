@@ -134,11 +134,7 @@
       '<button data-script="s" class="' + (script === 's' ? 'on' : '') + '" aria-label="Simplified">简</button>' +
       '<button data-script="t" class="' + (script === 't' ? 'on' : '') + '" aria-label="Traditional">繁</button></div>';
   }
-  function themeSeg() {
-    return '<div class="seg theme" role="group" aria-label="Color style">' +
-      '<button data-theme-btn="normal" class="' + (theme === 'normal' ? 'on' : '') + '">Normal</button>' +
-      '<button data-theme-btn="elena" class="' + (theme === 'elena' ? 'on' : '') + '">🌸 Elena<span class="long"> style</span></button></div>';
-  }
+  function themeSeg() { return ''; }
   function soundBtn() { return '<button class="iconbtn" id="snd" aria-label="Sound on or off">' + (soundOn ? '🔊' : '🔇') + '</button>'; }
   function bindTop(after) {
     Array.prototype.forEach.call(app.querySelectorAll('[data-script]'), function (b) {
@@ -273,7 +269,7 @@
     app.innerHTML =
       '<div class="screen has-tabs">' +
       '<div class="topbar">' + themeSeg() + '<span class="spacer"></span>' + '<span class="tools">' + soundBtn() + scriptToggle() + '</span>' + '</div>' +
-      '<div class="hero"><div class="logo">' + row(script === 't' ? C.appTitle.t : C.appTitle.s) + '</div><div class="sub">Hanzi Practice</div>' + walletPill() + '</div>' +
+      '<div class="hero"><div class="logo">' + row(script === 't' ? C.appTitle.t : C.appTitle.s) + '</div><div class="sub">HSK 5 Study</div>' + walletPill() + '</div>' +
       '<div class="lessons">' + cards + '</div>' +
       '<div class="legend"><span><i class="dot1"></i>1st tone</span><span><i class="dot2"></i>2nd</span><span><i class="dot3"></i>3rd</span><span><i class="dot4"></i>4th</span><span><i class="dot5"></i>neutral</span></div>' +
       '<button class="about-link" data-go="#/about">About &amp; credits</button>' +
@@ -686,7 +682,7 @@
     app.innerHTML =
       '<div class="screen about">' +
       '<div class="topbar"><button class="btn" data-go="#/">‹ Home</button>' + themeSeg() + '</div>' +
-      '<div class="acard"><h2>写汉字 Hanzi Practice</h2><p>A little app for practicing Chinese characters: trace each stroke in the right order, see the pinyin with tone colors, and learn what it means. It works with no internet, and nothing you do here leaves the device — no accounts, no tracking.</p></div>' +
+      '<div class="acard"><h2>完蛋 Wándàn</h2><p>A personal app for studying an HSK textbook: readings and grammar notes with English, comprehension checks, character writing practice, fill-in-the-blank, and sentence-order games. It works with no internet, and nothing you do here leaves the device — no accounts, no tracking.</p></div>' +
       '<div class="acard"><h2>Voice recordings</h2><p>The spoken characters and words are real recordings by native speakers, shared on Wikimedia Commons (Lingua Libre and the Chinese pronunciation set) under Creative Commons licenses. Thank you to everyone who lent their voice! Tap a character to see its recording page.</p>' +
       (speakers || '<p class="muted">Audio is coming soon.</p>') + '</div>' +
       '<div class="acard"><h2>Words</h2><p>Ideas and pinyin for the words in the Word Lab were checked against <a href="https://cc-cedict.org" target="_blank" rel="noopener">CC-CEDICT</a> (Creative Commons Attribution-ShareAlike 4.0). The kid-friendly meanings were written by hand.</p></div>' +

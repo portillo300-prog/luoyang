@@ -23,11 +23,11 @@
   function save() { store.set('garden', G); }
   function esc(s) { return A.esc(s); }
 
-  A.tabs.push({ id: 'garden', icon: '🌸', label: 'Garden', href: '#/garden', order: 40 });
+  A.tabs.push({ id: 'garden', icon: '🎋', label: 'Garden', href: '#/garden', order: 40 });
   A.routes.garden = function (p) { renderGarden(p[0] === 'shop' ? 'shop' : 'garden'); };
 
   function header(mode) {
-    return '<div class="topbar"><span class="title gtitle">🌸 My Garden</span>' + A.walletPill() + '</div>' +
+    return '<div class="topbar"><span class="title gtitle">🎋 My Garden</span>' + A.walletPill() + '</div>' +
       '<div class="modebar"><div class="seg" role="group" aria-label="Garden or shop">' +
       '<button data-gm="garden" class="' + (mode === 'garden' ? 'on' : '') + '">🌷 My Garden</button>' +
       '<button data-gm="shop" class="' + (mode === 'shop' ? 'on' : '') + '">🛍️ Shop</button></div></div>';

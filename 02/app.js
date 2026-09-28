@@ -84,7 +84,7 @@
   function walletPill() { return '<button class="wallet" data-go="#/garden/shop" aria-label="My stars">⭐ <b class="wnum">' + wallet.bal + '</b></button>'; }
 
   /* bottom tab bar (tabs from the games / garden / words modules are added at start-up) */
-  var tabs = [{ id: 'home', icon: '✏️', label: 'Practice', href: '#/', order: 10 }];
+  var tabs = [{ id: 'home', icon: '🖌️', label: 'Practice', href: '#/', order: 10 }];
   function tabbar(active) { return '<i class="tabmark" data-tab="' + active + '" hidden></i>'; }   // the real bar is a fixed <nav> outside the scrolling screens
 
   /* ---------- small helpers ---------- */

@@ -1,0 +1,781 @@
+(function () {
+  'use strict';
+
+  var C = window.CONTENT;
+  var STROKES = window.STROKES || {};
+  var AUDIO = window.AUDIO || {};
+  var FX = window.FX;
+  var app = document.getElementById('app');
+
+  /* ---------- tiny storage layer (never breaks the app if storage is blocked) ---------- */
+  var store = {
+    get: function (k, d) {
+      try { var v = localStorage.getItem('a02.' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; }
+    },
+    set: function (k, v) { try { localStorage.setItem('a02.' + k, JSON.stringify(v)); } catch (e) { /* ignore */ } }
+  };
+  var script = store.get('script', 's');     // 's' simplified | 't' traditional
+  var mode = store.get('mode', 'write');     // 'write' | 'read'
+  var done = store.get('done', {});          // { "l1:在": true }
+  var badges = store.get('badges', {});      // { l1: { writer: true, quiz: 3 } }
+  var soundOn = store.get('sound', true);
+  var theme = store.get('theme', 'normal');  // 'normal' | 'elena'
+  FX.setSound(soundOn);
+  function applyTheme() {
+    if (theme === 'elena') document.documentElement.setAttribute('data-theme', 'elena');
+    else document.documentElement.removeAttribute('data-theme');
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute('content', theme === 'elena' ? '#ffe6ee' : '#0e1116');
+    FX.setTheme(theme);
+  }
+  function cssVar(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  applyTheme();
+
+  /* ---------- content ---------- */
+  var lessons = C.lessons.map(function (L) {
+    var items = L.characters.map(function (c) { return Object.assign({ kind: 'c' }, c); })
+      .concat(L.words.map(function (w) { return Object.assign({ kind: 'w' }, w); }));
+    return Object.assign({ accent: '#4fd1c5', sticker: '⭐' }, L, { items: items });
+  });
+  function acc(L) { return theme === 'elena' ? (L.accentElena || '#e85a94') : L.accent; }
+  var labLesson = null;
+  if (C.lab && C.lab.words && C.lab.words.length) {
+    labLesson = { id: 'lab', number: 0, hidden: true, sticker: '🧩', accent: '#c792ea', accentElena: '#e85a94',
+      title: C.lab.title || { s: '词语', t: '詞語' }, py: 'ci2 yu3', en: 'Word Lab', characters: [], words: C.lab.words,
+      items: C.lab.words.map(function (w) { return Object.assign({ kind: 'w' }, w); }) };
+    lessons.push(labLesson);
+  }
+  function homeOf(L) { return L.hidden ? '#/words' : '#/l/' + L.id; }
+  // meanings shown in games/quizzes are kept short and plain: no parenthetical notes
+  function plainEn(t) { return String(t).replace(/\s*\([^)]*\)/g, '').replace(/\s+/g, ' ').trim(); }
+  // two items are a "clash" when a child could not tell them apart from the clue (same pinyin + tone, or the same English meaning)
+  function clash(a, b) { return a.s !== b.s && (pinyinText(a.py) === pinyinText(b.py) || plainEn(a.en).toLowerCase() === plainEn(b.en).toLowerCase()); }
+  function keyOf(L, it) { return L.id + ':' + it.s; }
+  function textOf(it) { return script === 't' ? (it.t || it.s) : it.s; }
+  function titleOf(L) { return script === 't' ? L.title.t : L.title.s; }
+  function lessonById(id) { return lessons.filter(function (l) { return l.id === id; })[0]; }
+  function doneCount(L) { return L.items.filter(function (it) { return done[keyOf(L, it)]; }).length; }
+  function badge(L) { return badges[L.id] || (badges[L.id] = {}); }
+
+  /* ---------- star wallet: stars are earned by learning + games, spent in the Garden shop ---------- */
+  var wallet = store.get('wallet', null);
+  if (!wallet) {   // first time: a fair starting balance for what she has already done
+    var start = 0;
+    lessons.forEach(function (L) { var bd = badges[L.id] || {}; start += doneCount(L) * 3 + (bd.writer ? 10 : 0) + (bd.quiz ? bd.quiz * 3 : 0); });
+    wallet = { bal: start, life: start };
+    store.set('wallet', wallet);
+  }
+  function updateChips() { Array.prototype.forEach.call(document.querySelectorAll('.wnum'), function (e) { e.textContent = wallet.bal; }); }
+  function toast(msg) {
+    var d = document.createElement('div'); d.className = 'toast'; d.textContent = msg;
+    document.body.appendChild(d);
+    setTimeout(function () { if (d.parentNode) d.parentNode.removeChild(d); }, 1700);
+  }
+  function earn(n) {
+    if (!(n > 0)) return;
+    wallet.bal += n; wallet.life += n; store.set('wallet', wallet);
+    toast('+' + n + ' ⭐'); updateChips();
+  }
+  function spend(n) {
+    if (wallet.bal < n) return false;
+    wallet.bal -= n; store.set('wallet', wallet); updateChips();
+    return true;
+  }
+  function walletPill() { return '<button class="wallet" data-go="#/garden/shop" aria-label="My stars">⭐ <b class="wnum">' + wallet.bal + '</b></button>'; }
+
+  /* bottom tab bar (tabs from the games / garden / words modules are added at start-up) */
+  var tabs = [{ id: 'home', icon: '✏️', label: 'Practice', href: '#/', order: 10 }];
+  function tabbar(active) { return '<i class="tabmark" data-tab="' + active + '" hidden></i>'; }   // the real bar is a fixed <nav> outside the scrolling screens
+
+  /* ---------- small helpers ---------- */
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function $(id) { return document.getElementById(id); }
+  function go(h) { if (location.hash === h) route(); else location.hash = h; }
+  function later(fn, ms) { return setTimeout(fn, ms); }
+
+  /* ---------- pinyin: tone numbers -> tone marks + tone color ---------- */
+  var MARKS = { a: 'āáǎà', e: 'ēéěè', i: 'īíǐì', o: 'ōóǒò', u: 'ūúǔù', 'ü': 'ǖǘǚǜ' };
+  function syllable(py) {
+    var tone = parseInt(py.slice(-1), 10);
+    var base = py.replace(/[1-5]$/, '').replace(/v/g, 'ü');
+    if (!(tone >= 1 && tone <= 4)) return { text: base, tone: 5 };
+    var i = base.indexOf('a');
+    if (i < 0) i = base.indexOf('e');
+    if (i < 0) i = base.indexOf('ou');
+    if (i < 0) { for (var k = base.length - 1; k >= 0; k--) { if ('iouü'.indexOf(base[k]) >= 0) { i = k; break; } } }
+    if (i >= 0) base = base.slice(0, i) + MARKS[base[i]][tone - 1] + base.slice(i + 1);
+    return { text: base, tone: tone };
+  }
+  function pinyinHTML(py, alt, size, plain) {
+    function one(s) {
+      return s.trim().split(/\s+/).map(function (x) {
+        var r = syllable(x);
+        return '<span class="syl ' + (plain ? '' : 't' + r.tone) + '">' + r.text + '</span>';
+      }).join('');
+    }
+    var h = one(py);
+    if (alt) h += '<span class="sep">/</span>' + one(alt);
+    return '<span class="pinyin ' + (size || '') + '">' + h + '</span>';
+  }
+  function pinyinText(py) { return py.trim().split(/\s+/).map(function (x) { return syllable(x).text; }).join(' '); }
+
+  /* ---------- glyphs drawn from the stroke data (same look on every device) ---------- */
+  function glyph(ch) {
+    var d = STROKES[ch];
+    if (!d) return '<span class="glyph" style="text-align:center;line-height:1">' + ch + '</span>';
+    return '<svg class="glyph" viewBox="0 0 1024 1024" role="img" aria-label="' + ch + '"><g transform="translate(0,900) scale(1,-1)">' +
+      d.strokes.map(function (p) { return '<path d="' + p + '"/>'; }).join('') + '</g></svg>';
+  }
+  function row(text) { return '<span class="wordrow">' + Array.from(text).map(glyph).join('') + '</span>'; }
+
+  /* ---------- shared UI bits ---------- */
+  function scriptToggle() {
+    return '<div class="seg" role="group" aria-label="Script">' +
+      '<button data-script="s" class="' + (script === 's' ? 'on' : '') + '" aria-label="Simplified">简</button>' +
+      '<button data-script="t" class="' + (script === 't' ? 'on' : '') + '" aria-label="Traditional">繁</button></div>';
+  }
+  function themeSeg() {
+    return '<div class="seg theme" role="group" aria-label="Color style">' +
+      '<button data-theme-btn="normal" class="' + (theme === 'normal' ? 'on' : '') + '">Normal</button>' +
+      '<button data-theme-btn="elena" class="' + (theme === 'elena' ? 'on' : '') + '">🌸 Elena<span class="long"> style</span></button></div>';
+  }
+  function soundBtn() { return '<button class="iconbtn" id="snd" aria-label="Sound on or off">' + (soundOn ? '🔊' : '🔇') + '</button>'; }
+  function bindTop(after) {
+    Array.prototype.forEach.call(app.querySelectorAll('[data-script]'), function (b) {
+      b.onclick = function () { script = b.getAttribute('data-script'); store.set('script', script); after(); };
+    });
+    Array.prototype.forEach.call(app.querySelectorAll('[data-theme-btn]'), function (b) {
+      b.onclick = function () {
+        var t = b.getAttribute('data-theme-btn');
+        if (t === theme) return;
+        theme = t; store.set('theme', theme); applyTheme();
+        if (theme === 'elena') FX.pop();
+        after();
+      };
+    });
+    var s = $('snd');
+    if (s) s.onclick = function () {
+      soundOn = !soundOn; store.set('sound', soundOn); FX.setSound(soundOn);
+      s.textContent = soundOn ? '🔊' : '🔇';
+      if (soundOn) FX.pop();
+    };
+  }
+  function hint(html) { var h = $('hint'); if (h) h.innerHTML = html || ''; }
+  function praiseHTML(p, small) {
+    if (small) return '<div class="pe">' + p.emoji + '</div><div class="pn">' + p.en + '</div>';
+    return '<div class="pe">' + p.emoji + '</div>' +
+      (p.zh ? '<div class="pz">' + p.zh + '</div>' + pinyinHTML(p.py, null, 'sm') + '<div class="pn">' + p.en + '</div>'
+            : '<div class="pn big">' + p.en + '</div>');
+  }
+  function showPraise(p, small) {
+    var host = $('bw'); if (!host) return;
+    var old = host.querySelector('.praise'); if (old) old.parentNode.removeChild(old);
+    var d = document.createElement('div');
+    d.className = 'praise' + (small ? ' small' : '') + (p.anim ? ' a-' + p.anim : '');
+    d.innerHTML = praiseHTML(p, small);
+    host.appendChild(d);
+    later(function () { if (d.parentNode) d.parentNode.removeChild(d); }, small ? 1050 : 1800);
+  }
+  function nudgeHTML() {
+    var p = FX.nudge();
+    return p.zh ? '<b>' + p.zh + '</b> ' + pinyinText(p.py) + ' — ' + p.en : p.en;
+  }
+
+  /* ---------- audio clips (recorded by native speakers) ---------- */
+  function clipFor(it) { return AUDIO[it.s] ? AUDIO[it.s].f : null; }
+  // a word with no recording of its own is read character by character, if every character has a clip
+  function charClips(it) {
+    var ch = Array.from(it.s);
+    if (ch.length < 2) return null;
+    var urls = [];
+    for (var i = 0; i < ch.length; i++) { if (!AUDIO[ch[i]]) return null; urls.push(AUDIO[ch[i]].f); }
+    return urls;
+  }
+  function hasVoice(it) { return !!(clipFor(it) || charClips(it)); }
+  // force = play even if the sound is muted; auto = played by the app (not a tap), so a refusal is not counted as "no sound"
+  function say(it, force, auto) {
+    var f = clipFor(it);
+    if (f) return FX.clip(f, force, auto);
+    var seq = charClips(it);
+    if (seq) return FX.sequence(seq, force, auto);
+    return Promise.resolve(false);
+  }
+  function speakBtn(it) {
+    return hasVoice(it) ? '<button class="speak" id="speak" aria-label="Hear it">🔊</button>' : '';
+  }
+  function soundFailed(ok) { if (ok === false) hint('Could not play the sound. Check the volume, then open About and tap Sound check.'); }
+  function bindSpeak(it) { var b = $('speak'); if (b) b.onclick = function () { say(it, true).then(soundFailed); }; }
+
+  /* ---------- celebration overlay ("Well done!" page) ---------- */
+  function showWin(o) {
+    var old = document.querySelector('.win'); if (old) old.parentNode.removeChild(old);
+    var cheer = FX.cheerWin();
+    var el = document.createElement('div');
+    el.className = 'win';
+    el.style.setProperty('--acc', o.accent || '#4fd1c5');
+    el.innerHTML =
+      '<div class="wincard">' +
+      '<div class="win-emoji">' + (o.emoji || '🎉') + '</div>' +
+      '<div class="win-title">' + o.title + '</div>' +
+      '<div class="win-zh">' + cheer.zh + ' ' + pinyinHTML(cheer.py, null, 'sm') + '</div>' +
+      (o.stars ? '<div class="win-stars">' + [1, 2, 3].map(function (n) { return '<span class="' + (n <= o.stars ? 'on' : '') + '" style="animation-delay:' + (0.5 + n * 0.25) + 's">⭐</span>'; }).join('') + '</div>' : '') +
+      (o.lines || []).map(function (l) { return '<div class="win-line">' + l + '</div>'; }).join('') +
+      (o.sticker ? '<div class="win-sticker"><span class="st">' + o.sticker.emoji + '</span><small>' + o.sticker.label + '</small></div>' : '') +
+      '<div class="win-btns"><button class="btn primary" id="win-a">' + o.primary.label + '</button>' +
+      (o.secondary ? '<button class="btn" id="win-b">' + o.secondary.label + '</button>' : '') + '</div></div>';
+    document.body.appendChild(el);
+    function close(fn) { return function () { if (el.parentNode) el.parentNode.removeChild(el); if (fn) fn(); }; }
+    $('win-a').onclick = close(o.primary.fn);
+    if (o.secondary) $('win-b').onclick = close(o.secondary.fn);
+    FX.fanfare();
+    FX.confetti({ kind: 'big' });
+    later(function () { FX.confetti({ x: 0.5, y: 0.35, n: 70 }); }, 900);
+  }
+
+  function checkWriterBadge(L) {
+    if (L.hidden) return;
+    var b = badge(L);
+    if (b.writer || doneCount(L) < L.items.length) return;
+    b.writer = true; store.set('badges', badges); earn(10);
+    later(function () {
+      showWin({
+        emoji: '🎉', title: 'Lesson complete!', accent: acc(L),
+        lines: ['You wrote every character and word in Lesson ' + L.number + '!'],
+        sticker: { emoji: L.sticker, label: 'New sticker: Star Writer ✍️' },
+        primary: { label: 'Keep going', fn: function () { go('#/l/' + L.id); } },
+        secondary: { label: '🏠 Home', fn: function () { go('#/'); } }
+      });
+    }, 2100);
+  }
+
+  /* ---------- HOME ---------- */
+  function ringHTML(frac, color, emoji) {
+    var c = 2 * Math.PI * 44;
+    return '<span class="ring" style="--acc:' + color + '"><svg viewBox="0 0 100 100"><circle class="track" cx="50" cy="50" r="44"/>' +
+      '<circle class="bar" cx="50" cy="50" r="44" stroke-dasharray="' + (c * frac).toFixed(1) + ' ' + c.toFixed(1) + '"/></svg>' +
+      '<span class="emo' + (frac >= 1 ? ' full' : '') + '">' + emoji + '</span></span>';
+  }
+  function renderHome() {
+    var cards = lessons.filter(function (L) { return !L.hidden; }).map(function (L, idx) {
+      var n = doneCount(L), b = badges[L.id] || {};
+      return '<button class="lesson-card" style="--acc:' + acc(L) + ';animation-delay:' + (idx * 0.08) + 's" data-go="#/l/' + L.id + '">' +
+        ringHTML(n / L.items.length, acc(L), L.sticker) +
+        '<span class="lc-body">' +
+        '<span class="badge">Lesson ' + L.number + '</span>' +
+        '<span class="zh">' + row(titleOf(L)) + '</span>' +
+        pinyinHTML(L.py, null, 'sm') +
+        '<span class="en">' + L.en + '</span>' +
+        '<span class="stats"><span>' + L.characters.length + ' characters · ' + L.words.length + ' words</span>' +
+        '<span class="stars">✓ ' + n + '/' + L.items.length + '</span></span>' +
+        '<span class="bdgs"><span class="bdg' + (b.writer ? ' on' : '') + '">✍️ Writer</span><span class="bdg' + (b.quiz ? ' on' : '') + '">🏆 Quiz</span></span>' +
+        '</span></button>';
+    }).join('');
+    app.innerHTML =
+      '<div class="screen has-tabs">' +
+      '<div class="topbar">' + themeSeg() + '<span class="spacer"></span>' + '<span class="tools">' + soundBtn() + scriptToggle() + '</span>' + '</div>' +
+      '<div class="hero"><div class="logo">' + row(script === 't' ? C.appTitle.t : C.appTitle.s) + '</div><div class="sub">Hanzi Practice</div>' + walletPill() + '</div>' +
+      '<div class="lessons">' + cards + '</div>' +
+      '<div class="legend"><span><i class="dot1"></i>1st tone</span><span><i class="dot2"></i>2nd</span><span><i class="dot3"></i>3rd</span><span><i class="dot4"></i>4th</span><span><i class="dot5"></i>neutral</span></div>' +
+      '<button class="about-link" data-go="#/about">About &amp; credits</button>' +
+      tabbar('home') + '</div>';
+    bindTop(renderHome);
+  }
+
+  /* ---------- LESSON ---------- */
+  function renderLesson(L) {
+    var b = badge(L);
+    function tile(it, idx) {
+      var isDone = done[keyOf(L, it)];
+      return '<button class="tile' + (isDone ? ' done' : '') + '" data-go="#/' + (mode === 'write' ? 'w' : 'r') + '/' + L.id + '/' + idx + '" aria-label="' + it.s + '">' +
+        row(textOf(it)) + (isDone && mode === 'write' ? '<span class="star">✓</span>' : '') + '</button>';
+    }
+    var nc = L.characters.length;
+    var stars = b.quiz ? '⭐'.repeat(b.quiz) : '';
+    app.innerHTML =
+      '<div class="screen" style="--acc:' + acc(L) + '">' +
+      '<div class="topbar"><button class="btn" data-go="#/">‹ Home</button>' + themeSeg() + '<span class="spacer"></span>' + '<span class="tools">' + soundBtn() + scriptToggle() + '</span>' + '</div>' +
+      '<div class="lesson-head"><div class="zh">' + row(titleOf(L)) + '</div>' + pinyinHTML(L.py, null, 'sm') + '<div class="en">Lesson ' + L.number + ' · ' + L.en + '</div></div>' +
+      (L.note ? '<div class="lnote"><b>💡 Good to know</b> ' + L.note + '</div>' : '') +
+      '<div class="modebar"><div class="seg" role="group" aria-label="Mode">' +
+      '<button data-mode="write" class="' + (mode === 'write' ? 'on' : '') + '">✏️ Write</button>' +
+      '<button data-mode="read" class="' + (mode === 'read' ? 'on' : '') + '">👀 Read</button></div></div>' +
+      '<button class="quiz-btn" data-go="#/q/' + L.id + '"><span class="qi">🎯</span><span class="qt"><b>Mini Quiz</b><small>' + (b.quiz ? 'Best: ' + stars : '8 quick questions — you can do it!') + '</small></span><span class="qa">›</span></button>' +
+      '<div class="section-title">Characters</div><div class="grid chars">' + L.characters.map(function (c, i) { return tile(c, i); }).join('') + '</div>' +
+      '<div class="section-title">Words</div><div class="grid words">' + L.words.map(function (w, i) { return tile(w, nc + i); }).join('') + '</div>' +
+      '</div>';
+    bindTop(function () { renderLesson(L); });
+    Array.prototype.forEach.call(app.querySelectorAll('[data-mode]'), function (bt) {
+      bt.onclick = function () { mode = bt.getAttribute('data-mode'); store.set('mode', mode); renderLesson(L); };
+    });
+  }
+
+  /* ---------- PRACTICE (write) ---------- */
+  var W = null;            // current practice state
+  var advanceTimer = null;
+  var resizeTimer = null;
+
+  function stopWriter() {
+    clearTimeout(advanceTimer);
+    clearTimeout(resizeTimer);
+    window.removeEventListener('resize', onResize);
+    if (W && W.writer) { try { W.writer.cancelQuiz(); } catch (e) { /* ignore */ } }
+    if (Q && Q.writer) { try { Q.writer.cancelQuiz(); } catch (e) { /* ignore */ } }
+    W = null; Q = null;
+    var w = document.querySelector('.win'); if (w) w.parentNode.removeChild(w);
+  }
+
+  function renderPractice(L, idx) {
+    var it = L.items[idx];
+    var chars = Array.from(textOf(it));
+    var slots = chars.length > 1
+      ? '<div class="wordslots">' + chars.map(function (c, i) { return '<button class="slot" data-ci="' + i + '" aria-label="Character ' + (i + 1) + '">' + glyph(c) + '</button>'; }).join('') + '</div>'
+      : '';
+    app.innerHTML =
+      '<div class="practice" style="--acc:' + acc(L) + '">' +
+      '<div class="topbar"><button class="btn" data-go="' + homeOf(L) + '">‹ Back</button><span class="title">' + (idx + 1) + ' / ' + L.items.length + '</span>' + '<span class="tools">' + soundBtn() + scriptToggle() + '</span>' + '</div>' +
+      '<div class="info">' + slots + '<div class="pyrow">' + pinyinHTML(it.py, it.alt) + speakBtn(it) + '</div><div class="meaning">' + it.en + '</div><div class="hint" id="hint"></div></div>' +
+      '<div class="boardwrap" id="bw"><div class="board" id="board"></div></div>' +
+      '<div class="controls">' +
+      '<button class="btn" id="prev"' + (idx === 0 ? ' disabled' : '') + '><span class="ico">‹</span>Previous</button>' +
+      '<button class="btn" id="show"><span class="ico">👁</span>Show me</button>' +
+      '<button class="btn" id="again"><span class="ico">↺</span>Try again</button>' +
+      '<button class="btn primary" id="next"><span class="ico">›</span>Next</button>' +
+      '</div></div>';
+
+    W = { L: L, idx: idx, it: it, chars: chars, ci: 0, doneSet: {}, writer: null, size: 0 };
+    bindTop(function () { renderPractice(L, idx); });
+    bindSpeak(it);
+    $('prev').onclick = function () { go('#/w/' + L.id + '/' + (idx - 1)); };
+    $('next').onclick = function () { go(idx + 1 < L.items.length ? '#/w/' + L.id + '/' + (idx + 1) : homeOf(L)); };
+    $('again').onclick = function () { clearTimeout(advanceTimer); hint(''); startChar(); };
+    $('show').onclick = showMe;
+    Array.prototype.forEach.call(app.querySelectorAll('[data-ci]'), function (b) {
+      b.onclick = function () { clearTimeout(advanceTimer); W.ci = parseInt(b.getAttribute('data-ci'), 10); hint(''); startChar(); };
+    });
+    window.addEventListener('resize', onResize);
+    startChar();
+  }
+
+  function boardSize() {
+    var bw = $('bw');
+    return Math.max(200, Math.floor(Math.min(bw.clientWidth, bw.clientHeight)) - 8);
+  }
+
+  function updateSlots() {
+    Array.prototype.forEach.call(app.querySelectorAll('.slot'), function (s, i) {
+      s.classList.toggle('current', i === W.ci);
+      s.classList.toggle('done', !!W.doneSet[i]);
+    });
+  }
+
+  function makeWriter(box, ch, size, outline) {
+    return HanziWriter.create(box, ch, {
+      width: size - 4,
+      height: size - 4,
+      padding: Math.round(size * 0.07),
+      showOutline: outline,
+      showCharacter: false,
+      strokeColor: cssVar('--stroke'),
+      outlineColor: cssVar('--outline-c'),
+      highlightColor: cssVar('--hl'),
+      highlightCompleteColor: cssVar('--hlc'),
+      drawingColor: cssVar('--draw'),
+      drawingWidth: Math.max(10, Math.round(size * 0.035)),
+      strokeAnimationSpeed: 1,
+      delayBetweenStrokes: 250,
+      charDataLoader: function (c, ok, fail) { if (STROKES[c]) ok(STROKES[c]); else fail(); }
+    });
+  }
+  function sparkleAt(box, strokeData) {
+    try {
+      var pts = strokeData.drawnPath.points, p = pts[pts.length - 1];
+      FX.sparkles(box, p.x, p.y);
+    } catch (e) { /* ignore */ }
+  }
+
+  function startChar() {
+    if (!W) return;
+    if (typeof HanziWriter === 'undefined') { hint('The writing tool did not load. Please reopen the app.'); return; }
+    var box = $('board');
+    box.innerHTML = '';
+    box.classList.remove('celebrate');
+    var size = boardSize();
+    W.size = size;
+    box.style.width = size + 'px';
+    box.style.height = size + 'px';
+    updateSlots();
+    W.writer = makeWriter(box, W.chars[W.ci], size, true);
+    quiz();
+  }
+
+  function quiz() {
+    var wr = W.writer, box = $('board');
+    wr.quiz({
+      leniency: 1.5,
+      showHintAfterMisses: 2,
+      markStrokeCorrectAfterMisses: 4,
+      highlightOnComplete: true,
+      onMistake: function () { hint(nudgeHTML()); },
+      onCorrectStroke: function (d) { hint(''); FX.tink(); sparkleAt(box, d); },
+      onComplete: function () { if (W && W.writer === wr) onCharComplete(); }
+    });
+  }
+
+  function showMe() {
+    if (!W || !W.writer) return;
+    clearTimeout(advanceTimer);
+    var wr = W.writer;
+    wr.cancelQuiz();
+    hint('Watch the strokes…');
+    wr.animateCharacter({
+      onComplete: function () { if (W && W.writer === wr) { hint('Now you try!'); quiz(); } }
+    });
+  }
+
+  function celebrateBoard() { var b = $('board'); if (b) b.classList.add('celebrate'); }
+
+  function onCharComplete() {
+    W.doneSet[W.ci] = true;
+    updateSlots();
+    celebrateBoard();
+    var total = W.chars.length;
+    var count = Object.keys(W.doneSet).length;
+    if (count >= total) {
+      showPraise(FX.praise(), false);
+      if (total > 1) FX.word(); else FX.ding();
+      FX.confetti({ x: 0.5, y: 0.42, n: total > 1 ? 95 : 60 });
+      earn(done[keyOf(W.L, W.it)] ? 1 : (total > 1 ? 4 : 3));
+      done[keyOf(W.L, W.it)] = true;
+      store.set('done', done);
+      hint('');
+      $('next').classList.add('pulse');
+      var it = W.it, L = W.L;
+      later(function () { if (W && W.it === it) say(it, false); }, 1000);
+      checkWriterBadge(L);
+    } else {
+      showPraise(FX.mini(), true);
+      FX.pop();
+      hint('');
+      advanceTimer = later(function () {
+        if (!W) return;
+        var nxt = W.ci;
+        for (var k = 1; k <= total; k++) { var c = (W.ci + k) % total; if (!W.doneSet[c]) { nxt = c; break; } }
+        W.ci = nxt;
+        startChar();
+      }, 1250);
+    }
+  }
+
+  function onResize() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      if (!$('bw')) return;
+      if (W && Math.abs(boardSize() - W.size) > 8) startChar();
+      else if (Q && Q.writer && Math.abs(boardSize() - Q.size) > 8) startWriteQ();
+    }, 250);
+  }
+
+  /* ---------- READ (flashcards) ---------- */
+  function renderRead(L, idx) {
+    var it = L.items[idx];
+    var t = textOf(it);
+    var shown = false;
+    app.innerHTML =
+      '<div class="read" style="--acc:' + acc(L) + '">' +
+      '<div class="topbar"><button class="btn" data-go="' + homeOf(L) + '">‹ Back</button><span class="title">' + (idx + 1) + ' / ' + L.items.length + '</span>' + '<span class="tools">' + soundBtn() + scriptToggle() + '</span>' + '</div>' +
+      '<button class="card" id="card" style="--n:' + Array.from(t).length + '" aria-label="Tap to show pinyin and meaning">' + row(t) + '</button>' +
+      '<div class="reveal" id="rev"></div>' +
+      '<div class="controls">' +
+      '<button class="btn" id="prev"' + (idx === 0 ? ' disabled' : '') + '>‹ Previous</button>' +
+      '<button class="btn primary" id="flip"></button>' +
+      '<button class="btn" id="next">Next ›</button></div></div>';
+    function paint() {
+      $('rev').innerHTML = shown
+        ? '<div class="pyrow">' + pinyinHTML(it.py, it.alt) + speakBtn(it) + '</div><div class="meaning">' + it.en + '</div>'
+        : '<div class="placeholder">Say it out loud, then tap to check</div>';
+      $('flip').textContent = shown ? 'Hide answer' : '👀 Show answer';
+      if (shown) { bindSpeak(it); FX.pop(); }
+    }
+    function flip() { shown = !shown; paint(); }
+    $('card').onclick = flip;
+    $('flip').onclick = flip;
+    $('prev').onclick = function () { go('#/r/' + L.id + '/' + (idx - 1)); };
+    $('next').onclick = function () { go(idx + 1 < L.items.length ? '#/r/' + L.id + '/' + (idx + 1) : homeOf(L)); };
+    bindTop(function () { renderRead(L, idx); });
+    paint();
+  }
+
+  /* ---------- MINI QUIZ ---------- */
+  var Q = null;
+  function buildQuiz(L) {
+    var chars = shuffle(L.characters.slice()), words = shuffle(L.words.slice());
+    var ci = 0, wi = 0;
+    function nextChar() { return chars[ci++ % chars.length]; }
+    function nextWord() { return words.length ? words[wi++ % words.length] : nextChar(); }
+    var wq = nextWord();
+    var pattern = [
+      { t: 'py', it: nextChar() }, { t: 'py', it: nextChar() }, { t: 'write', it: nextChar() },
+      { t: 'pick', it: nextChar() }, { t: 'py', it: nextChar() }, { t: 'write', it: nextChar() },
+      { t: clipFor(wq) ? 'listen' : 'pick', it: wq }, { t: 'write', it: nextChar() }
+    ];
+    return pattern;
+  }
+  function uniqueBy(list, fn) { var seen = {}; return list.filter(function (x) { var k = fn(x); if (seen[k]) return false; seen[k] = 1; return true; }); }
+
+  function renderQuiz(L) {
+    Q = { L: L, qs: buildQuiz(L), i: 0, res: [], writer: null, size: 0, miss: 0, assist: false, locked: false };
+    drawQuestion();
+  }
+  function dotsHTML() {
+    return '<span class="qdots">' + Q.qs.map(function (q, i) {
+      var c = i < Q.i ? (Q.res[i] === 'first' ? 'ok' : 'help') : (i === Q.i ? 'now' : '');
+      return '<i class="' + c + '"></i>';
+    }).join('') + '</span>';
+  }
+  function drawQuestion() {
+    var q = Q.qs[Q.i], L = Q.L, it = q.it;
+    // no working voice on this device: ask a "which character is this?" question instead of a silent listen one
+    if (q.t === 'listen' && FX.voiceBroken) { q.t = 'pick'; q.noSound = true; }
+    Q.miss = 0; Q.assist = false; Q.locked = false;
+    var label, info, body = '', ctrl = '';
+    if (q.t === 'py') {
+      label = 'Which pinyin matches?';
+      info = '<div class="qbig">' + row(textOf(it)) + '</div><div class="meaning">' + plainEn(it.en) + '</div>';
+      var base = it.py.replace(/[1-5]$/, '');
+      var wrong = shuffle([1, 2, 3, 4].map(function (t) { return base + t; }).filter(function (x) { return x !== it.py; })).slice(0, 2);
+      var others = shuffle(L.characters.filter(function (c) { return c.py !== it.py && c.py.replace(/[1-5]$/, '') !== base; })).slice(0, 1);
+      var opts = [{ py: it.py, alt: it.alt, ok: true }].concat(wrong.map(function (p) { return { py: p }; })).concat(others.map(function (c) { return { py: c.py }; }));
+      opts = shuffle(uniqueBy(opts, function (o) { return pinyinText(o.py); }));
+      body = '<div class="choices">' + opts.map(function (o, i) {
+        return '<button class="choice pyc" data-ok="' + (o.ok ? 1 : 0) + '">' + pinyinHTML(o.py, o.ok ? o.alt : null, '', true) + '</button>';
+      }).join('') + '</div>';
+    } else if (q.t === 'pick' || q.t === 'listen') {
+      var pool = it.kind === 'w' ? L.words : L.characters;
+      var picks = shuffle(pool.filter(function (x) { return x.s !== it.s && !clash(x, it); })).slice(0, 3);
+      var options = shuffle([it].concat(picks));
+      if (q.t === 'listen') {
+        label = 'Listen, then tap the right one';
+        info = '<button class="speak big" id="qspeak" aria-label="Play the sound">🔊</button>';
+      } else {
+        label = 'Which character is this?';
+        info = '<div class="pyrow">' + pinyinHTML(it.py, it.alt) + '</div><div class="meaning">' + plainEn(it.en) + '</div>' +
+          (q.noSound ? '<div class="gtry">No sound this time. Try this clue!</div>' : '');
+      }
+      body = '<div class="choices">' + options.map(function (o) {
+        return '<button class="choice glc" data-ok="' + (o.s === it.s ? 1 : 0) + '">' + row(textOf(o)) + '</button>';
+      }).join('') + '</div>';
+    } else {
+      label = 'Write it from memory!';
+      info = '<div class="pyrow">' + pinyinHTML(it.py, it.alt) + '</div><div class="meaning">' + plainEn(it.en) + '</div><div class="hint" id="hint"></div>';
+      body = '<div class="board" id="board"></div>';
+      ctrl = '<div class="controls two"><button class="btn" id="peek"><span class="ico">💡</span>Peek</button><button class="btn" id="qagain"><span class="ico">↺</span>Try again</button></div>';
+    }
+    app.innerHTML =
+      '<div class="practice quiz" style="--acc:' + acc(L) + '">' +
+      '<div class="topbar"><button class="btn" id="qquit">✕ Quit</button><span class="title">' + dotsHTML() + '</span>' + soundBtn() + '</div>' +
+      '<div class="info"><div class="qlabel">' + label + '</div>' + info + (q.t === 'write' ? '' : '<div class="hint" id="hint"></div>') + '</div>' +
+      '<div class="boardwrap" id="bw">' + body + '</div>' + ctrl + '</div>';
+    bindTop(function () { drawQuestion(); });
+    $('qquit').onclick = function () { go('#/l/' + L.id); };
+    if (q.t === 'write') {
+      $('peek').onclick = function () {
+        Q.assist = true;
+        if (Q.writer) { Q.writer.showOutline(); later(function () { if (Q.writer) Q.writer.hideOutline(); }, 1800); }
+        hint('Take a good look…');
+      };
+      $('qagain').onclick = function () { hint(''); startWriteQ(); };
+      window.addEventListener('resize', onResize);
+      startWriteQ();
+    } else {
+      Array.prototype.forEach.call(app.querySelectorAll('.choice'), function (b) { b.onclick = function () { answerChoice(b); }; });
+      if (q.t === 'listen') {
+        $('qspeak').onclick = function () {
+          say(it, true).then(function (ok) {
+            if (ok === false && Q && Q.qs[Q.i] === q && !Q.locked) drawQuestion();   // swaps this question to a pick question
+          });
+        };
+        later(function () { if (Q && Q.qs[Q.i] === q) say(it, true, true); }, 400);
+      }
+    }
+  }
+  function answerChoice(btn) {
+    if (Q.locked || btn.disabled) return;
+    if (btn.getAttribute('data-ok') === '1') {
+      Q.locked = true;
+      btn.classList.add('right');
+      FX.ding();
+      showPraise(FX.mini(), true);
+      finishQuestion(Q.miss === 0 && !Q.assist ? 'first' : 'help');
+    } else {
+      Q.miss++;
+      btn.classList.add('nope'); btn.disabled = true;
+      FX.oops();
+      hint('Not quite — try another one!');
+    }
+  }
+  function startWriteQ() {
+    if (!Q) return;
+    var q = Q.qs[Q.i], box = $('board');
+    box.innerHTML = '';
+    var size = boardSize();
+    Q.size = size;
+    box.style.width = size + 'px'; box.style.height = size + 'px';
+    var ch = Array.from(textOf(q.it))[0];
+    var wr = Q.writer = makeWriter(box, ch, size, false);
+    wr.quiz({
+      leniency: 1.5,
+      showHintAfterMisses: 3,
+      markStrokeCorrectAfterMisses: 5,
+      highlightOnComplete: true,
+      onMistake: function () { Q.miss++; hint(nudgeHTML()); },
+      onCorrectStroke: function (d) { hint(''); FX.tink(); sparkleAt(box, d); },
+      onComplete: function () {
+        if (!Q || Q.writer !== wr) return;
+        box.classList.add('celebrate');
+        FX.ding();
+        FX.confetti({ x: 0.5, y: 0.45, n: 45 });
+        showPraise(FX.praise(), false);
+        finishQuestion(!Q.assist && Q.miss <= 1 ? 'first' : 'help');
+      }
+    });
+  }
+  function finishQuestion(result) {
+    var q = Q;
+    q.res[q.i] = result;
+    later(function () {
+      if (Q !== q) return;
+      if (Q.writer) { try { Q.writer.cancelQuiz(); } catch (e) { /* ignore */ } Q.writer = null; }
+      Q.i++;
+      if (Q.i >= Q.qs.length) endQuiz(); else drawQuestion();
+    }, 1500);
+  }
+  function endQuiz() {
+    var L = Q.L, first = Q.res.filter(function (r) { return r === 'first'; }).length;
+    var stars = first >= 7 ? 3 : first >= 5 ? 2 : 1;
+    var b = badge(L), isNew = !b.quiz;
+    if (!b.quiz || stars > b.quiz) b.quiz = stars;
+    store.set('badges', badges);
+    earn(3 + stars * 2 + (isNew ? 5 : 0));
+    var msg = stars === 3 ? 'Amazing! You got ' + first + ' of 8 on the first try!' :
+              stars === 2 ? 'Great work! ' + first + ' of 8 on the first try.' :
+              'You finished the quiz! Every try makes you stronger.';
+    Q = null;
+    showWin({
+      emoji: stars === 3 ? '🏆' : '🎉', title: 'Well done!', accent: acc(L), stars: stars,
+      lines: [msg],
+      sticker: isNew ? { emoji: '🏆', label: 'New badge: Quiz Champion!' } : null,
+      primary: { label: 'Play again', fn: function () { go('#/q/' + L.id); } },
+      secondary: { label: 'Back to lesson', fn: function () { go('#/l/' + L.id); } }
+    });
+  }
+
+  /* ---------- ABOUT & CREDITS ---------- */
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
+  function renderAbout() {
+    var by = {};
+    Object.keys(AUDIO).forEach(function (k) {
+      var a = AUDIO[k]; var w = a.who || 'Unknown';
+      (by[w] = by[w] || { lic: {}, items: [] });
+      by[w].lic[a.lic || 'CC'] = 1;
+      by[w].items.push({ k: k, src: a.src });
+    });
+    var speakers = Object.keys(by).sort().map(function (w) {
+      return '<div class="credit"><div class="cw">' + esc(w) + '</div><div class="cl">' + esc(Object.keys(by[w].lic).join(', ')) + '</div><div class="ci">' +
+        by[w].items.map(function (i) { return '<a href="' + esc(i.src || '#') + '" target="_blank" rel="noopener">' + esc(i.k) + '</a>'; }).join(' ') + '</div></div>';
+    }).join('');
+    app.innerHTML =
+      '<div class="screen about">' +
+      '<div class="topbar"><button class="btn" data-go="#/">‹ Home</button>' + themeSeg() + '</div>' +
+      '<div class="acard"><h2>写汉字 Hanzi Practice</h2><p>A little app for practicing Chinese characters: trace each stroke in the right order, see the pinyin with tone colors, and learn what it means. It works with no internet, and nothing you do here leaves the device — no accounts, no tracking.</p></div>' +
+      '<div class="acard"><h2>Voice recordings</h2><p>The spoken characters and words are real recordings by native speakers, shared on Wikimedia Commons (Lingua Libre and the Chinese pronunciation set) under Creative Commons licenses. Thank you to everyone who lent their voice! Tap a character to see its recording page.</p>' +
+      (speakers || '<p class="muted">Audio is coming soon.</p>') + '</div>' +
+      '<div class="acard"><h2>Words</h2><p>Ideas and pinyin for the words in the Word Lab were checked against <a href="https://cc-cedict.org" target="_blank" rel="noopener">CC-CEDICT</a> (Creative Commons Attribution-ShareAlike 4.0). The kid-friendly meanings were written by hand.</p></div>' +
+      '<div class="acard"><h2>Stroke order</h2><p>Stroke animations use <a href="https://hanziwriter.org" target="_blank" rel="noopener">Hanzi Writer</a> (MIT License), with character data from <a href="https://github.com/skishore/makemeahanzi" target="_blank" rel="noopener">Make Me a Hanzi</a> and <a href="https://github.com/parsimonhi/animCJK" target="_blank" rel="noopener">AnimCJK</a>, based on the Arphic PL fonts (Arphic Public License).</p></div>' +
+      '<div class="acard"><h2>Sound check</h2><p>Not hearing the voices or the chimes? Turn the volume up, make sure the device is not on silent, then tap the button.</p><button class="btn primary" id="soundtest">🔊 Play test sound</button><div id="soundout" class="soundout"></div></div>' +
+      '<div class="acard"><h2>Sounds &amp; pictures</h2><p>Chimes and cheers are generated by the app itself. Emoji are drawn by your device.</p></div>' +
+      '<div class="acard"><h2>Made with ❤️</h2><p>Built for a young learner by a family that loves Chinese. Words and lessons can be updated any time.</p></div>' +
+      '</div>';
+    bindTop(renderAbout);
+    var st = $('soundtest');
+    if (st) st.onclick = function () {
+      var out = $('soundout'), first = Object.keys(AUDIO)[0];
+      out.innerHTML = '<div class="sndline">Testing…</div>';
+      FX.diagnose(first ? AUDIO[first].f : 'audio/none.m4a').then(function (lines) {
+        out.innerHTML = lines.map(function (l) { return '<div class="sndline ' + (l.ok ? 'ok' : 'bad') + '">' + esc(l.txt) + '</div>'; }).join('') +
+          '<div class="sndline tip">Heard nothing but everything says OK? Try the volume buttons, and on an iPhone the side Ring/Silent switch. Tell Oscar what you see here.</div>';
+      });
+    };
+  }
+
+  /* ---------- router ---------- */
+  var leaveFns = [];
+  var routes = {};
+  function route() {
+    stopWriter();
+    leaveFns.splice(0).forEach(function (f) { try { f(); } catch (e) { /* ignore */ } });
+    var p = location.hash.replace(/^#\/?/, '').split('/');
+    var L = lessonById(p[1]);
+    var i = parseInt(p[2], 10);
+    if (p[0] === 'l' && L) return renderLesson(L);
+    if (p[0] === 'w' && L && L.items[i]) return renderPractice(L, i);
+    if (p[0] === 'r' && L && L.items[i]) return renderRead(L, i);
+    if (p[0] === 'q' && L) return renderQuiz(L);
+    if (p[0] === 'about') return renderAbout();
+    if (routes[p[0]]) return routes[p[0]](p.slice(1));
+    renderHome();
+  }
+  window.addEventListener('hashchange', route);
+  app.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-go]') : null;
+    if (t) go(t.getAttribute('data-go'));
+  });
+
+  /* ---------- iPad polish: no pinch-zoom, no long-press menus ---------- */
+  ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (ev) {
+    document.addEventListener(ev, function (e) { e.preventDefault(); });
+  });
+  document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+
+  /* ---------- offline support ---------- */
+  if ('serviceWorker' in navigator) {
+    var hadController = !!navigator.serviceWorker.controller, reloaded = false;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (!hadController || reloaded) return;          // first install: nothing to refresh
+      if (W || Q) { window.addEventListener('hashchange', function () { if (!reloaded) { reloaded = true; location.reload(); } }, { once: true }); return; }
+      reloaded = true; location.reload();
+    });
+    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () { /* ignore */ }); });
+  }
+
+  /* ---------- API for the extra modules (games, garden, word lab) ---------- */
+  var A = window.HANZI = {
+    app: app, FX: FX, AUDIO: AUDIO, store: store, lessons: lessons.filter(function (L) { return !L.hidden; }), allLessons: lessons, labLesson: labLesson, routes: routes, tabs: tabs,
+    $: $, go: go, later: later, shuffle: shuffle, esc: esc, row: row, glyph: glyph,
+    pinyinHTML: pinyinHTML, pinyinText: pinyinText, textOf: textOf, keyOf: keyOf, acc: acc, plain: plainEn,
+    say: say, hasVoice: hasVoice, showWin: showWin, showPraise: showPraise, hint: hint, soundBtn: soundBtn, scriptToggle: scriptToggle, themeSeg: themeSeg,
+    bindTop: bindTop, earn: earn, spend: spend, walletPill: walletPill, tabbar: tabbar,
+    wallet: function () { return wallet; },
+    cssVar: cssVar, nudgeHTML: nudgeHTML, clash: clash,
+    script: function () { return script; },
+    isDone: function (L, it) { return !!done[keyOf(L, it)]; },
+    onLeave: function (fn) { leaveFns.push(fn); }
+  };
+  (window.HANZI_MODS || []).forEach(function (m) { try { m(A); } catch (e) { if (window.console) console.error('module failed', e); } });
+
+  /* The bottom bar lives on <body>, OUTSIDE the scrolling screens, so iPhones/iPads can never scroll it away. */
+  var nav = document.createElement('nav');
+  nav.className = 'tabbar'; nav.id = 'tabbar'; nav.hidden = true; nav.setAttribute('aria-label', 'Main');
+  nav.innerHTML = tabs.slice().sort(function (a, b) { return a.order - b.order; }).map(function (t) {
+    return '<button class="tab" data-tab="' + t.id + '" data-go="' + t.href + '"><span class="ti">' + t.icon + '</span><span class="tl">' + t.label + '</span></button>';
+  }).join('');
+  document.body.appendChild(nav);
+  nav.addEventListener('click', function (e) { var t = e.target.closest ? e.target.closest('[data-go]') : null; if (t) go(t.getAttribute('data-go')); });
+  function syncNav() {
+    var m = app.querySelector('.tabmark');
+    nav.hidden = !m;
+    if (m) Array.prototype.forEach.call(nav.querySelectorAll('.tab'), function (b) { b.classList.toggle('on', b.getAttribute('data-tab') === m.getAttribute('data-tab')); });
+  }
+  new MutationObserver(syncNav).observe(app, { childList: true });
+
+  route();
+})();

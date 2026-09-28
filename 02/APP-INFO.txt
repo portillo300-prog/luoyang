@@ -1,0 +1,3 @@
+App 02 - 完蛋 Wándàn
+Save-name prefix: a02  (cache "a02-...", saved data "a02....")
+Created from the home practice app template. Register it in doc 07 (Repo map).

@@ -1,35 +1,39 @@
-/* Always dark — never follows the device's light/dark setting. */
+/* Bamboo theme. Default (no data-theme attribute) = dark bamboo, gray-based.
+   data-theme="light" (see below) = light bamboo, aged-paper.
+   Tone colors (t1-t5), --gold and --brown are declared ONLY here and never
+   overridden per-theme, so a character's tone color is identical in both modes. */
 :root {
   color-scheme: dark;
-  --bg: #0e1116;
-  --panel: #171c25;
-  --panel-2: #1f2632;
-  --line: #2b3444;
-  --grid: #283040;
-  --outline: #3b4456;
-  --text: #f1f4f9;
-  --muted: #9aa4b5;
-  --faint: #566073;
-  --accent: #4fd1c5;
-  --accent-ink: #06231f;
-  --gold: #ffd166;
-  --t1: #ff6b6b;
-  --t2: #ffb347;
-  --t3: #62d98b;
-  --t4: #5aa9ff;
-  --t5: #9aa4b5;
+  --bg: #1c1c1c;
+  --panel: #242424;
+  --panel-2: #2c2c2c;
+  --line: #3a3a3a;
+  --grid: #333333;
+  --outline: #454545;
+  --text: #ede9dd;
+  --muted: #a8a494;
+  --faint: #726e60;
+  --accent: #6fbf73;
+  --accent-ink: #0d1f0f;
+  --gold: #c9a441;
+  --brown: #8a6b4a;
+  --t1: #c9504f;
+  --t2: #c17d2e;
+  --t3: #2f8f6b;
+  --t4: #3573b0;
+  --t5: #82806f;
   --radius: 24px;
   /* theme-able extras */
-  --press: #283143;
-  --accent-press: #3fb9ae;
-  --glow-gold: rgba(255, 209, 102, .18);
-  --glow-gold-2: rgba(255, 209, 102, .25);
-  --pulse-a: rgba(79, 209, 197, .55);
-  --pulse-b: rgba(79, 209, 197, 0);
-  --bg-glow-1: rgba(79, 209, 197, .13);
-  --bg-glow-2: rgba(255, 138, 91, .10);
-  --bg-glow-3: rgba(199, 146, 234, .09);
-  --logo-glow: rgba(79, 209, 197, .38);
+  --press: #303030;
+  --accent-press: #5aa85e;
+  --glow-gold: rgba(201, 164, 65, .18);
+  --glow-gold-2: rgba(201, 164, 65, .25);
+  --pulse-a: rgba(111, 191, 115, .5);
+  --pulse-b: rgba(111, 191, 115, 0);
+  --bg-glow-1: rgba(111, 191, 115, .12);
+  --bg-glow-2: rgba(138, 107, 74, .10);
+  --bg-glow-3: rgba(201, 164, 65, .09);
+  --logo-glow: rgba(111, 191, 115, .35);
   --sheen: rgba(255, 255, 255, .04);
   --sheen-line: rgba(255, 255, 255, .05);
   --shadow-1: rgba(0, 0, 0, .3);
@@ -37,22 +41,22 @@
   --shadow-3: rgba(0, 0, 0, .55);
   --shadow-4: rgba(0, 0, 0, .65);
   --bdg-border: #6b5a2b;
-  --bdg-bg: rgba(255, 209, 102, .1);
-  --mix-a: #101520;
-  --mix-b: #171c25;
-  --win-a: #151b26;
-  --win-b: #121722;
-  --win-solid: #131925;
-  --praise-bg: rgba(14, 17, 22, .88);
-  --overlay: rgba(6, 8, 12, .74);
-  --ok-bg: rgba(98, 217, 139, .17);
-  --speak-ring: rgba(79, 209, 197, .12);
+  --bdg-bg: rgba(201, 164, 65, .12);
+  --mix-a: #1f1f1f;
+  --mix-b: #242424;
+  --win-a: #232323;
+  --win-b: #1e1e1e;
+  --win-solid: #202020;
+  --praise-bg: rgba(28, 28, 28, .9);
+  --overlay: rgba(10, 10, 10, .74);
+  --ok-bg: rgba(111, 191, 115, .16);
+  --speak-ring: rgba(111, 191, 115, .12);
   /* colors handed to the writing tool */
-  --stroke: #f1f4f9;
-  --outline-c: #3b4456;
-  --hl: #4fd1c5;
-  --hlc: #ffd166;
-  --draw: #ffffff;
+  --stroke: #ede9dd;
+  --outline-c: #454545;
+  --hl: #6fbf73;
+  --hlc: #c9a441;
+  --draw: #ede9dd;
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -435,71 +439,62 @@ body {
 
 
 /* =====================================================================
-   Elena style: peach + pink pastels, deep-plum text, softer lines
+   Light bamboo: aged paper, soft, Chinese-inspired. Text is always dark ink
+   (never green) so it never blends into a green background; green is
+   reserved for headers, icons and chip backgrounds on a neutral panel.
    ===================================================================== */
-:root[data-theme="elena"] {
+:root[data-theme="light"] {
   color-scheme: light;
-  --bg: #ffeef0;
-  --panel: #ffffff;
-  --panel-2: #ffe4ec;
-  --line: #f7c6d6;
-  --grid: #f7c8d8;
-  --outline: #e2a9c0;
-  --text: #4a1d3a;
-  --muted: #94627e;
-  --faint: #cfa3b8;
-  --accent: #e85a94;
-  --accent-ink: #ffffff;
-  --gold: #e08a00;
-  --t1: #e5484d;
-  --t2: #d97706;
-  --t3: #16a34a;
-  --t4: #2f6fed;
-  --t5: #8b7a86;
-  --press: #ffd3e2;
-  --accent-press: #d44a83;
-  --glow-gold: rgba(245, 158, 11, .22);
-  --glow-gold-2: rgba(245, 158, 11, .28);
-  --pulse-a: rgba(232, 90, 148, .5);
-  --pulse-b: rgba(232, 90, 148, 0);
-  --bg-glow-1: rgba(255, 178, 200, .6);
-  --bg-glow-2: rgba(255, 206, 172, .6);
-  --bg-glow-3: rgba(214, 190, 255, .42);
-  --logo-glow: rgba(232, 90, 148, .28);
-  --sheen: rgba(255, 255, 255, .7);
-  --sheen-line: rgba(255, 255, 255, .9);
-  --shadow-1: rgba(190, 90, 130, .18);
-  --shadow-2: rgba(190, 90, 130, .22);
-  --shadow-3: rgba(190, 90, 130, .3);
-  --shadow-4: rgba(190, 90, 130, .35);
-  --bdg-border: #f3c26b;
-  --bdg-bg: rgba(255, 209, 102, .28);
-  --mix-a: #ffffff;
-  --mix-b: #fff3f6;
-  --win-a: #ffe6ef;
-  --win-b: #fff8f4;
-  --win-solid: #fff5f7;
-  --praise-bg: rgba(255, 251, 248, .96);
-  --overlay: rgba(255, 225, 236, .74);
-  --ok-bg: rgba(22, 163, 74, .12);
-  --speak-ring: rgba(232, 90, 148, .16);
-  --stroke: #5a1f45;
-  --outline-c: #e2a9c0;
-  --hl: #ff5f9e;
-  --hlc: #ff9f1c;
-  --draw: #5a1f45;
+  --bg: #f4f1e3;
+  --panel: #faf8ee;
+  --panel-2: #f0ecdb;
+  --line: #ddd6bd;
+  --grid: #e6e0c9;
+  --outline: #cfc6a6;
+  --text: #2b2a20;
+  --muted: #6d6a56;
+  --faint: #9a9678;
+  --accent: #3f6b45;
+  --accent-ink: #f4f1e3;
+  --press: #ece5cc;
+  --accent-press: #345a3a;
+  --glow-gold: rgba(201, 164, 65, .20);
+  --glow-gold-2: rgba(201, 164, 65, .26);
+  --pulse-a: rgba(63, 107, 69, .4);
+  --pulse-b: rgba(63, 107, 69, 0);
+  --bg-glow-1: rgba(63, 107, 69, .10);
+  --bg-glow-2: rgba(138, 107, 74, .08);
+  --bg-glow-3: rgba(201, 164, 65, .10);
+  --logo-glow: rgba(63, 107, 69, .22);
+  --sheen: rgba(255, 255, 255, .6);
+  --sheen-line: rgba(255, 255, 255, .8);
+  --shadow-1: rgba(43, 42, 32, .10);
+  --shadow-2: rgba(43, 42, 32, .14);
+  --shadow-3: rgba(43, 42, 32, .20);
+  --shadow-4: rgba(43, 42, 32, .28);
+  --bdg-border: #c7a460;
+  --bdg-bg: rgba(201, 164, 65, .16);
+  --mix-a: #f7f4e8;
+  --mix-b: #faf8ee;
+  --win-a: #f6f3e5;
+  --win-b: #f1ecdb;
+  --win-solid: #f3efe0;
+  --praise-bg: rgba(244, 241, 227, .94);
+  --overlay: rgba(43, 42, 32, .35);
+  --ok-bg: rgba(63, 107, 69, .14);
+  --speak-ring: rgba(63, 107, 69, .12);
+  --stroke: #2b2a20;
+  --outline-c: #cfc6a6;
+  --hl: #3f6b45;
+  --hlc: #8a6b4a;
+  --draw: #2b2a20;
 }
-:root[data-theme="elena"] body,
-:root[data-theme="elena"] button {
-  font-family: ui-rounded, "SF Pro Rounded", "Nunito", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-}
-:root[data-theme="elena"] .hero .logo { color: var(--accent); }
-:root[data-theme="elena"] .board { background-color: #ffffff; }
-:root[data-theme="elena"] .bdg { border-color: var(--line); }
-:root[data-theme="elena"] .btn:not(.primary), :root[data-theme="elena"] .iconbtn, :root[data-theme="elena"] .speak, :root[data-theme="elena"] .seg { background: #ffffff; }
-:root[data-theme="elena"] .seg button.on { box-shadow: 0 3px 10px rgba(232, 90, 148, .3); }
-:root[data-theme="elena"] .lesson-card, :root[data-theme="elena"] .tile, :root[data-theme="elena"] .card, :root[data-theme="elena"] .choice, :root[data-theme="elena"] .acard { box-shadow: 0 8px 22px rgba(232, 120, 160, .14); }
-:root[data-theme="elena"] .qdots i:not(.now):not(.ok):not(.help) { background: #f3c9d8; }
+:root[data-theme="light"] .board { background-color: var(--panel); }
+:root[data-theme="light"] .bdg { border-color: var(--line); }
+:root[data-theme="light"] .btn:not(.primary), :root[data-theme="light"] .iconbtn, :root[data-theme="light"] .speak, :root[data-theme="light"] .seg { background: var(--panel); }
+:root[data-theme="light"] .seg button.on { box-shadow: 0 3px 10px rgba(63, 107, 69, .25); }
+:root[data-theme="light"] .lesson-card, :root[data-theme="light"] .tile, :root[data-theme="light"] .card, :root[data-theme="light"] .choice, :root[data-theme="light"] .acard { box-shadow: 0 8px 22px rgba(43, 42, 32, .10); }
+:root[data-theme="light"] .qdots i:not(.now):not(.ok):not(.help) { background: var(--panel-2); }
 
 /* the Normal / Elena style switch */
 .seg.theme button { min-width: 0; padding: 0 16px; font-size: 20px; }
@@ -531,20 +526,20 @@ body {
    v4 — bottom tab bar, star wallet, games, garden + shop
    ===================================================================== */
 :root {
-  --arena-a: #12233a;
-  --arena-b: #0e1116;
-  --bub-fill: rgba(140, 225, 255, .14);
-  --bub-line: rgba(160, 230, 255, .55);
+  --arena-a: #232a22;
+  --arena-b: #1c1f1a;
+  --bub-fill: rgba(150, 200, 160, .14);
+  --bub-line: rgba(160, 210, 170, .5);
   --bub-shine: rgba(255, 255, 255, .5);
-  --tab-bg: rgba(20, 25, 34, .92);
+  --tab-bg: rgba(28, 28, 28, .92);
 }
-:root[data-theme="elena"] {
-  --arena-a: #ffe0ec;
-  --arena-b: #ffd6c4;
-  --bub-fill: rgba(255, 255, 255, .55);
-  --bub-line: rgba(240, 120, 170, .55);
-  --bub-shine: rgba(255, 255, 255, .95);
-  --tab-bg: rgba(255, 250, 250, .94);
+:root[data-theme="light"] {
+  --arena-a: #e6e9d5;
+  --arena-b: #f0ead0;
+  --bub-fill: rgba(63, 107, 69, .10);
+  --bub-line: rgba(63, 107, 69, .35);
+  --bub-shine: rgba(255, 255, 255, .8);
+  --tab-bg: rgba(250, 248, 238, .92);
 }
 
 /* bottom tab bar */
@@ -581,7 +576,6 @@ body {
 .gtag { color: var(--muted); font-size: 18px; }
 .gearn { color: var(--gold); font-weight: 800; font-size: 16px; margin-top: 4px; }
 .bubble-ico { display: inline-block; width: 1em; height: 1em; border-radius: 50%; background: radial-gradient(circle at 30% 28%, rgba(255,255,255,.95), rgba(255,255,255,.2) 32%, transparent 34%), radial-gradient(circle at 50% 50%, rgba(120, 210, 255, .35), rgba(90, 170, 255, .55)); border: 3px solid rgba(140, 215, 255, .9); box-shadow: inset 0 -6px 12px rgba(80, 150, 255, .35); }
-:root[data-theme="elena"] .bubble-ico { background: radial-gradient(circle at 30% 28%, rgba(255,255,255,.95), rgba(255,255,255,.2) 32%, transparent 34%), radial-gradient(circle at 50% 50%, rgba(255, 190, 215, .5), rgba(255, 130, 175, .6)); border-color: rgba(255, 130, 175, .9); box-shadow: inset 0 -6px 12px rgba(255, 120, 170, .35); }
 .bubble-ico.big { font-size: 90px; }
 .chips { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 6px 0 22px; }
 .chip { min-height: 56px; padding: 0 22px; border-radius: 999px; background: var(--panel); border: 2px solid var(--line); font-size: 20px; font-weight: 800; color: var(--muted); }
@@ -602,7 +596,6 @@ body {
   background: radial-gradient(circle at 30% 26%, var(--bub-shine), rgba(255, 255, 255, 0) 30%), radial-gradient(circle at 50% 55%, var(--bub-fill), rgba(255, 255, 255, .04) 72%);
   border: 3px solid var(--bub-line); box-shadow: inset 0 -10px 22px rgba(130, 200, 255, .18), 0 6px 18px rgba(0, 0, 0, .18);
 }
-:root[data-theme="elena"] .bubble { box-shadow: inset 0 -10px 22px rgba(255, 130, 175, .2), 0 6px 18px rgba(200, 100, 140, .2); }
 .bubble.popping { animation: popB .8s ease-out forwards; pointer-events: none; }
 @keyframes popB { 0% { opacity: 1; filter: none; } 25% { opacity: 1; filter: brightness(1.4); } 100% { opacity: 0; filter: blur(3px); } }
 .bubble.wob { animation: wob .55s ease-in-out; }
@@ -712,13 +705,9 @@ body {
 /* pop-game bodies + arenas */
 .arena.pond { --arena-a: #10465a; --arena-b: #0a2b3a; }
 .arena.sky { --arena-a: #241a55; --arena-b: #14103a; }
-:root[data-theme="elena"] .arena.pond { --arena-a: #d9f2ef; --arena-b: #ffe3ee; }
-:root[data-theme="elena"] .arena.sky { --arena-a: #e8dcff; --arena-b: #ffe3ef; }
 .bubble.b-fish { background: linear-gradient(135deg, #ffc477, #ff8a5b); border: none; border-radius: 58% 46% 46% 58% / 52% 50% 50% 52%; color: #3a2010; box-shadow: inset -8px -10px 16px rgba(120, 40, 0, .18), 0 6px 14px rgba(0, 0, 0, .25); }
 .bubble.b-fish::before { content: ""; position: absolute; left: -16%; top: 26%; width: 30%; height: 48%; background: #ff8a5b; clip-path: polygon(100% 50%, 0 0, 8% 50%, 0 100%); }
 .bubble.b-fish::after { content: ""; position: absolute; right: 14%; top: 22%; width: 9%; height: 9%; border-radius: 50%; background: #fff; box-shadow: 0 0 0 3px #3a2010 inset; }
-:root[data-theme="elena"] .bubble.b-fish { background: linear-gradient(135deg, #ffb3cf, #ff7fb0); color: #4a1d3a; }
-:root[data-theme="elena"] .bubble.b-fish::before { background: #ff7fb0; }
 .bubble.b-starb { background: radial-gradient(circle at 50% 42%, #fff6bd, #ffd166 58%, #f5a623); border: none; box-shadow: none; color: #3a2600; font-size: calc(var(--bs) * .42); padding-top: 4%; clip-path: polygon(50% 2%, 61% 35%, 98% 36%, 68% 57%, 79% 92%, 50% 71%, 21% 92%, 32% 57%, 2% 36%, 39% 35%); -webkit-clip-path: polygon(50% 2%, 61% 35%, 98% 36%, 68% 57%, 79% 92%, 50% 71%, 21% 92%, 32% 57%, 2% 36%, 39% 35%); }
 
 /* tone houses */
@@ -759,7 +748,6 @@ body {
 .fl-cover { font-size: clamp(46px, 11vmin, 74px); background: radial-gradient(circle at 50% 60%, #8fdc8c, #4caf6a); border: 2px solid rgba(255, 255, 255, .35); }
 .fl-card { transform: rotateY(180deg); background: var(--panel); border: 3px solid var(--line); font-size: clamp(50px, 12vmin, 78px); color: var(--text); }
 .fl.treasure .fl-card { border-color: var(--gold); background: var(--ok-bg); box-shadow: 0 0 0 4px var(--glow-gold), 0 0 30px var(--glow-gold-2); }
-:root[data-theme="elena"] .fl-cover { background: radial-gradient(circle at 50% 60%, #ffd6e4, #ff9fc3); }
 
 /* sentence builder */
 .game.sentences { grid-template-rows: auto auto auto auto minmax(0, 1fr); }
@@ -837,6 +825,7 @@ body {
 .gpy { color: var(--muted); font-size: 15px; margin-top: -8px; }
 .gexpl { color: var(--muted); font-size: 16px; line-height: 1.5; }
 .gex { background: var(--panel-2); border-radius: 16px; padding: 12px 14px; }
+.gexzh::before { content: '\1F343'; margin-right: 6px; font-size: 15px; }
 .gexzh { font-size: 19px; color: var(--text); }
 .gexzh .sense { color: var(--accent); font-style: italic; font-size: 14px; font-weight: 600; }
 .gexpy { color: var(--muted); font-size: 14px; margin-top: 4px; }
@@ -849,13 +838,16 @@ body {
 
 .coll { display: flex; flex-direction: column; gap: 8px; }
 .crow { display: grid; grid-template-columns: auto auto 1fr; gap: 8px; align-items: baseline; background: var(--panel-2); border-radius: 14px; padding: 10px 12px; }
+.cverb::before { content: '\1F38B'; margin-right: 4px; font-size: 13px; }
 .cverb { color: var(--text); font-weight: 700; font-size: 17px; }
 .cplus { color: var(--faint); }
 .cobj { color: var(--text); font-size: 15px; grid-column: 3; }
 .crow .cen { grid-column: 1 / -1; color: var(--muted); font-style: italic; font-size: 13px; margin-top: 2px; }
 
 .reflect .rprompt { color: var(--muted); font-size: 15px; line-height: 1.5; }
-.reflect .rq { color: var(--muted); font-size: 15px; line-height: 1.6; padding-left: 20px; }
+.reflect .rq { color: var(--muted); font-size: 15px; line-height: 1.6; list-style: none; padding-left: 0; }
+.reflect .rq li { padding-left: 24px; position: relative; margin-bottom: 6px; }
+.reflect .rq li::before { content: '\1F343'; position: absolute; left: 0; top: 0; font-size: 13px; }
 .reflect textarea { width: 100%; background: var(--panel-2); border: 2px solid var(--line); border-radius: 16px; color: var(--text); font-size: 17px; padding: 12px 14px; font-family: inherit; resize: vertical; }
 
 .uactions { display: flex; flex-direction: column; gap: 12px; margin-top: 6px; }

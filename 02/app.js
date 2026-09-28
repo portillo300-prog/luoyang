@@ -19,13 +19,13 @@
   var done = store.get('done', {});          // { "l1:在": true }
   var badges = store.get('badges', {});      // { l1: { writer: true, quiz: 3 } }
   var soundOn = store.get('sound', true);
-  var theme = store.get('theme', 'normal');  // 'normal' | 'elena'
+  var theme = store.get('theme', 'dark');  // 'dark' | 'light' (bamboo, toggled manually)
   FX.setSound(soundOn);
   function applyTheme() {
-    if (theme === 'elena') document.documentElement.setAttribute('data-theme', 'elena');
+    if (theme === 'light') document.documentElement.setAttribute('data-theme', 'light');
     else document.documentElement.removeAttribute('data-theme');
     var m = document.querySelector('meta[name="theme-color"]');
-    if (m) m.setAttribute('content', theme === 'elena' ? '#ffe6ee' : '#0e1116');
+    if (m) m.setAttribute('content', theme === 'light' ? '#f4f1e3' : '#1c1c1c');
     FX.setTheme(theme);
   }
   function cssVar(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
@@ -37,7 +37,7 @@
       .concat(L.words.map(function (w) { return Object.assign({ kind: 'w' }, w); }));
     return Object.assign({ accent: '#4fd1c5', sticker: '⭐' }, L, { items: items });
   });
-  function acc(L) { return theme === 'elena' ? (L.accentElena || '#e85a94') : L.accent; }
+  function acc(L) { return L.accent; }
   var labLesson = null;
   if (C.lab && C.lab.words && C.lab.words.length) {
     labLesson = { id: 'lab', number: 0, hidden: true, sticker: '🧩', accent: '#c792ea', accentElena: '#e85a94',
@@ -134,7 +134,11 @@
       '<button data-script="s" class="' + (script === 's' ? 'on' : '') + '" aria-label="Simplified">简</button>' +
       '<button data-script="t" class="' + (script === 't' ? 'on' : '') + '" aria-label="Traditional">繁</button></div>';
   }
-  function themeSeg() { return ''; }
+  function themeSeg() {
+    return '<div class="seg theme" role="group" aria-label="Light or dark">' +
+      '<button data-theme-btn="dark" class="' + (theme === 'dark' ? 'on' : '') + '">🌙 Dark</button>' +
+      '<button data-theme-btn="light" class="' + (theme === 'light' ? 'on' : '') + '">☀️ Light</button></div>';
+  }
   function soundBtn() { return '<button class="iconbtn" id="snd" aria-label="Sound on or off">' + (soundOn ? '🔊' : '🔇') + '</button>'; }
   function bindTop(after) {
     Array.prototype.forEach.call(app.querySelectorAll('[data-script]'), function (b) {
@@ -145,7 +149,7 @@
         var t = b.getAttribute('data-theme-btn');
         if (t === theme) return;
         theme = t; store.set('theme', theme); applyTheme();
-        if (theme === 'elena') FX.pop();
+        FX.pop();
         after();
       };
     });

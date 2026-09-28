@@ -34,7 +34,7 @@
   function renderList() {
     var units = C.units || [];
     app.innerHTML = '<div class="screen study has-tabs">' +
-      '<div class="topbar"><span class="title">📖 Study</span><span class="spacer"></span>' + A.scriptToggle() + A.walletPill() + '</div>' +
+      '<div class="topbar"><span class="title">📖 Study</span><span class="spacer"></span>' + A.themeSeg() + A.scriptToggle() + A.walletPill() + '</div>' +
       '<div class="ulist">' + (units.length ? units.map(unitCard).join('') : '<p class="muted">No units yet — send more textbook photos!</p>') + '</div>' +
       A.tabbar('study') + '</div>';
     A.bindTop(renderList);
@@ -97,7 +97,7 @@
   function renderUnit(u) {
     var L = lessonFor(u);
     app.innerHTML = '<div class="screen study unit has-tabs" style="--acc:' + (L ? A.acc(L) : '#4fd1c5') + '">' +
-      '<div class="topbar"><button class="btn" data-go="#/study">‹ Study</button><span class="spacer"></span>' + A.scriptToggle() + A.walletPill() + '</div>' +
+      '<div class="topbar"><button class="btn" data-go="#/study">‹ Study</button><span class="spacer"></span>' + A.themeSeg() + A.scriptToggle() + A.walletPill() + '</div>' +
       '<div class="uscroll">' +
       '<div class="uhero"><div class="uheroZh">' + esc(scriptText(u.title)) + '</div><div class="uheroEn">' + esc(u.en) + '</div>' + (u.source ? '<div class="usource">' + esc(u.source) + '</div>' : '') + '</div>' +
       section('📖 Reading — tap a line for English', renderReading(u)) +

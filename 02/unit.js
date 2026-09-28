@@ -14,12 +14,8 @@
   // best-effort tone-colored pinyin for a full sentence string that may include commas/punctuation
   function plainPinyin(py) {
     if (!py) return '';
-    return py.split(/\s+/).map(function (tok) {
-      var core = tok.replace(/[,.!?:;“”…]/g, '');
-      var trail = tok.slice(core.length);
-      if (!/[1-5]$/.test(core)) return esc(tok);
-      return A.pinyinHTML(core, null, 'sm') + esc(trail);
-    }).join(' ');
+    var clean = py.replace(/[,.!?:;“”…]/g, '').replace(/\s+/g, ' ').trim();
+    return clean ? A.pinyinHTML(clean, null, 'sm') : '';
   }
 
   function unitCard(u) {
@@ -59,7 +55,7 @@
   }
 
   function renderGrammarCard(g) {
-    var head = '<div class="gpoint">' + esc(g.point) + '</div>' + (g.py ? '<div class="gpy">' + esc(g.py) + '</div>' : '') +
+    var head = '<div class="gpoint">' + esc(g.point) + '</div>' + (g.py ? '<div class="gpy">' + plainPinyin(g.py) + '</div>' : '') +
       '<div class="gexpl">' + esc(g.en) + '</div>';
     var ex = (g.examples || []).map(function (e) {
       return '<div class="gex">' +

@@ -111,7 +111,7 @@
       return s.trim().split(/\s+/).map(function (x) {
         var r = syllable(x);
         return '<span class="syl ' + (plain ? '' : 't' + r.tone) + '">' + r.text + '</span>';
-      }).join('');
+      }).join(' ');
     }
     var h = one(py);
     if (alt) h += '<span class="sep">/</span>' + one(alt);

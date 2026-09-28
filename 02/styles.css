@@ -829,6 +829,8 @@ body {
 .gexzh { font-size: 19px; color: var(--text); }
 .gexzh .sense { color: var(--accent); font-style: italic; font-size: 14px; font-weight: 600; }
 .gexpy { color: var(--muted); font-size: 14px; margin-top: 4px; }
+.gexpy .pinyin { font-size: 15px; font-weight: 600; }
+.gexpy .pinyin .syl { margin: 0 .1em; }
 .gexen { color: var(--muted); font-style: italic; font-size: 15px; margin-top: 4px; }
 
 .disc { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }

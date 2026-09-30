@@ -7,6 +7,7 @@ import vm from 'node:vm';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { check as checkContent } from './check-content.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const cacheDir = path.join(root, 'scripts', '.cache');
@@ -16,6 +17,14 @@ const sandbox = { window: {} };
 vm.createContext(sandbox);
 vm.runInContext(fs.readFileSync(path.join(root, 'content.js'), 'utf8'), sandbox);
 const C = sandbox.window.CONTENT;
+
+// content checks first: mistakes a screen test cannot see (Drive doc 13, QA gate)
+{
+  const { errors, notes } = checkContent(C);
+  notes.forEach((n) => console.log('  note: ' + n));
+  if (errors.length) { console.error('\nCONTENT ERRORS (' + errors.length + ') - fix these first:\n - ' + errors.join('\n - ')); process.exit(1); }
+  console.log('content checks passed');
+}
 
 const SIMP = (c) => `https://cdn.jsdelivr.net/npm/hanzi-writer-data@2/${encodeURIComponent(c)}.json`;
 const TRAD = (c) => `https://cdn.jsdelivr.net/npm/hanzi-writer-data-acjk@1.0.0/animCJK/ZhHant/${encodeURIComponent(c)}.json`;

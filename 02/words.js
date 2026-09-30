@@ -85,35 +85,38 @@
 
   /* ---------------- hub (the Words tab) ---------------- */
   function hub() {
-    var n = foundCount(), total = ALL.length;
-    var groups = [
-      { id: 'starter', name: 'Starter words', hint: 'made only from characters in your book' },
-      { id: 'stretch', name: 'Stretch words', hint: 'these bring new characters to learn' },
-      { id: 'lesson', name: 'From your lessons', hint: 'the words you practice in Lessons' }
-    ];
+    /* The Words tab is the chapter vocabulary, all open: browse by chapter, search, tap a word for its card.
+       (The finding game lives in Word Maker and Word Puzzles.) */
+    var lessonWords = ALL.filter(function (w) { return w.lessonId; });
+    function qOf(w) { return (w.s + ' ' + (w.t || '') + ' ' + A.pinyinText(w.py) + ' ' + w.py + ' ' + A.plain(w.en)).toLowerCase(); }
     function card(w) {
       var i = ALL.indexOf(w);
-      if (found[w.s]) return '<button class="wcard found" data-i="' + i + '"><span class="wcw">' + A.row(A.textOf(w)) + '</span>' + A.pinyinHTML(w.py, null, 'sm') + '</button>';
-      return '<button class="wcard locked" data-i="' + i + '"><span class="wcq">' + Array.from(w.s).map(function () { return '<i>?</i>'; }).join('') + '</span><span class="wcm">' + A.esc(w.en) + '</span></button>';
+      return '<button class="wcard found" data-i="' + i + '" data-q="' + A.esc(qOf(w)) + '"><span class="wcw">' + A.row(A.textOf(w)) + '</span>' + A.pinyinHTML(w.py, null, 'sm') + '<span class="wcm">' + A.esc(A.shortEn(w.en)) + '</span></button>';
     }
+    var chapters = A.lessons.map(function (L) {
+      var list = lessonWords.filter(function (w) { return w.lessonId === L.id; });
+      if (!list.length) return '';
+      return '<div class="wl-chap"><div class="section-title">Chapter ' + L.number + ' ' + L.sticker + ' <small class="wl-sub">' + list.length + ' words</small></div><div class="wl-hint">' + A.esc(L.en) + '</div><div class="wgrid">' + list.map(card).join('') + '</div></div>';
+    }).join('');
     app.innerHTML =
       '<div class="screen has-tabs wl">' +
-      '<div class="topbar"><span class="title gtitle">🧩 Word Lab</span>' + A.walletPill() + '</div>' +
-      '<div class="wl-prog"><div class="wl-bar"><i style="width:' + Math.round(n / total * 100) + '%"></i></div><div class="wl-count">Found <b>' + n + '</b> of ' + total + ' words</div></div>' +
+      '<div class="topbar"><span class="title gtitle">🧩 Words</span>' + A.walletPill() + '</div>' +
+      '<div class="wl-prog"><div class="wl-count"><b>' + lessonWords.length + '</b> words from your chapters</div></div>' +
+      '<div class="wl-search"><input id="wsearch" type="search" placeholder="Search: 汉字, pinyin or English" autocomplete="off" autocapitalize="off" spellcheck="false"></div>' +
       '<div class="wl-modes"><button class="modecard" data-go="#/words/maker"><span class="mi">🧩</span><span class="mt"><b>Word Maker</b><small>Put characters together and see what you get!</small></span></button>' +
       '<button class="modecard" data-go="#/words/puzzles"><span class="mi">🎯</span><span class="mt"><b>Word Puzzles</b><small>8 quick words to build</small></span></button></div>' +
-      groups.map(function (g) {
-        var list = ALL.filter(function (w) { return (w.group || 'lesson') === g.id; });
-        if (!list.length) return '';
-        var fc = list.filter(function (w) { return found[w.s]; }).length;
-        return '<div class="section-title">' + g.name + ' <small class="wl-sub">' + fc + '/' + list.length + '</small></div><div class="wl-hint">' + g.hint + '</div><div class="wgrid">' + list.map(card).join('') + '</div>';
-      }).join('') + A.tabbar('words') + '</div>';
+      chapters + '<p class="wl-none" id="wnone" hidden>No words match.</p>' + A.tabbar('words') + '</div>';
     Array.prototype.forEach.call(app.querySelectorAll('.wcard'), function (b) {
-      b.onclick = function () {
-        var w = ALL[parseInt(b.getAttribute('data-i'), 10)];
-        if (found[w.s]) showCard(w, false); else A.go('#/words/find/' + b.getAttribute('data-i'));
-      };
+      b.onclick = function () { showCard(ALL[parseInt(b.getAttribute('data-i'), 10)], false); };
     });
+    $('wsearch').oninput = function () {
+      var q = this.value.trim().toLowerCase(), any = false;
+      Array.prototype.forEach.call(app.querySelectorAll('.wcard'), function (b) {
+        var ok = !q || b.getAttribute('data-q').indexOf(q) >= 0; b.hidden = !ok; if (ok) any = true;
+      });
+      Array.prototype.forEach.call(app.querySelectorAll('.wl-chap'), function (c) { c.hidden = !c.querySelector('.wcard:not([hidden])'); });
+      $('wnone').hidden = any;
+    };
   }
 
   /* ---------------- Word Maker (free play) ---------------- */

@@ -21,7 +21,7 @@
   function unitCard(u) {
     var L = lessonFor(u);
     return '<button class="ucard" data-go="#/study/' + u.id + '" style="--acc:' + (L ? A.acc(L) : '#4fd1c5') + '">' +
-      '<div class="unum">Unit ' + (L ? L.number : '') + '</div>' +
+      '<div class="unum">Chapter ' + (L ? L.number : '') + '</div>' +
       '<div class="uzh">' + esc(scriptText(u.title)) + '</div>' +
       '<div class="uen">' + esc(u.en) + '</div>' +
       '</button>';

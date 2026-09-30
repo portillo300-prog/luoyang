@@ -935,3 +935,19 @@ mark.hl { background: var(--hl); color: inherit; border-radius: 6px; padding: 1p
 .pfoot { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
 .pbtns { display: flex; gap: 8px; }
 .pbtns button, .pchip { min-height: 40px; font-size: 14px; }
+
+/* long chapter titles wrap inside their card instead of running off it */
+.wordrow { flex-wrap: wrap; row-gap: .06em; max-width: 100%; }
+.lesson-card .zh { font-size: clamp(30px, 8.4vw, 46px); max-width: 100%; }
+.lesson-head .zh { max-width: 100%; }
+.lesson-head .zh { font-size: clamp(30px, 9vw, 52px); }
+
+.wl-search { margin: 0 4px 14px; }
+.wl-search input { width: 100%; min-height: 52px; border-radius: 18px; border: 2px solid var(--line); background: var(--panel); color: var(--text); padding: 0 16px; font-size: 18px; }
+.wl-search input:focus { outline: none; border-color: var(--accent); }
+.wl-none { color: var(--muted); text-align: center; padding: 24px; }
+.wcard[hidden], .wl-chap[hidden] { display: none !important; }
+.wcard .wcm { font-size: 14px; line-height: 1.2; }
+.wl-count { font-size: 18px; color: var(--muted); }
+.lesson-head { text-align: center; align-items: center; width: 100%; } .lesson-head .wordrow, .lesson-head .pinyin { justify-content: center; }
+.choice.mc { font-size: 22px; font-weight: 700; line-height: 1.25; padding: 14px 16px; }

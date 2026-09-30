@@ -250,8 +250,8 @@
     b.writer = true; store.set('badges', badges); earn(10);
     later(function () {
       showWin({
-        emoji: '🎉', title: 'Lesson complete!', accent: acc(L),
-        lines: ['You wrote every character and word in Lesson ' + L.number + '!'],
+        emoji: '🎉', title: 'Chapter complete!', accent: acc(L),
+        lines: ['You wrote every word in Chapter ' + L.number + '!'],
         sticker: { emoji: L.sticker, label: 'New sticker: Star Writer ✍️' },
         primary: { label: 'Keep going', fn: function () { go('#/l/' + L.id); } },
         secondary: { label: '🏠 Home', fn: function () { go('#/'); } }
@@ -272,11 +272,11 @@
       return '<button class="lesson-card" style="--acc:' + acc(L) + ';animation-delay:' + (idx * 0.08) + 's" data-go="#/l/' + L.id + '">' +
         ringHTML(n / L.items.length, acc(L), L.sticker) +
         '<span class="lc-body">' +
-        '<span class="badge">Lesson ' + L.number + '</span>' +
+        '<span class="badge">Chapter ' + L.number + '</span>' +
         '<span class="zh">' + row(titleOf(L)) + '</span>' +
         pinyinHTML(L.py, null, 'sm') +
         '<span class="en">' + L.en + '</span>' +
-        '<span class="stats"><span>' + L.characters.length + ' characters · ' + L.words.length + ' words</span>' +
+        '<span class="stats"><span>' + (L.characters.length ? L.characters.length + ' characters · ' : '') + L.words.length + ' words</span>' +
         '<span class="stars">✓ ' + n + '/' + L.items.length + '</span></span>' +
         '<span class="bdgs"><span class="bdg' + (b.writer ? ' on' : '') + '">✍️ Writer</span><span class="bdg' + (b.quiz ? ' on' : '') + '">🏆 Quiz</span></span>' +
         '</span></button>';
@@ -304,14 +304,14 @@
     var stars = b.quiz ? '⭐'.repeat(b.quiz) : '';
     app.innerHTML =
       '<div class="screen" style="--acc:' + acc(L) + '">' +
-      '<div class="topbar"><button class="btn" data-go="#/">‹ Home</button>' + themeSeg() + '<span class="spacer"></span>' + '<span class="tools">' + soundBtn() + scriptToggle() + '</span>' + '</div>' +
-      '<div class="lesson-head"><div class="zh">' + row(titleOf(L)) + '</div>' + pinyinHTML(L.py, null, 'sm') + '<div class="en">Lesson ' + L.number + ' · ' + L.en + '</div></div>' +
+      '<div class="topbar"><button class="btn" data-go="#/">‹ Practice</button>' + themeSeg() + '<span class="spacer"></span>' + '<span class="tools">' + soundBtn() + scriptToggle() + '</span>' + '</div>' +
+      '<div class="lesson-head"><div class="zh">' + row(titleOf(L)) + '</div>' + pinyinHTML(L.py, null, 'sm') + '<div class="en">Chapter ' + L.number + ' · ' + L.en + '</div></div>' +
       (L.note ? '<div class="lnote"><b>💡 Good to know</b> ' + L.note + '</div>' : '') +
       '<div class="modebar"><div class="seg" role="group" aria-label="Mode">' +
       '<button data-mode="write" class="' + (mode === 'write' ? 'on' : '') + '">✏️ Write</button>' +
       '<button data-mode="read" class="' + (mode === 'read' ? 'on' : '') + '">👀 Read</button></div></div>' +
-      '<button class="quiz-btn" data-go="#/q/' + L.id + '"><span class="qi">🎯</span><span class="qt"><b>Mini Quiz</b><small>' + (b.quiz ? 'Best: ' + stars : '8 quick questions — you can do it!') + '</small></span><span class="qa">›</span></button>' +
-      '<div class="section-title">Characters</div><div class="grid chars">' + L.characters.map(function (c, i) { return tile(c, i); }).join('') + '</div>' +
+      '<button class="quiz-btn" data-go="#/q/' + L.id + '"><span class="qi">🎯</span><span class="qt"><b>Mini Quiz</b><small>' + (b.quiz ? 'Best: ' + stars : '8 quick questions on this chapter') + '</small></span><span class="qa">›</span></button>' +
+      (nc ? '<div class="section-title">Characters</div><div class="grid chars">' + L.characters.map(function (c, i) { return tile(c, i); }).join('') + '</div>' : '') +
       '<div class="section-title">Words</div><div class="grid words">' + L.words.map(function (w, i) { return tile(w, nc + i); }).join('') + '</div>' +
       '</div>';
     bindTop(function () { renderLesson(L); });
@@ -518,7 +518,17 @@
 
   /* ---------- MINI QUIZ ---------- */
   var Q = null;
+  function wordMode(L) { return L.characters.length < 4; }   // chapters made of words (HSK) quiz on words; kids' lessons quiz on characters
   function buildQuiz(L) {
+    if (wordMode(L)) {
+      var ws = shuffle(L.words.slice()), wi2 = 0;
+      function nw() { return ws[wi2++ % ws.length]; }
+      var lw = nw();
+      return [
+        { t: 'py', it: nw() }, { t: 'mean', it: nw() }, { t: 'pick', it: nw() }, { t: 'py', it: nw() },
+        { t: 'mean', it: nw() }, { t: 'pick', it: nw() }, { t: clipFor(lw) ? 'listen' : 'mean', it: lw }, { t: 'py', it: nw() }
+      ];
+    }
     var chars = shuffle(L.characters.slice()), words = shuffle(L.words.slice());
     var ci = 0, wi = 0;
     function nextChar() { return chars[ci++ % chars.length]; }
@@ -531,6 +541,7 @@
     ];
     return pattern;
   }
+  function shortMeaning(en) { return plainEn(en).split(/\s*[;,\/]\s*/)[0]; }
   function uniqueBy(list, fn) { var seen = {}; return list.filter(function (x) { var k = fn(x); if (seen[k]) return false; seen[k] = 1; return true; }); }
 
   function renderQuiz(L) {
@@ -552,16 +563,31 @@
     if (q.t === 'py') {
       label = 'Which pinyin matches?';
       info = '<div class="qbig">' + row(textOf(it)) + '</div><div class="meaning">' + plainEn(it.en) + '</div>';
-      var base = it.py.replace(/[1-5]$/, '');
-      var wrong = shuffle([1, 2, 3, 4].map(function (t) { return base + t; }).filter(function (x) { return x !== it.py; })).slice(0, 2);
-      var others = shuffle(L.characters.filter(function (c) { return c.py !== it.py && c.py.replace(/[1-5]$/, '') !== base; })).slice(0, 1);
+      var syl = it.py.trim().split(/\s+/), wrong = [], tries = 0;
+      while (wrong.length < 2 && tries++ < 40) {
+        var k = Math.floor(Math.random() * syl.length), nt = 1 + Math.floor(Math.random() * 4), v = syl.slice();
+        v[k] = v[k].replace(/[1-5]$/, '') + nt;
+        var vs = v.join(' ');
+        if (vs !== it.py && wrong.indexOf(vs) < 0) wrong.push(vs);
+      }
+      var srcPool = wordMode(L) ? L.words : L.characters, baseOf = function (x) { return x.py.replace(/[1-5]/g, ''); };
+      var sameLen = srcPool.filter(function (c) { return c.py !== it.py && baseOf(c) !== baseOf(it) && c.py.trim().split(/\s+/).length === syl.length; });
+      var others = shuffle(sameLen.length ? sameLen : srcPool.filter(function (c) { return c.py !== it.py && baseOf(c) !== baseOf(it); })).slice(0, 1);
       var opts = [{ py: it.py, alt: it.alt, ok: true }].concat(wrong.map(function (p) { return { py: p }; })).concat(others.map(function (c) { return { py: c.py }; }));
       opts = shuffle(uniqueBy(opts, function (o) { return pinyinText(o.py); }));
       body = '<div class="choices">' + opts.map(function (o, i) {
         return '<button class="choice pyc" data-ok="' + (o.ok ? 1 : 0) + '">' + pinyinHTML(o.py, o.ok ? o.alt : null, '', true) + '</button>';
       }).join('') + '</div>';
+    } else if (q.t === 'mean') {
+      label = 'What does it mean?';
+      info = '<div class="qbig">' + row(textOf(it)) + '</div><div class="pyrow">' + pinyinHTML(it.py, it.alt) + '</div>';
+      var mpool = shuffle(L.words.filter(function (x) { return x.s !== it.s && plainEn(x.en).toLowerCase() !== plainEn(it.en).toLowerCase(); })).slice(0, 3);
+      var mopts = shuffle([it].concat(mpool));
+      body = '<div class="choices">' + mopts.map(function (o) {
+        return '<button class="choice mc" data-ok="' + (o.s === it.s ? 1 : 0) + '">' + esc(shortMeaning(o.en)) + '</button>';
+      }).join('') + '</div>';
     } else if (q.t === 'pick' || q.t === 'listen') {
-      var pool = it.kind === 'w' ? L.words : L.characters;
+      var pool = wordMode(L) ? L.words : (it.kind === 'w' ? L.words : L.characters);
       var picks = shuffle(pool.filter(function (x) { return x.s !== it.s && !clash(x, it); })).slice(0, 3);
       var options = shuffle([it].concat(picks));
       if (q.t === 'listen') {
@@ -669,14 +695,14 @@
     earn(3 + stars * 2 + (isNew ? 5 : 0));
     var msg = stars === 3 ? 'Amazing! You got ' + first + ' of 8 on the first try!' :
               stars === 2 ? 'Great work! ' + first + ' of 8 on the first try.' :
-              'You finished the quiz! Every try makes you stronger.';
+              'You finished the quiz. Keep going, every try helps.';
     Q = null;
     showWin({
       emoji: stars === 3 ? '🏆' : '🎉', title: 'Well done!', accent: acc(L), stars: stars,
       lines: [msg],
       sticker: isNew ? { emoji: '🏆', label: 'New badge: Quiz Champion!' } : null,
       primary: { label: 'Play again', fn: function () { go('#/q/' + L.id); } },
-      secondary: { label: 'Back to lesson', fn: function () { go('#/l/' + L.id); } }
+      secondary: { label: 'Back to chapter', fn: function () { go('#/l/' + L.id); } }
     });
   }
 
@@ -696,15 +722,15 @@
     }).join('');
     app.innerHTML =
       '<div class="screen about">' +
-      '<div class="topbar"><button class="btn" data-go="#/">‹ Home</button>' + themeSeg() + '</div>' +
+      '<div class="topbar"><button class="btn" data-go="#/">‹ Practice</button>' + themeSeg() + '</div>' +
       '<div class="acard"><h2>完蛋 Wándàn</h2><p>A personal app for studying an HSK textbook: readings and grammar notes with English, comprehension checks, character writing practice, fill-in-the-blank, and sentence-order games. It works with no internet, and nothing you do here leaves the device — no accounts, no tracking.</p></div>' +
-      '<div class="acard"><h2>Voice recordings</h2><p>The spoken characters and words are real recordings by native speakers, shared on Wikimedia Commons (Lingua Libre and the Chinese pronunciation set) under Creative Commons licenses. Thank you to everyone who lent their voice! Tap a character to see its recording page.</p>' +
-      (speakers || '<p class="muted">Audio is coming soon.</p>') + '</div>' +
-      '<div class="acard"><h2>Words</h2><p>Ideas and pinyin for the words in the Word Lab were checked against <a href="https://cc-cedict.org" target="_blank" rel="noopener">CC-CEDICT</a> (Creative Commons Attribution-ShareAlike 4.0). The kid-friendly meanings were written by hand.</p></div>' +
+      (speakers ? '<div class="acard"><h2>Voice recordings</h2><p>The spoken characters and words are real recordings by native speakers, shared on Wikimedia Commons under Creative Commons licenses. Thank you to everyone who lent their voice!</p>' + speakers + '</div>'
+        : '<div class="acard"><h2>Audio</h2><p class="muted">Word audio is planned for a later update.</p></div>') +
+      '<div class="acard"><h2>Words</h2><p>Chapter vocabulary and pinyin come from the textbook, HSK 标准教程 5 (上). The English sentence translations, expression notes and quiz questions were written for this app.</p></div>' +
       '<div class="acard"><h2>Stroke order</h2><p>Stroke animations use <a href="https://hanziwriter.org" target="_blank" rel="noopener">Hanzi Writer</a> (MIT License), with character data from <a href="https://github.com/skishore/makemeahanzi" target="_blank" rel="noopener">Make Me a Hanzi</a> and <a href="https://github.com/parsimonhi/animCJK" target="_blank" rel="noopener">AnimCJK</a>, based on the Arphic PL fonts (Arphic Public License).</p></div>' +
       '<div class="acard"><h2>Sound check</h2><p>Not hearing the voices or the chimes? Turn the volume up, make sure the device is not on silent, then tap the button.</p><button class="btn primary" id="soundtest">🔊 Play test sound</button><div id="soundout" class="soundout"></div></div>' +
       '<div class="acard"><h2>Sounds &amp; pictures</h2><p>Chimes and cheers are generated by the app itself. Emoji are drawn by your device.</p></div>' +
-      '<div class="acard"><h2>Made with ❤️</h2><p>Built for a young learner by a family that loves Chinese. Words and lessons can be updated any time.</p></div>' +
+      '<div class="acard"><h2>Made with ❤️</h2><p>Built for one learner\'s HSK study. Chapters and games are updated as new textbook pages are added.</p></div>' +
       '</div>';
     bindTop(renderAbout);
     var st = $('soundtest');

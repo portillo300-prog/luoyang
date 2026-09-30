@@ -951,3 +951,7 @@ mark.hl { background: var(--hl); color: inherit; border-radius: 6px; padding: 1p
 .wl-count { font-size: 18px; color: var(--muted); }
 .lesson-head { text-align: center; align-items: center; width: 100%; } .lesson-head .wordrow, .lesson-head .pinyin { justify-content: center; }
 .choice.mc { font-size: 22px; font-weight: 700; line-height: 1.25; padding: 14px 16px; }
+
+/* the English for a tapped sentence sits right under it */
+.ren-inline { display: block; margin: 6px 0 12px; padding: 8px 12px; border-left: 4px solid var(--acc, var(--accent)); border-radius: 4px 12px 12px 4px; background: var(--panel-2); color: var(--muted); font-style: italic; font-size: 16px; line-height: 1.5; -webkit-user-select: none; user-select: none; }
+.rpara.sent .ren { display: none; }

@@ -38,12 +38,14 @@
 
   function section(title, inner) { return inner ? '<div class="scard"><h3>' + esc(title) + '</h3>' + inner + '</div>' : ''; }
 
+  var openEn = {};   // which sentence translations are open (kept across redraws): "unit|sec|para|sentence"
   function renderPara(p, i, uid, sec) {
     if (p.sentences && p.sentences.length) {
       return '<div class="rpara sent" data-i="' + i + '" data-sec="' + sec + '"><div class="rzh">' + p.sentences.map(function (x, k) {
-        var inner = A.markup ? A.markup(uid, sec, i, k, x) : esc(scriptText(x));
-        return '<span class="rsent" data-k="' + k + '" data-en="' + esc(x.en) + '">' + inner + '</span>';
-      }).join('') + '</div><div class="ren" hidden></div></div>';
+        var inner = A.markup ? A.markup(uid, sec, i, k, x) : esc(scriptText(x)), open = openEn[uid + '|' + sec + '|' + i + '|' + k];
+        return '<span class="rsent' + (open ? ' on' : '') + '" data-k="' + k + '" data-en="' + esc(x.en) + '">' + inner + '</span>' +
+          (open ? '<span class="ren-inline">' + esc(x.en) + '</span>' : '');
+      }).join('') + '</div></div>';
     }
     return '<div class="rpara" data-i="' + i + '">' +
       '<div class="rzh">' + esc(scriptText(p)) + '</div>' +
@@ -66,13 +68,17 @@
     Array.prototype.forEach.call(app.querySelectorAll('.rpara:not(.sent)'), function (el) {
       el.onclick = function () { var e = el.querySelector('.ren'); e.hidden = !e.hidden; el.classList.toggle('open', !e.hidden); };
     });
-    /* one-sentence translation: tap a sentence, see just that sentence in English */
+    /* one-sentence translation: tap a sentence and its English opens RIGHT UNDER it; tap again to close.
+       Several can stay open at once. Nothing is redrawn, so the page does not jump. */
     Array.prototype.forEach.call(app.querySelectorAll('.rsent'), function (sp) {
       sp.onclick = function () {
-        var para = sp.parentNode.parentNode, e = para.querySelector('.ren'), was = sp.classList.contains('on');
-        Array.prototype.forEach.call(para.querySelectorAll('.rsent.on'), function (x) { x.classList.remove('on'); });
-        if (was) { e.hidden = true; return; }
-        sp.classList.add('on'); e.textContent = sp.getAttribute('data-en'); e.hidden = false;
+        var g = window.getSelection && window.getSelection();
+        if (g && !g.isCollapsed) return;                       // the reader is selecting text, not tapping
+        var para = sp.closest('.rpara'), sc = sp.closest('.uscroll');
+        var key = (sc ? sc.getAttribute('data-uid') : '') + '|' + para.getAttribute('data-sec') + '|' + para.getAttribute('data-i') + '|' + sp.getAttribute('data-k');
+        var nxt = sp.nextElementSibling;
+        if (nxt && nxt.classList.contains('ren-inline')) { nxt.parentNode.removeChild(nxt); sp.classList.remove('on'); delete openEn[key]; }
+        else { sp.insertAdjacentHTML('afterend', '<span class="ren-inline">' + esc(sp.getAttribute('data-en')) + '</span>'); sp.classList.add('on'); openEn[key] = 1; }
       };
     });
   }

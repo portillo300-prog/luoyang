@@ -26,6 +26,7 @@ function addPair(s, t, label, py) {
   const S = [...s], T = [...t];
   if (S.length !== T.length) problems.push(`${label}: simplified "${s}" and traditional "${t}" differ in length`);
   S.forEach((sc, i) => {
+    if (!/\p{Script=Han}/u.test(sc)) return;   // punctuation (， ！ etc.) has no stroke data
     need.set(sc, need.get(sc) || 's');
     const tc = T[i];
     if (tc && tc !== sc && !need.has(tc)) need.set(tc, 't');
@@ -44,6 +45,8 @@ for (const w of (C.lab && C.lab.words) || []) addPair(w.s, w.t, `lab ${w.s}`, w.
 if (C.lab && C.lab.title) addPair(C.lab.title.s, C.lab.title.t, 'lab title');
 for (const st of C.sentences || []) { if (st.chunks.length !== st.tchunks.length) problems.push('sentence chunk count mismatch: ' + st.chunks.join('')); st.chunks.forEach((c, i) => addPair(c, st.tchunks[i] || c, 'sentence ' + st.chunks.join(''))); }
 for (const f of C.fill || []) addPair(f.s, f.t, 'fill ' + f.s, f.py);
+for (const r of C.collGame || []) { addPair(r.left.s, r.left.t, 'colloc ' + r.left.s); for (const x of r.rights) addPair(x.s, x.t, 'colloc ' + x.s); }
+for (const u of C.units || []) for (const w of ((u.warmup && u.warmup.weather) || [])) addPair(w.s, w.t, 'weather ' + w.s, w.py);
 for (const p of C.pics || []) addPair(p.s, p.t, 'pic ' + p.s, p.py);
 addPair(C.appTitle.s, C.appTitle.t, 'app title');
 if (problems.length) { console.error('\nProblems:\n - ' + problems.join('\n - ')); process.exit(1); }
@@ -71,7 +74,7 @@ console.log(`strokes.js: ${Object.keys(out).length} characters (${[...need.value
 
 // stamp a version so devices refresh their offline copy
 const audioFiles = fs.existsSync(path.join(root, 'audio')) ? fs.readdirSync(path.join(root, 'audio')).filter((f) => f.endsWith('.m4a')).sort().map((f) => 'audio/' + f) : [];
-const core = ['index.html', 'styles.css', 'app.js', 'fx.js', 'garden.js', 'games.js', 'games2.js', 'fill.js', 'unit.js', 'words.js', 'content.js', 'strokes.js', 'audio-manifest.js', 'manifest.webmanifest', 'vendor/hanzi-writer.min.js'];
+const core = ['index.html', 'styles.css', 'app.js', 'fx.js', 'garden.js', 'games.js', 'games2.js', 'games3.js', 'fill.js', 'unit.js', 'phrases.js', 'words.js', 'content.js', 'strokes.js', 'audio-manifest.js', 'manifest.webmanifest', 'vendor/hanzi-writer.min.js'];
 const files = [...core, ...audioFiles];
 const h = crypto.createHash('sha1');
 for (const f of files) h.update(fs.readFileSync(path.join(root, f)));

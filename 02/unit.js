@@ -31,26 +31,49 @@
     var units = C.units || [];
     app.innerHTML = '<div class="screen study has-tabs">' +
       '<div class="topbar"><span class="title">📖 Study</span><span class="spacer"></span>' + A.themeSeg() + A.scriptToggle() + A.walletPill() + '</div>' +
-      '<div class="ulist">' + (units.length ? units.map(unitCard).join('') : '<p class="muted">No units yet — send more textbook photos!</p>') + '</div>' +
+      '<div class="ulist">' + (A.phrasesCard ? A.phrasesCard() : '') + (units.length ? units.map(unitCard).join('') : '<p class="muted">No units yet — send more textbook photos!</p>') + '</div>' +
       A.tabbar('study') + '</div>';
     A.bindTop(renderList);
   }
 
   function section(title, inner) { return inner ? '<div class="scard"><h3>' + esc(title) + '</h3>' + inner + '</div>' : ''; }
 
+  function renderPara(p, i, uid, sec) {
+    if (p.sentences && p.sentences.length) {
+      return '<div class="rpara sent" data-i="' + i + '" data-sec="' + sec + '"><div class="rzh">' + p.sentences.map(function (x, k) {
+        var inner = A.markup ? A.markup(uid, sec, i, k, x) : esc(scriptText(x));
+        return '<span class="rsent" data-k="' + k + '" data-en="' + esc(x.en) + '">' + inner + '</span>';
+      }).join('') + '</div><div class="ren" hidden></div></div>';
+    }
+    return '<div class="rpara" data-i="' + i + '">' +
+      '<div class="rzh">' + esc(scriptText(p)) + '</div>' +
+      '<div class="ren" hidden>' + esc(p.en) + '</div>' +
+      '</div>';
+  }
+
   function renderReading(u) {
     var pgs = (u.reading && u.reading.paragraphs) || [];
-    return pgs.map(function (p, i) {
-      return '<div class="rpara" data-i="' + i + '">' +
-        '<div class="rzh">' + esc(scriptText(p)) + '</div>' +
-        '<div class="ren" hidden>' + esc(p.en) + '</div>' +
-        '</div>';
-    }).join('');
+    return pgs.map(function (p, i) { return renderPara(p, i, u.id, 'r'); }).join('');
+  }
+
+  function renderBackground(u) {
+    var pgs = (u.background && u.background.paragraphs) || [];
+    return pgs.map(function (p, i) { return renderPara(p, i, u.id, 'b'); }).join('');
   }
 
   function bindReading() {
-    Array.prototype.forEach.call(app.querySelectorAll('.rpara'), function (el) {
+    /* whole-paragraph translation (older units) */
+    Array.prototype.forEach.call(app.querySelectorAll('.rpara:not(.sent)'), function (el) {
       el.onclick = function () { var e = el.querySelector('.ren'); e.hidden = !e.hidden; el.classList.toggle('open', !e.hidden); };
+    });
+    /* one-sentence translation: tap a sentence, see just that sentence in English */
+    Array.prototype.forEach.call(app.querySelectorAll('.rsent'), function (sp) {
+      sp.onclick = function () {
+        var para = sp.parentNode.parentNode, e = para.querySelector('.ren'), was = sp.classList.contains('on');
+        Array.prototype.forEach.call(para.querySelectorAll('.rsent.on'), function (x) { x.classList.remove('on'); });
+        if (was) { e.hidden = true; return; }
+        sp.classList.add('on'); e.textContent = sp.getAttribute('data-en'); e.hidden = false;
+      };
     });
   }
 
@@ -66,8 +89,9 @@
     }).join('');
     var disc = '';
     if (g.discrimination) {
+      var lab = g.labels || ['如何', '怎么'];
       disc = '<div class="disc">' + g.discrimination.map(function (row) {
-        return '<div class="drow"><div class="dcell"><b>如何</b><br>' + esc(row.ruhe) + '</div><div class="dcell"><b>怎么</b><br>' + esc(row.zenme) + '</div></div>';
+        return '<div class="drow"><div class="dcell"><b>' + esc(lab[0]) + '</b><br>' + esc(row.a || row.ruhe) + '</div><div class="dcell"><b>' + esc(lab[1]) + '</b><br>' + esc(row.b || row.zenme) + '</div></div>';
       }).join('') + '</div>';
     }
     return '<div class="gcard">' + head + ex + disc + '</div>';
@@ -90,14 +114,25 @@
       '</div>';
   }
 
+  var curUnit = null;
+  // redraw the open unit (after saving a phrase, toggling expressions...) without losing the reader's place
+  A.redrawUnit = function () {
+    if (!curUnit || !app.querySelector('.uscroll')) return;
+    var sc = app.querySelector('.uscroll'), y = sc.scrollTop;
+    renderUnit(curUnit);
+    var sc2 = app.querySelector('.uscroll'); if (sc2 && y) sc2.scrollTop = y;
+  };
+
   function renderUnit(u) {
     var L = lessonFor(u);
     app.innerHTML = '<div class="screen study unit has-tabs" style="--acc:' + (L ? A.acc(L) : '#4fd1c5') + '">' +
       '<div class="topbar"><button class="btn" data-go="#/study">‹ Study</button><span class="spacer"></span>' + A.themeSeg() + A.scriptToggle() + A.walletPill() + '</div>' +
-      '<div class="uscroll">' +
+      '<div class="uscroll" data-uid="' + u.id + '">' +
       '<div class="uhero"><div class="uheroZh">' + esc(scriptText(u.title)) + '</div><div class="uheroEn">' + esc(u.en) + '</div>' + (u.source ? '<div class="usource">' + esc(u.source) + '</div>' : '') + '</div>' +
-      section('📖 Reading — tap a line for English', renderReading(u)) +
+      (A.exprToggle ? A.exprToggle(u) : '') +
+      section('📖 Reading — tap a sentence for English', renderReading(u)) +
       (u.grammar || []).map(function (g) { return section('💡 ' + g.point, renderGrammarCard(g)); }).join('') +
+      section('🧭 ' + ((u.background && u.background.en) || 'Background'), u.background ? renderBackground(u) : '') +
       section('🧩 Word Collocations', u.collocations ? renderCollocations(u) : '') +
       section('✏️ Reflect (write in Chinese — not graded)', renderReflection(u)) +
       '<div class="uactions">' +
@@ -107,8 +142,10 @@
       '<button class="btn big" data-go="#/g/sentences">🧱 Sentence Builder</button>' +
       '</div>' +
       '</div>' + A.tabbar('study') + '</div>';
+    curUnit = u;
     A.bindTop(function () { renderUnit(u); });
     bindReading();
+    if (A.afterUnit) A.afterUnit(u);
     var rt = $('rtext');
     if (rt) rt.onblur = function () { A.store.set('reflect.' + u.id, rt.value); };
   }

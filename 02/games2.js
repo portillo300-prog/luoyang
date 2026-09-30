@@ -20,7 +20,7 @@
   }
   function firstLesson() { var sel = A.selectedLessons(); return A.lessons.filter(function (L) { return sel.indexOf(L.id) >= 0; })[0] || A.lessons[0]; }
   function reg(cfg, play) {
-    A.registerGame({ id: cfg.id, name: cfg.name, icon: cfg.icon, tag: cfg.tag, order: cfg.order }, function (p) {
+    A.registerGame({ id: cfg.id, name: cfg.name, icon: cfg.icon, tag: cfg.tag, order: cfg.order, hidden: cfg.hidden }, function (p) {
       if (p[0] === 'play') return play();
       A.gameSetup(cfg);
     });
@@ -33,51 +33,73 @@
     { n: 3, mark: 'ǎ', name: '3rd tone', how: 'down and up' },
     { n: 4, mark: 'à', name: '4th tone', how: 'falling fast' }
   ];
-  var toneCfg = { id: 'tones', order: 40, name: 'Tone Houses', icon: '🏠', tag: 'Which tone house does it live in?', how: 'Every character lives in a tone house. Look, listen, then tap its house!', done: 'Tone masters!' };
+  var NEUTRAL = { n: 5, mark: 'a', name: 'light tone', how: 'short and soft, no mark' };
+  var toneCfg = { id: 'tones', order: 40, name: 'Tone Houses', icon: '🏠', tag: 'Which tone house does each syllable live in?', how: 'Every syllable of a word lives in a tone house. Look at the word, listen if you can, then tap the house for each syllable in turn!', done: 'Tone masters!' };
   reg(toneCfg, tonesPlay);
+
+  function sylls(c) { return c.py.trim().split(/\s+/); }
+  function toneOf(x) { return parseInt(x.slice(-1), 10); }
+  function toneless(x) { return x.replace(/[1-5]$/, '').replace(/v/g, 'ü'); }
 
   function tonesPlay() {
     var sel = A.selectedLessons(), lesson = firstLesson();
-    var pool = A.poolFor(sel).filter(function (c) { return /[1-4]$/.test(c.py); });
+    var pool = A.poolFor(sel).filter(function (c) { return sylls(c).every(function (x) { return /[1-5]$/.test(x); }); });
     if (pool.length < 4) return A.go('#/g/tones');
-    var seq = A.shuffle(pool.slice()).slice(0, ROUNDS), idx = 0, miss = 0, good = 0, locked = false, alive = true;
+    var seq = A.shuffle(pool.slice()).slice(0, ROUNDS), idx = 0, sy = 0, miss = 0, wordMiss = false, good = 0, locked = false, alive = true;
+    var hasNeutral = seq.some(function (c) { return sylls(c).some(function (x) { return toneOf(x) === 5; }); });
+    var HOUSES = TONES.concat(hasNeutral ? [NEUTRAL] : []);
     app.innerHTML = frame(lesson, ' tones') +
       '<div class="gprompt tcardwrap" id="tcard"></div>' +
-      '<div class="houses" id="houses">' + TONES.map(function (t) {
+      '<div class="houses' + (hasNeutral ? ' five' : '') + '" id="houses">' + HOUSES.map(function (t) {
         return '<button class="house" data-t="' + t.n + '" style="--tc:var(--t' + t.n + ')"><span class="hroof">🏠</span><span class="hmark">' + t.mark + '</span><span class="hname">' + t.name + '</span><span class="hhow">' + t.how + '</span></button>';
       }).join('') + '</div></div>';
     A.bindTop(function () {});
     $('gquit').onclick = function () { A.go('#/g/tones'); };
     A.onLeave(function () { alive = false; });
+    function clear() { Array.prototype.forEach.call(app.querySelectorAll('.house'), function (h) { h.classList.remove('yes', 'wob', 'shine'); }); }
+    function drawCard(c, reveal) {
+      var ss = sylls(c), txt = A.textOf(c), chars = Array.from(txt), aligned = chars.length === ss.length;
+      var glyphs = aligned
+        ? '<span class="wordrow">' + chars.map(function (ch, i) { return '<span class="tsy' + (reveal || i < sy ? ' done' : i === sy ? ' on' : '') + '">' + A.glyph(ch) + '</span>'; }).join('') + '</span>'
+        : A.row(txt);
+      var py = reveal ? A.pinyinHTML(c.py, c.alt, 'md')
+        : ss.map(function (x, i) { return i < sy ? A.pinyinHTML(x, null, 'md') : '<span class="pinyin md"><span class="syl">' + toneless(x) + '</span></span>'; }).join(' ');
+      var step = reveal ? '' : '<div class="tc-step">Syllable ' + (sy + 1) + ' of ' + ss.length + (aligned ? '' : ' · ' + toneless(ss[sy])) + '</div>';
+      $('tcard').innerHTML = '<div class="tc-glyph' + (chars.length > 2 ? ' long' : '') + '">' + glyphs + '</div><div class="tc-py" id="tcpy">' + py + '</div><div class="tc-en">' + A.esc(A.shortEn(c.en)) + '</div>' + step +
+        (A.hasVoice(c) ? '<button class="speak" id="gspeak" aria-label="Play the sound">🔊</button>' : '');
+      if ($('gspeak')) $('gspeak').onclick = function () { A.say(c, true); };
+    }
     function show() {
       if (!alive) return;
       if (idx >= seq.length) { alive = false; return win(toneCfg, lesson, good, seq.length); }
-      var c = seq[idx]; miss = 0; locked = false;
+      var c = seq[idx]; sy = 0; miss = 0; wordMiss = false; locked = false;
       $('gprog').textContent = (idx + 1) + ' / ' + seq.length;
-      var base = c.py.replace(/[1-5]$/, '').replace(/v/g, 'ü');
-      $('tcard').innerHTML = '<div class="tc-glyph">' + A.row(A.textOf(c)) + '</div><div class="tc-py" id="tcpy">' + base + '</div><div class="tc-en">' + A.esc(A.plain(c.en)) + '</div>' +
-        (A.hasVoice(c) ? '<button class="speak" id="gspeak" aria-label="Play the sound">🔊</button>' : '');
-      if ($('gspeak')) { $('gspeak').onclick = function () { A.say(c, true); }; setTimeout(function () { if (alive && seq[idx] === c) A.say(c, false); }, 400); }
-      Array.prototype.forEach.call(app.querySelectorAll('.house'), function (h) { h.classList.remove('yes', 'wob', 'shine'); });
+      drawCard(c, false); clear();
+      if (A.hasVoice(c)) setTimeout(function () { if (alive && seq[idx] === c) A.say(c, false); }, 400);
+    }
+    function nextSyllable() {
+      var c = seq[idx];
+      sy++; miss = 0; clear();
+      if (sy >= sylls(c).length) {
+        if (!wordMiss) good++;
+        drawCard(c, true); A.say(c, false); idx++; setTimeout(show, 1700);
+      } else { locked = false; drawCard(c, false); }
     }
     Array.prototype.forEach.call(app.querySelectorAll('.house'), function (h) {
       h.onclick = function () {
         if (locked || !alive) return;
-        var c = seq[idx], want = parseInt(c.py.slice(-1), 10), got = parseInt(h.getAttribute('data-t'), 10);
-        function reveal() { $('tcpy').innerHTML = A.pinyinHTML(c.py, c.alt, 'md'); }
+        var c = seq[idx], want = toneOf(sylls(c)[sy]), got = parseInt(h.getAttribute('data-t'), 10);
         if (got === want) {
-          locked = true; if (miss === 0) good++;
-          h.classList.add('yes'); reveal(); FX.ding();
-          var r = h.getBoundingClientRect(); FX.confetti({ x: (r.left + r.width / 2) / window.innerWidth, y: (r.top + r.height / 2) / window.innerHeight, n: 26 });
-          A.say(c, false);
-          idx++; setTimeout(show, 1500);
+          locked = true; h.classList.add('yes'); FX.ding();
+          var r = h.getBoundingClientRect(); FX.confetti({ x: (r.left + r.width / 2) / window.innerWidth, y: (r.top + r.height / 2) / window.innerHeight, n: 18 });
+          setTimeout(function () { if (alive) nextSyllable(); }, 650);
         } else {
-          miss++; FX.oops(); h.classList.remove('wob'); void h.offsetWidth; h.classList.add('wob');
+          miss++; wordMiss = true; FX.oops(); h.classList.remove('wob'); void h.offsetWidth; h.classList.add('wob');
           if (miss >= 2) {   // show the answer and move on
-            locked = true; reveal();
+            locked = true;
             Array.prototype.forEach.call(app.querySelectorAll('.house'), function (x) { if (parseInt(x.getAttribute('data-t'), 10) === want) x.classList.add('shine'); });
-            A.say(c, false); idx++; setTimeout(show, 2200);
-          } else A.say(c, false);
+            setTimeout(function () { if (alive) nextSyllable(); }, 1500);
+          }
         }
       };
     });
@@ -85,20 +107,23 @@
   }
 
   /* ---------------- Memory Match ---------------- */
-  var memCfg = { id: 'memory', order: 50, name: 'Memory Match', icon: '🃏', tag: 'Find the matching pairs!', how: 'Flip two cards. A character matches its pinyin. Find all six pairs!', done: 'All pairs found!', unit: ' moves (fewer is better)' };
+  var memCfg = { id: 'memory', order: 50, name: 'Memory Match', icon: '🃏', tag: 'Find the matching pairs!', how: 'Flip two cards. Match each word with its meaning (or its pinyin). Find all six pairs!', modes: [{ id: 'en', label: 'English meaning' }, { id: 'py', label: 'Pinyin' }], modeTitle: 'Match the word to', done: 'All pairs found!', unit: ' moves (fewer is better)' };
   reg(memCfg, memoryPlay);
 
   function memoryPlay() {
     var sel = A.selectedLessons(), lesson = firstLesson(), pool = A.poolFor(sel);
     if (pool.length < 6) return A.go('#/g/memory');
-    var picks = [], cards = [];   // six characters that can never be mixed up (no shared pinyin or meaning)
+    var memMode = A.store.get('mode.memory', 'en');
+    var picks = [], cards = [];   // six words that can never be mixed up (no shared pinyin or meaning)
     A.shuffle(pool.slice()).forEach(function (c) { if (picks.length < 6 && !picks.some(function (p) { return A.clash(p, c); })) picks.push(c); });
     if (picks.length < 6) return A.go('#/g/memory');
     picks.forEach(function (c, i) { cards.push({ k: i, kind: 'g', item: c }); cards.push({ k: i, kind: 'p', item: c }); });
     cards = A.shuffle(cards);
     app.innerHTML = frame(lesson, ' memory') + '<div class="gprompt"><div class="gq">Find the pairs</div><div class="mv" id="mv">Moves: 0</div></div>' +
       '<div class="mgrid" id="mgrid">' + cards.map(function (cd, i) {
-        var front = cd.kind === 'g' ? '<span class="mf g">' + A.row(A.textOf(cd.item)) + '</span>' : '<span class="mf p">' + A.pinyinHTML(cd.item.py, cd.item.alt, 'md') + '</span>';
+        var n = Array.from(A.textOf(cd.item)).length;
+        var front = cd.kind === 'g' ? '<span class="mf g" style="font-size:min(clamp(46px, 11vmin, 70px), calc(27vw / ' + n + '))">' + A.row(A.textOf(cd.item)) + '</span>'
+          : (memMode === 'py' ? '<span class="mf p">' + A.pinyinHTML(cd.item.py, cd.item.alt, 'md') + '</span>' : '<span class="mf e">' + A.esc(A.shortEn(cd.item.en)) + '</span>');
         return '<button class="mc" data-i="' + i + '"><span class="mc-in"><span class="mc-back">✿</span><span class="mc-front">' + front + '</span></span></button>';
       }).join('') + '</div></div>';
     A.bindTop(function () {});
@@ -135,7 +160,7 @@
   }
 
   /* ---------------- Treasure Garden (tap to discover) ---------------- */
-  var treasureCfg = { id: 'treasure', order: 60, name: 'Treasure Garden', icon: '🌷', tag: 'Tap the flowers to find the treasure!', how: 'Something is hiding under the flowers. Tap to discover the character you are looking for!', done: 'Treasure found!' };
+  var treasureCfg = { id: 'treasure', order: 60, name: 'Treasure Garden', icon: '🌷', tag: 'Tap the flowers to find the treasure!', hidden: true, how: 'Something is hiding under the flowers. Tap to discover the character you are looking for!', done: 'Treasure found!' };
   reg(treasureCfg, treasurePlay);
 
   function treasurePlay() {

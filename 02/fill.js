@@ -13,7 +13,7 @@
   var picCfg = { id: 'picwords', order: 90, name: 'Picture Words', icon: '🖼️', tag: 'Look at the picture and write the word!', how: 'You will see a picture and its English name. Write the Chinese word with your finger. It will tell you if a stroke is right!', done: 'Great writing!', unit: ' words on the first try' };
 
   [fillCfg, picCfg].forEach(function (cfg) {
-    A.registerGame({ id: cfg.id, name: cfg.name, icon: cfg.icon, tag: cfg.tag, order: cfg.order }, function (p) {
+    A.registerGame({ id: cfg.id, name: cfg.name, icon: cfg.icon, tag: cfg.tag, order: cfg.order, hidden: cfg.id === 'picwords' && !(C.pics && C.pics.length) }, function (p) {
       if (p[0] === 'play') return play(cfg);
       setup(cfg);
     });

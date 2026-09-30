@@ -12,7 +12,7 @@
   A.routes.g = function (p) { var h = A.gameRoutes[p[0]]; if (h) return h(p.slice(1)); renderHub(); };
 
   function renderHub() {
-    var list = GAMES.slice().sort(function (a, b) { return (a.order || 50) - (b.order || 50); });
+    var list = GAMES.filter(function (g) { return !g.hidden; }).sort(function (a, b) { return (a.order || 50) - (b.order || 50); });
     app.innerHTML =
       '<div class="screen has-tabs">' +
       '<div class="topbar"><span class="title gtitle">🎮 Games</span>' + A.walletPill() + '</div>' +
@@ -23,50 +23,58 @@
   }
 
   /* ---------- helpers shared by the games ---------- */
+  /* chapters are on by default; the player switches OFF the ones they don't want (so a new chapter joins the games automatically) */
   A.selectedLessons = function () {
-    var sel = store.get('bubbleSel', null), ids = A.lessons.map(function (L) { return L.id; });
-    if (!sel || !sel.length) sel = ids;
-    return sel.filter(function (id) { return ids.indexOf(id) >= 0; });
+    var off = store.get('gameOff', []), ids = A.lessons.map(function (L) { return L.id; });
+    var sel = ids.filter(function (id) { return off.indexOf(id) < 0; });
+    return sel.length ? sel : ids;
   };
+  // the game pool = the official vocabulary of the chosen chapters (words, plus any single characters), each word once
   A.poolFor = function (sel) {
-    var only = store.get('onlyDone', false), all = [], done = [];
+    var seen = {}, all = [];
     A.lessons.forEach(function (L) {
-      if (sel.indexOf(L.id) >= 0) L.characters.forEach(function (c) { all.push(c); if (A.isDone(L, c)) done.push(c); });
+      if (sel.indexOf(L.id) < 0) return;
+      (L.characters || []).concat(L.words || []).forEach(function (w) { if (w.s && !seen[w.s]) { seen[w.s] = 1; all.push(w); } });
     });
-    return (only && done.length >= 6) ? done : all;   // "only practiced" needs at least 6 characters to make a good game
+    return all;
   };
+  // a short English gloss for cards and buttons: first meaning only, no notes in brackets
+  A.shortEn = function (en) { return A.plain(en).split(/\s*[;,\/]\s*/)[0].replace(/^to\s+/, 'to ').trim(); };
   // setup screen: pick the lessons, then Start
   A.gameSetup = function (cfg) {
-    var sel = A.selectedLessons();
+    var sel = A.selectedLessons(), modeHtml = '';
+    if (cfg.modes) {
+      var cur = store.get('mode.' + cfg.id, cfg.modes[0].id);
+      modeHtml = '<div class="section-title">' + (cfg.modeTitle || 'Match to') + '</div><div class="chips" id="modechips">' + cfg.modes.map(function (m) {
+        return '<button class="chip' + (cur === m.id ? ' on' : '') + '" data-m="' + m.id + '">' + m.label + '</button>';
+      }).join('') + '</div>';
+    }
     app.innerHTML =
       '<div class="screen">' +
       '<div class="topbar"><button class="btn" data-go="#/games">‹ Games</button>' + A.walletPill() + '</div>' +
       '<div class="hero small"><div class="bigemoji">' + cfg.icon.replace('bubble-ico', 'bubble-ico big') + '</div><h1 class="gh">' + cfg.name + '</h1>' +
       '<p class="shophint">' + cfg.how + '</p></div>' +
-      (cfg.noChips ? '' : '<div class="section-title">Which characters?</div>' +
+      modeHtml +
+      (cfg.noChips ? '' : '<div class="section-title">Which chapters?</div>' +
       '<div class="chips">' + A.lessons.map(function (L) {
-        return '<button class="chip' + (sel.indexOf(L.id) >= 0 ? ' on' : '') + '" data-l="' + L.id + '">Lesson ' + L.number + ' ' + L.sticker + '</button>';
-      }).join('') + '</div>') +
-      (cfg.noChips ? '' : '<div class="chips"><button class="chip' + (store.get('onlyDone', false) ? ' on' : '') + '" id="onlyDone">✓ Only characters I\'ve practiced</button></div>' +
-       '<p class="shophint" id="onlyHint"></p>') +
+        return '<button class="chip' + (sel.indexOf(L.id) >= 0 ? ' on' : '') + '" data-l="' + L.id + '">Chapter ' + L.number + ' ' + L.sticker + '</button>';
+      }).join('') + '</div><p class="shophint" id="poolHint"></p>') +
       '<div class="startrow"><button class="btn primary big" id="start">▶ Start</button></div></div>';
-    if ($('onlyDone')) {
-      var upd = function () {
-        var on = store.get('onlyDone', false), n = A.poolFor(A.selectedLessons()).length;
-        var h = $('onlyHint'); if (h) h.textContent = on ? (A.poolFor(A.selectedLessons()).length && store.get('onlyDone', false) ? 'Playing with the characters you have traced.' : '') : '';
-        var doneCount = 0; A.lessons.forEach(function (L) { if (A.selectedLessons().indexOf(L.id) >= 0) L.characters.forEach(function (c) { if (A.isDone(L, c)) doneCount++; }); });
-        if (on && doneCount < 6 && h) h.textContent = 'Trace a few more characters first (you have ' + doneCount + '). Until then, all the characters are used.';
-      };
-      $('onlyDone').onclick = function () { var v = !store.get('onlyDone', false); store.set('onlyDone', v); $('onlyDone').classList.toggle('on', v); upd(); };
-      upd();
-    }
+    function hint() { var h = $('poolHint'); if (h) h.textContent = A.poolFor(A.selectedLessons()).length + ' words in play'; }
+    hint();
     Array.prototype.forEach.call(app.querySelectorAll('.chip[data-l]'), function (c) {
       c.onclick = function () {
         c.classList.toggle('on');
-        var now = Array.prototype.map.call(app.querySelectorAll('.chip.on'), function (x) { return x.getAttribute('data-l'); });
-        if (!now.length) { c.classList.add('on'); return; }
-        store.set('bubbleSel', now);
-        if ($('onlyDone')) $('onlyDone').click(), $('onlyDone').click();   // refresh the hint text
+        var on = Array.prototype.map.call(app.querySelectorAll('.chip[data-l].on'), function (x) { return x.getAttribute('data-l'); });
+        if (!on.length) { c.classList.add('on'); return; }
+        store.set('gameOff', A.lessons.map(function (L) { return L.id; }).filter(function (id) { return on.indexOf(id) < 0; }));
+        hint();
+      };
+    });
+    Array.prototype.forEach.call(app.querySelectorAll('.chip[data-m]'), function (c) {
+      c.onclick = function () {
+        Array.prototype.forEach.call(app.querySelectorAll('.chip[data-m]'), function (x) { x.classList.toggle('on', x === c); });
+        store.set('mode.' + cfg.id, c.getAttribute('data-m'));
       };
     });
     $('start').onclick = function () { FX.pop(); A.go('#/g/' + cfg.id + '/play'); };
@@ -77,9 +85,9 @@
     if (A.hasVoice(target) && !FX.voiceBroken) t.push('listen');
     return t[Math.floor(Math.random() * t.length)];
   };
-  var lastVerb = 'Find the character';
+  var lastVerb = 'Find the word';
   A.promptHTML = function (target, kind, verb) {
-    verb = verb || 'Find the character';
+    verb = verb || 'Find the word';
     lastVerb = verb;
     if (kind === 'pinyin') return '<div class="gq">' + verb + ' for</div>' + A.pinyinHTML(target.py, target.alt);
     if (kind === 'meaning') return '<div class="gq">' + verb + ' that means</div><div class="gmean">' + A.esc(A.plain(target.en)) + '</div>';
@@ -101,12 +109,12 @@
 
   /* ---------------- the "pop" games: things that move, tap the right one ---------------- */
   var POPS = [
-    { id: 'bubbles', order: 10, name: 'Bubble Pop', icon: '<span class="bubble-ico"></span>', tag: 'Pop the bubble that matches!', how: 'A word shows up. Pop the bubble with the right character! Wrong bubbles just wobble, so try again.', dir: 'up', body: 'b-bubble', arena: 'sea', done: 'Bubbles popped!' },
-    { id: 'fish', order: 20, name: 'Fish Pond', icon: '🐟', tag: 'Tap the fish with the right character!', how: 'Fish swim across the pond. Tap the fish that has the right character!', dir: 'right', body: 'b-fish', arena: 'pond', done: 'Fish caught!' },
-    { id: 'stars', order: 30, name: 'Star Catcher', icon: '⭐', tag: 'Catch the falling star that matches!', how: 'Stars fall from the sky. Catch the one with the right character!', dir: 'down', body: 'b-starb', arena: 'sky', done: 'Stars caught!' }
+    { id: 'bubbles', order: 10, name: 'Bubble Pop', icon: '<span class="bubble-ico"></span>', tag: 'Pop the bubble that matches the word!', how: 'A word shows up. Pop the bubble with the right word! Wrong bubbles just wobble, so try again.', dir: 'up', body: 'b-bubble', arena: 'sea', done: 'Bubbles popped!' },
+    { id: 'fish', order: 20, name: 'Fish Pond', icon: '🐟', tag: 'Tap the fish with the right word!', hidden: true, how: 'Fish swim across the pond. Tap the fish that has the right word!', dir: 'right', body: 'b-fish', arena: 'pond', done: 'Fish caught!' },
+    { id: 'stars', order: 30, name: 'Star Catcher', icon: '⭐', tag: 'Catch the falling star that matches!', hidden: true, how: 'Stars fall from the sky. Catch the one with the right word!', dir: 'down', body: 'b-starb', arena: 'sky', done: 'Stars caught!' }
   ];
   POPS.forEach(function (cfg) {
-    A.registerGame({ id: cfg.id, name: cfg.name, icon: cfg.icon, tag: cfg.tag, order: cfg.order }, function (p) {
+    A.registerGame({ id: cfg.id, name: cfg.name, icon: cfg.icon, tag: cfg.tag, order: cfg.order, hidden: cfg.hidden }, function (p) {
       if (p[0] === 'play') return popPlay(cfg);
       A.gameSetup(cfg);
     });
@@ -141,7 +149,11 @@
       return options[Math.floor(Math.random() * options.length)];
     }
     function shownChars() { return bubbles.map(function (b) { return b.item.s; }); }
-    function paint(b) { b.el.innerHTML = A.row(A.textOf(b.item)); b.el.setAttribute('data-ok', b.item === target ? '1' : '0'); }
+    function paint(b) {
+      var txt = A.textOf(b.item), n = Array.from(txt).length;
+      b.el.innerHTML = A.row(txt); b.el.setAttribute('data-ok', b.item === target ? '1' : '0');
+      b.el.style.fontSize = n > 1 ? 'calc(var(--bs) * ' + Math.min(0.56, 0.7 / n).toFixed(3) + ')' : '';   // longer words shrink to fit the bubble
+    }
     function place(b, initial) {
       if (dir === 'up') {
         var lane = W / N;
@@ -187,7 +199,7 @@
       target = seq[idx]; miss = 0; locked = false;
       $('gprog').textContent = (idx + 1) + ' / ' + ROUNDS;
       var kind = A.promptKind(target);
-      $('gprompt').innerHTML = A.promptHTML(target, kind, 'Find the character');
+      $('gprompt').innerHTML = A.promptHTML(target, kind, 'Find the word');
       A.bindPromptSound(target, kind, function () { return alive && target === seq[idx]; });
       var visible = bubbles.filter(onScreen);
       var host = visible.length ? visible[Math.floor(Math.random() * visible.length)] : bubbles[0];

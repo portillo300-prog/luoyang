@@ -128,6 +128,288 @@ window.CONTENT = {
         { s: '周到', t: '周到', py: 'zhou1 dao4', en: 'thoughtful, considerate', topic: 'social' },
         { s: '坦率', t: '坦率', py: 'tan3 shuai4', en: 'frank, candid', topic: 'social' }
       ]
+    },
+    {
+      "id": "u3",
+      "number": 3,
+      "sticker": "⛵",
+      "accent": "#34c9a3",
+      "title": {
+        "s": "人生有选择，一切可改变",
+        "t": "人生有選擇，一切可改變"
+      },
+      "py": "ren2 sheng1 you3 xuan3 ze2 yi2 qie4 ke3 gai3 bian4",
+      "en": "Having Choices in Life Makes Change Possible",
+      "characters": [],
+      "words": [
+        {
+          "s": "人生",
+          "t": "人生",
+          "py": "ren2 sheng1",
+          "en": "life"
+        },
+        {
+          "s": "工人",
+          "t": "工人",
+          "py": "gong1 ren2",
+          "en": "worker"
+        },
+        {
+          "s": "稳定",
+          "t": "穩定",
+          "py": "wen3 ding4",
+          "en": "stable"
+        },
+        {
+          "s": "待遇",
+          "t": "待遇",
+          "py": "dai4 yu4",
+          "en": "pay and perks"
+        },
+        {
+          "s": "发愁",
+          "t": "發愁",
+          "py": "fa1 chou2",
+          "en": "to worry"
+        },
+        {
+          "s": "平静",
+          "t": "平靜",
+          "py": "ping2 jing4",
+          "en": "quiet, peaceful"
+        },
+        {
+          "s": "帆船",
+          "t": "帆船",
+          "py": "fan1 chuan2",
+          "en": "sailing boat/ship"
+        },
+        {
+          "s": "撞",
+          "t": "撞",
+          "py": "zhuang4",
+          "en": "to bump against"
+        },
+        {
+          "s": "艘",
+          "t": "艘",
+          "py": "sou1",
+          "en": "measure word for boats/ships"
+        },
+        {
+          "s": "航行",
+          "t": "航行",
+          "py": "hang2 xing2",
+          "en": "to sail, to navigate by air or water"
+        },
+        {
+          "s": "积蓄",
+          "t": "積蓄",
+          "py": "ji1 xu4",
+          "en": "savings; to save"
+        },
+        {
+          "s": "二手",
+          "t": "二手",
+          "py": "er4 shou3",
+          "en": "second-hand"
+        },
+        {
+          "s": "彩虹",
+          "t": "彩虹",
+          "py": "cai3 hong2",
+          "en": "rainbow"
+        },
+        {
+          "s": "包括",
+          "t": "包括",
+          "py": "bao1 kuo4",
+          "en": "to include"
+        },
+        {
+          "s": "疯",
+          "t": "瘋",
+          "py": "feng1",
+          "en": "to be crazy, to go mad"
+        },
+        {
+          "s": "辞职",
+          "t": "辭職",
+          "py": "ci2 zhi2",
+          "en": "to quit a job"
+        },
+        {
+          "s": "驾驶",
+          "t": "駕駛",
+          "py": "jia4 shi3",
+          "en": "to drive, to pilot"
+        },
+        {
+          "s": "轮流",
+          "t": "輪流",
+          "py": "lun2 liu2",
+          "en": "to take turns"
+        },
+        {
+          "s": "钓",
+          "t": "釣",
+          "py": "diao4",
+          "en": "to fish with a hook and line"
+        },
+        {
+          "s": "顿",
+          "t": "頓",
+          "py": "dun4",
+          "en": "measure word for meals"
+        },
+        {
+          "s": "海鲜",
+          "t": "海鮮",
+          "py": "hai3 xian1",
+          "en": "seafood"
+        },
+        {
+          "s": "傍晚",
+          "t": "傍晚",
+          "py": "bang4 wan3",
+          "en": "towards evening, at dusk"
+        },
+        {
+          "s": "舒适",
+          "t": "舒適",
+          "py": "shu1 shi4",
+          "en": "comfortable, cozy"
+        },
+        {
+          "s": "干活儿",
+          "t": "幹活兒",
+          "py": "gan4 huor2",
+          "en": "to work"
+        },
+        {
+          "s": "盼望",
+          "t": "盼望",
+          "py": "pan4 wang4",
+          "en": "to look forward to"
+        },
+        {
+          "s": "陆地",
+          "t": "陸地",
+          "py": "lu4 di4",
+          "en": "land"
+        },
+        {
+          "s": "各自",
+          "t": "各自",
+          "py": "ge4 zi4",
+          "en": "each, respective"
+        },
+        {
+          "s": "勿",
+          "t": "勿",
+          "py": "wu4",
+          "en": "(used in imperative sentences) don't"
+        },
+        {
+          "s": "时刻",
+          "t": "時刻",
+          "py": "shi2 ke4",
+          "en": "moment"
+        },
+        {
+          "s": "着火",
+          "t": "著火",
+          "py": "zhao2 huo3",
+          "en": "to catch fire"
+        },
+        {
+          "s": "漏",
+          "t": "漏",
+          "py": "lou4",
+          "en": "(of a container) to leak"
+        },
+        {
+          "s": "雷",
+          "t": "雷",
+          "py": "lei2",
+          "en": "thunder"
+        },
+        {
+          "s": "随时",
+          "t": "隨時",
+          "py": "sui2 shi2",
+          "en": "at any time"
+        },
+        {
+          "s": "闪电",
+          "t": "閃電",
+          "py": "shan3 dian4",
+          "en": "lightning"
+        },
+        {
+          "s": "击",
+          "t": "擊",
+          "py": "ji1",
+          "en": "to hit, to strike"
+        },
+        {
+          "s": "拥抱",
+          "t": "擁抱",
+          "py": "yong1 bao4",
+          "en": "to hug, to embrace"
+        },
+        {
+          "s": "海里",
+          "t": "海里",
+          "py": "hai3 li3",
+          "en": "nautical mile"
+        },
+        {
+          "s": "台阶",
+          "t": "台階",
+          "py": "tai2 jie1",
+          "en": "flight of steps"
+        },
+        {
+          "s": "未来",
+          "t": "未來",
+          "py": "wei4 lai2",
+          "en": "future"
+        },
+        {
+          "s": "太太",
+          "t": "太太",
+          "py": "tai4 tai5",
+          "en": "wife"
+        },
+        {
+          "s": "时代",
+          "t": "時代",
+          "py": "shi2 dai4",
+          "en": "era, age, epoch"
+        },
+        {
+          "s": "翟峰",
+          "t": "翟峰",
+          "py": "zhai2 feng1",
+          "en": "Zhai Feng (a person's name)",
+          "topic": "names"
+        },
+        {
+          "s": "澳大利亚",
+          "t": "澳大利亞",
+          "py": "ao4 da4 li4 ya4",
+          "en": "Australia",
+          "topic": "names"
+        },
+        {
+          "s": "新西兰",
+          "t": "新西蘭",
+          "py": "xin1 xi1 lan2",
+          "en": "New Zealand",
+          "topic": "names"
+        }
+      ]
     }
   ],
 
@@ -142,34 +424,186 @@ window.CONTENT = {
       reading: {
         paragraphs: [
           {
-            s: '电台要选出一对最恩爱的夫妻。对比后，有三对夫妻入围。',
-            t: '電台要選出一對最恩愛的夫妻。對比後，有三對夫妻入圍。',
-            en: 'A radio station wanted to select the most loving couple. After comparing entries, three couples were shortlisted.'
+            "s": "电台要选出一对最恩爱的夫妻。对比后，有三对夫妻入围。",
+            "t": "電台要選出一對最恩愛的夫妻。對比後，有三對夫妻入圍。",
+            "en": "A radio station wanted to select the most loving couple. After comparing entries, three couples were shortlisted.",
+            "sentences": [
+              {
+                "s": "电台要选出一对最恩爱的夫妻。",
+                "t": "電台要選出一對最恩愛的夫妻。",
+                "en": "A radio station wanted to select the most loving couple."
+              },
+              {
+                "s": "对比后，有三对夫妻入围。",
+                "t": "對比後，有三對夫妻入圍。",
+                "en": "After comparing entries, three couples were shortlisted."
+              }
+            ]
           },
           {
-            s: '评委叫第一对夫妻说说他俩是如何恩爱的。妻子说，前几年她全身瘫痪了，医生说她站起来的可能性很小。别人都觉得她的丈夫会跟她离婚，她也想过要自杀。但丈夫一直鼓励她，为她不知找了多少家医院，并且几年如一日地照顾她，从不抱怨。在丈夫的爱护和努力下，她终于又站了起来。她的故事十分感人，评委们听了都很感动。',
-            t: '評委叫第一對夫妻說說他倆是如何恩愛的。妻子說，前幾年她全身癱瘓了，醫生說她站起來的可能性很小。別人都覺得她的丈夫會跟她離婚，她也想過要自殺。但丈夫一直鼓勵她，為她不知找了多少家醫院，並且幾年如一日地照顧她，從不抱怨。在丈夫的愛護和努力下，她終於又站了起來。她的故事十分感人，評委們聽了都很感動。',
-            en: 'The judges asked the first couple to describe how they loved each other so devotedly. The wife said that a few years earlier she had become completely paralyzed, and doctors said the chances of her ever standing up again were very slim. Everyone assumed her husband would divorce her, and she herself had even thought about suicide. But her husband kept encouraging her — there was no telling how many hospitals he had gone to for help — and for years, day after day, he took care of her without ever complaining once. Thanks to her husband\'s loving care and effort, she finally stood up again. Her story was deeply moving, and the judges were all touched hearing it.'
+            "s": "评委叫第一对夫妻说说他俩是如何恩爱的。妻子说，前几年她全身瘫痪了，医生说她站起来的可能性很小。别人都觉得她的丈夫会跟她离婚，她也想过要自杀。但丈夫一直鼓励她，为她不知找了多少家医院，并且几年如一日地照顾她，从不抱怨。在丈夫的爱护和努力下，她终于又站了起来。她的故事十分感人，评委们听了都很感动。",
+            "t": "評委叫第一對夫妻說說他倆是如何恩愛的。妻子說，前幾年她全身癱瘓了，醫生說她站起來的可能性很小。別人都覺得她的丈夫會跟她離婚，她也想過要自殺。但丈夫一直鼓勵她，為她不知找了多少家醫院，並且幾年如一日地照顧她，從不抱怨。在丈夫的愛護和努力下，她終於又站了起來。她的故事十分感人，評委們聽了都很感動。",
+            "en": "The judges asked the first couple to describe how they loved each other so devotedly. The wife said that a few years earlier she had become completely paralyzed, and doctors said the chances of her ever standing up again were very slim. Everyone assumed her husband would divorce her, and she herself had even thought about suicide. But her husband kept encouraging her — there was no telling how many hospitals he had gone to for help — and for years, day after day, he took care of her without ever complaining once. Thanks to her husband's loving care and effort, she finally stood up again. Her story was deeply moving, and the judges were all touched hearing it.",
+            "sentences": [
+              {
+                "s": "评委叫第一对夫妻说说他俩是如何恩爱的。",
+                "t": "評委叫第一對夫妻說說他倆是如何恩愛的。",
+                "en": "The judges asked the first couple to describe how they loved each other so devotedly."
+              },
+              {
+                "s": "妻子说，前几年她全身瘫痪了，医生说她站起来的可能性很小。",
+                "t": "妻子說，前幾年她全身癱瘓了，醫生說她站起來的可能性很小。",
+                "en": "The wife said that a few years earlier she had become completely paralyzed, and doctors said the chances of her ever standing up again were very slim."
+              },
+              {
+                "s": "别人都觉得她的丈夫会跟她离婚，她也想过要自杀。",
+                "t": "別人都覺得她的丈夫會跟她離婚，她也想過要自殺。",
+                "en": "Everyone assumed her husband would divorce her, and she herself had even thought about suicide."
+              },
+              {
+                "s": "但丈夫一直鼓励她，为她不知找了多少家医院，并且几年如一日地照顾她，从不抱怨。",
+                "t": "但丈夫一直鼓勵她，為她不知找了多少家醫院，並且幾年如一日地照顧她，從不抱怨。",
+                "en": "But her husband kept encouraging her — there was no telling how many hospitals he had gone to for help — and for years, day after day, he took care of her without ever complaining once."
+              },
+              {
+                "s": "在丈夫的爱护和努力下，她终于又站了起来。",
+                "t": "在丈夫的愛護和努力下，她終於又站了起來。",
+                "en": "Thanks to her husband's loving care and effort, she finally stood up again."
+              },
+              {
+                "s": "她的故事十分感人，评委们听了都很感动。",
+                "t": "她的故事十分感人，評委們聽了都很感動。",
+                "en": "Her story was deeply moving, and the judges were all touched hearing it."
+              }
+            ]
           },
           {
-            s: '随后进来的是第二对夫妻，他俩说，十几年的婚姻生活中，他们从来没为任何事红过脸、吵过架，一直相亲相爱、相敬如宾。评委们听了暗暗点头。',
-            t: '隨後進來的是第二對夫妻，他倆說，十幾年的婚姻生活中，他們從來沒為任何事紅過臉、吵過架，一直相親相愛、相敬如賓。評委們聽了暗暗點頭。',
-            en: 'Next came the second couple. They said that in over ten years of marriage, they had never once gotten upset or quarreled over anything — they had always loved each other dearly and treated each other with the utmost respect. The judges nodded quietly to themselves as they listened.'
+            "s": "随后进来的是第二对夫妻，他俩说，十几年的婚姻生活中，他们从来没为任何事红过脸、吵过架，一直相亲相爱、相敬如宾。评委们听了暗暗点头。",
+            "t": "隨後進來的是第二對夫妻，他倆說，十幾年的婚姻生活中，他們從來沒為任何事紅過臉、吵過架，一直相親相愛、相敬如賓。評委們聽了暗暗點頭。",
+            "en": "Next came the second couple. They said that in over ten years of marriage, they had never once gotten upset or quarreled over anything — they had always loved each other dearly and treated each other with the utmost respect. The judges nodded quietly to themselves as they listened.",
+            "sentences": [
+              {
+                "s": "随后进来的是第二对夫妻，",
+                "t": "隨後進來的是第二對夫妻，",
+                "en": "Next came the second couple."
+              },
+              {
+                "s": "他俩说，十几年的婚姻生活中，他们从来没为任何事红过脸、吵过架，一直相亲相爱、相敬如宾。",
+                "t": "他倆說，十幾年的婚姻生活中，他們從來沒為任何事紅過臉、吵過架，一直相親相愛、相敬如賓。",
+                "en": "They said that in over ten years of marriage, they had never once gotten upset or quarreled over anything — they had always loved each other dearly and treated each other with the utmost respect."
+              },
+              {
+                "s": "评委们听了暗暗点头。",
+                "t": "評委們聽了暗暗點頭。",
+                "en": "The judges nodded quietly to themselves as they listened."
+              }
+            ]
           },
           {
-            s: '轮到第三对夫妻了，却很长时间不见人。评委们等得有些不耐烦，就走出来看个究竟。只见第三对夫妻仍然坐在门口，男人的头靠在女人的肩膀上，睡着了。一个评委要上前喊醒那个男的，女的却伸出手指做了个小声的动作，然后小心地从包里拿出纸笔，用左手歪歪扭扭写下一行字递给评委，而她的右肩一直让丈夫的脑袋靠着。评委们看那纸条上面写着：别出声，他昨晚没睡好。一个评委提起笔在后面续写了一句话：但是女士，我们得听你们夫妻俩的叙述啊！女人又写：那我们就不参加了。',
-            t: '輪到第三對夫妻了，卻很長時間不見人。評委們等得有些不耐煩，就走出來看個究竟。只見第三對夫妻仍然坐在門口，男人的頭靠在女人的肩膀上，睡著了。一個評委要上前喊醒那個男的，女的卻伸出手指做了個小聲的動作，然後小心地從包裡拿出紙筆，用左手歪歪扭扭寫下一行字遞給評委，而她的右肩一直讓丈夫的腦袋靠著。評委們看那紙條上面寫著：別出聲，他昨晚沒睡好。一個評委提起筆在後面續寫了一句話：但是女士，我們得聽你們夫妻倆的敘述啊！女人又寫：那我們就不參加了。',
-            en: 'Then it was the third couple\'s turn, but no one appeared for a long time. The judges grew a little impatient waiting, so they went out to see what was going on. There they found the third couple still sitting by the door — the man\'s head resting on the woman\'s shoulder, fast asleep. One judge started to step forward to wake the man, but the woman held up a finger in a "shh" gesture. Then she carefully took paper and pen out of her bag, and with her left hand wrote a wobbly line of characters and handed it to the judges — all the while keeping her right shoulder still, so her husband\'s head could keep resting on it. The note read: "Please don\'t make a sound, he didn\'t sleep well last night." One judge picked up the pen and added a line underneath: "But madam, we still need to hear the two of you tell your story!" The woman wrote back: "Then we\'ll just withdraw."'
+            "s": "轮到第三对夫妻了，却很长时间不见人。评委们等得有些不耐烦，就走出来看个究竟。只见第三对夫妻仍然坐在门口，男人的头靠在女人的肩膀上，睡着了。一个评委要上前喊醒那个男的，女的却伸出手指做了个小声的动作，然后小心地从包里拿出纸笔，用左手歪歪扭扭写下一行字递给评委，而她的右肩一直让丈夫的脑袋靠着。评委们看那纸条上面写着：别出声，他昨晚没睡好。一个评委提起笔在后面续写了一句话：但是女士，我们得听你们夫妻俩的叙述啊！女人又写：那我们就不参加了。",
+            "t": "輪到第三對夫妻了，卻很長時間不見人。評委們等得有些不耐煩，就走出來看個究竟。只見第三對夫妻仍然坐在門口，男人的頭靠在女人的肩膀上，睡著了。一個評委要上前喊醒那個男的，女的卻伸出手指做了個小聲的動作，然後小心地從包裡拿出紙筆，用左手歪歪扭扭寫下一行字遞給評委，而她的右肩一直讓丈夫的腦袋靠著。評委們看那紙條上面寫著：別出聲，他昨晚沒睡好。一個評委提起筆在後面續寫了一句話：但是女士，我們得聽你們夫妻倆的敘述啊！女人又寫：那我們就不參加了。",
+            "en": "Then it was the third couple's turn, but no one appeared for a long time. The judges grew a little impatient waiting, so they went out to see what was going on. There they found the third couple still sitting by the door — the man's head resting on the woman's shoulder, fast asleep. One judge started to step forward to wake the man, but the woman held up a finger in a \"shh\" gesture. Then she carefully took paper and pen out of her bag, and with her left hand wrote a wobbly line of characters and handed it to the judges — all the while keeping her right shoulder still, so her husband's head could keep resting on it. The note read: \"Please don't make a sound, he didn't sleep well last night.\" One judge picked up the pen and added a line underneath: \"But madam, we still need to hear the two of you tell your story!\" The woman wrote back: \"Then we'll just withdraw.\"",
+            "sentences": [
+              {
+                "s": "轮到第三对夫妻了，却很长时间不见人。",
+                "t": "輪到第三對夫妻了，卻很長時間不見人。",
+                "en": "Then it was the third couple's turn, but no one appeared for a long time."
+              },
+              {
+                "s": "评委们等得有些不耐烦，就走出来看个究竟。",
+                "t": "評委們等得有些不耐煩，就走出來看個究竟。",
+                "en": "The judges grew a little impatient waiting, so they went out to see what was going on."
+              },
+              {
+                "s": "只见第三对夫妻仍然坐在门口，男人的头靠在女人的肩膀上，睡着了。",
+                "t": "只見第三對夫妻仍然坐在門口，男人的頭靠在女人的肩膀上，睡著了。",
+                "en": "There they found the third couple still sitting by the door — the man's head resting on the woman's shoulder, fast asleep."
+              },
+              {
+                "s": "一个评委要上前喊醒那个男的，女的却伸出手指做了个小声的动作，",
+                "t": "一個評委要上前喊醒那個男的，女的卻伸出手指做了個小聲的動作，",
+                "en": "One judge started to step forward to wake the man, but the woman held up a finger in a \"shh\" gesture."
+              },
+              {
+                "s": "然后小心地从包里拿出纸笔，用左手歪歪扭扭写下一行字递给评委，而她的右肩一直让丈夫的脑袋靠着。",
+                "t": "然後小心地從包裡拿出紙筆，用左手歪歪扭扭寫下一行字遞給評委，而她的右肩一直讓丈夫的腦袋靠著。",
+                "en": "Then she carefully took paper and pen out of her bag, and with her left hand wrote a wobbly line of characters and handed it to the judges — all the while keeping her right shoulder still, so her husband's head could keep resting on it."
+              },
+              {
+                "s": "评委们看那纸条上面写着：别出声，他昨晚没睡好。",
+                "t": "評委們看那紙條上面寫著：別出聲，他昨晚沒睡好。",
+                "en": "The note read: \"Please don't make a sound, he didn't sleep well last night.\""
+              },
+              {
+                "s": "一个评委提起笔在后面续写了一句话：但是女士，我们得听你们夫妻俩的叙述啊！",
+                "t": "一個評委提起筆在後面續寫了一句話：但是女士，我們得聽你們夫妻倆的敘述啊！",
+                "en": "One judge picked up the pen and added a line underneath: \"But madam, we still need to hear the two of you tell your story!\""
+              },
+              {
+                "s": "女人又写：那我们就不参加了。",
+                "t": "女人又寫：那我們就不參加了。",
+                "en": "The woman wrote back: \"Then we'll just withdraw.\""
+              }
+            ]
           },
           {
-            s: '大家很吃惊，这个女人为了不影响丈夫睡觉，居然放弃这次机会！但评委们还是决定先不催他们，而是再等待一段时间。过了一会儿，男人醒了。评委们问他怎么那么累。男人不好意思地笑笑说："我家住一楼，蚊子多。昨晚半夜我被蚊子叮醒了，我怕我老婆再被吵醒，所以后半夜就在为她赶蚊子。"',
-            t: '大家很吃驚，這個女人為了不影響丈夫睡覺，居然放棄這次機會！但評委們還是決定先不催他們，而是再等待一段時間。過了一會兒，男人醒了。評委們問他怎麼那麼累。男人不好意思地笑笑說：「我家住一樓，蚊子多。昨晚半夜我被蚊子叮醒了，我怕我老婆再被吵醒，所以後半夜就在為她趕蚊子。」',
-            en: 'Everyone was stunned — this woman, just so as not to disturb her husband\'s sleep, had unexpectedly given up this opportunity! But the judges decided not to rush them, and to wait a while longer instead. After a while, the man woke up. The judges asked him why he seemed so tired. Embarrassed, the man laughed and said: "I live on the first floor, so there are a lot of mosquitoes. Last night around midnight a mosquito bit me awake, and I was afraid my wife would get bitten and woken up too — so I spent the rest of the night swatting mosquitoes away for her."'
+            "s": "大家很吃惊，这个女人为了不影响丈夫睡觉，居然放弃这次机会！但评委们还是决定先不催他们，而是再等待一段时间。过了一会儿，男人醒了。评委们问他怎么那么累。男人不好意思地笑笑说：\"我家住一楼，蚊子多。昨晚半夜我被蚊子叮醒了，我怕我老婆再被吵醒，所以后半夜就在为她赶蚊子。\"",
+            "t": "大家很吃驚，這個女人為了不影響丈夫睡覺，居然放棄這次機會！但評委們還是決定先不催他們，而是再等待一段時間。過了一會兒，男人醒了。評委們問他怎麼那麼累。男人不好意思地笑笑說：「我家住一樓，蚊子多。昨晚半夜我被蚊子叮醒了，我怕我老婆再被吵醒，所以後半夜就在為她趕蚊子。」",
+            "en": "Everyone was stunned — this woman, just so as not to disturb her husband's sleep, had unexpectedly given up this opportunity! But the judges decided not to rush them, and to wait a while longer instead. After a while, the man woke up. The judges asked him why he seemed so tired. Embarrassed, the man laughed and said: \"I live on the first floor, so there are a lot of mosquitoes. Last night around midnight a mosquito bit me awake, and I was afraid my wife would get bitten and woken up too — so I spent the rest of the night swatting mosquitoes away for her.\"",
+            "sentences": [
+              {
+                "s": "大家很吃惊，这个女人为了不影响丈夫睡觉，居然放弃这次机会！",
+                "t": "大家很吃驚，這個女人為了不影響丈夫睡覺，居然放棄這次機會！",
+                "en": "Everyone was stunned — this woman, just so as not to disturb her husband's sleep, had unexpectedly given up this opportunity!"
+              },
+              {
+                "s": "但评委们还是决定先不催他们，而是再等待一段时间。",
+                "t": "但評委們還是決定先不催他們，而是再等待一段時間。",
+                "en": "But the judges decided not to rush them, and to wait a while longer instead."
+              },
+              {
+                "s": "过了一会儿，男人醒了。",
+                "t": "過了一會兒，男人醒了。",
+                "en": "After a while, the man woke up."
+              },
+              {
+                "s": "评委们问他怎么那么累。",
+                "t": "評委們問他怎麼那麼累。",
+                "en": "The judges asked him why he seemed so tired."
+              },
+              {
+                "s": "男人不好意思地笑笑说：\"我家住一楼，蚊子多。",
+                "t": "男人不好意思地笑笑說：「我家住一樓，蚊子多。",
+                "en": "Embarrassed, the man laughed and said: \"I live on the first floor, so there are a lot of mosquitoes."
+              },
+              {
+                "s": "昨晚半夜我被蚊子叮醒了，我怕我老婆再被吵醒，所以后半夜就在为她赶蚊子。\"",
+                "t": "昨晚半夜我被蚊子叮醒了，我怕我老婆再被吵醒，所以後半夜就在為她趕蚊子。」",
+                "en": "Last night around midnight a mosquito bit me awake, and I was afraid my wife would get bitten and woken up too — so I spent the rest of the night swatting mosquitoes away for her.\""
+              }
+            ]
           },
           {
-            s: '最后的结果是，电台增加了两项奖项，将第一对夫妻评为"患难与共夫妻"，将第二对夫妻评为"相敬如宾夫妻"，而真正的"最恩爱夫妻"奖，却给了第三对夫妻。',
-            t: '最後的結果是，電台增加了兩項獎項，將第一對夫妻評為「患難與共夫妻」，將第二對夫妻評為「相敬如賓夫妻」，而真正的「最恩愛夫妻」獎，卻給了第三對夫妻。',
-            en: 'In the end, the radio station added two new awards. They named the first couple "Through Thick and Thin Couple," and the second couple "Mutual Respect Couple." The real "Most Loving Couple" award, though, went to the third couple.'
+            "s": "最后的结果是，电台增加了两项奖项，将第一对夫妻评为\"患难与共夫妻\"，将第二对夫妻评为\"相敬如宾夫妻\"，而真正的\"最恩爱夫妻\"奖，却给了第三对夫妻。",
+            "t": "最後的結果是，電台增加了兩項獎項，將第一對夫妻評為「患難與共夫妻」，將第二對夫妻評為「相敬如賓夫妻」，而真正的「最恩愛夫妻」獎，卻給了第三對夫妻。",
+            "en": "In the end, the radio station added two new awards. They named the first couple \"Through Thick and Thin Couple,\" and the second couple \"Mutual Respect Couple.\" The real \"Most Loving Couple\" award, though, went to the third couple.",
+            "sentences": [
+              {
+                "s": "最后的结果是，电台增加了两项奖项，",
+                "t": "最後的結果是，電台增加了兩項獎項，",
+                "en": "In the end, the radio station added two new awards."
+              },
+              {
+                "s": "将第一对夫妻评为\"患难与共夫妻\"，将第二对夫妻评为\"相敬如宾夫妻\"，",
+                "t": "將第一對夫妻評為「患難與共夫妻」，將第二對夫妻評為「相敬如賓夫妻」，",
+                "en": "They named the first couple \"Through Thick and Thin Couple,\" and the second couple \"Mutual Respect Couple.\""
+              },
+              {
+                "s": "而真正的\"最恩爱夫妻\"奖，却给了第三对夫妻。",
+                "t": "而真正的「最恩愛夫妻」獎，卻給了第三對夫妻。",
+                "en": "The real \"Most Loving Couple\" award, though, went to the third couple."
+              }
+            ]
           }
         ]
       },
@@ -355,29 +789,134 @@ window.CONTENT = {
       reading: {
         paragraphs: [
           {
-            s: '父母一辈子住在农村老家，对老屋的感情，就像没断奶的孩子对母亲一样。因此长年以来，父母很少离开老屋，尽管姥姥、舅舅和姑姑都在城里，父母也坚决不在城里住。',
-            t: '父母一輩子住在農村老家，對老屋的感情，就像沒斷奶的孩子對母親一樣。因此長年以來，父母很少離開老屋，儘管姥姥、舅舅和姑姑都在城裡，父母也堅決不在城裡住。',
-            en: 'My parents have lived their whole lives in their old home in the countryside; their feelings for that old house are just like an unweaned child\'s feelings for its mother. Because of this, for years they have rarely left the old house — even though my grandmother, uncle, and aunt all live in the city, my parents have firmly refused to live there too.'
+            "s": "父母一辈子住在农村老家，对老屋的感情，就像没断奶的孩子对母亲一样。因此长年以来，父母很少离开老屋，尽管姥姥、舅舅和姑姑都在城里，父母也坚决不在城里住。",
+            "t": "父母一輩子住在農村老家，對老屋的感情，就像沒斷奶的孩子對母親一樣。因此長年以來，父母很少離開老屋，儘管姥姥、舅舅和姑姑都在城裡，父母也堅決不在城裡住。",
+            "en": "My parents have lived their whole lives in their old home in the countryside; their feelings for that old house are just like an unweaned child's feelings for its mother. Because of this, for years they have rarely left the old house — even though my grandmother, uncle, and aunt all live in the city, my parents have firmly refused to live there too.",
+            "sentences": [
+              {
+                "s": "父母一辈子住在农村老家，对老屋的感情，就像没断奶的孩子对母亲一样。",
+                "t": "父母一輩子住在農村老家，對老屋的感情，就像沒斷奶的孩子對母親一樣。",
+                "en": "My parents have lived their whole lives in their old home in the countryside; their feelings for that old house are just like an unweaned child's feelings for its mother."
+              },
+              {
+                "s": "因此长年以来，父母很少离开老屋，尽管姥姥、舅舅和姑姑都在城里，父母也坚决不在城里住。",
+                "t": "因此長年以來，父母很少離開老屋，儘管姥姥、舅舅和姑姑都在城裡，父母也堅決不在城裡住。",
+                "en": "Because of this, for years they have rarely left the old house — even though my grandmother, uncle, and aunt all live in the city, my parents have firmly refused to live there too."
+              }
+            ]
           },
           {
-            s: '去年，在我和妻子的努力下，我们终于用打工挣的钱，在县里买了一套新房。新房装修完，父母第一次走进新房时，高兴得不得了。妻子提出留一串钥匙给父母，可他们拒绝了。那天，父亲喝醉了，等他醒时，天色已晚。我和妻子强烈留父母在新房住一夜，第二天再回，但他们仍坚持坐上了最后一趟回老家的车。',
-            t: '去年，在我和妻子的努力下，我們終於用打工掙的錢，在縣裡買了一套新房。新房裝修完，父母第一次走進新房時，高興得不得了。妻子提出留一串鑰匙給父母，可他們拒絕了。那天，父親喝醉了，等他醒時，天色已晚。我和妻子強烈留父母在新房住一夜，第二天再回，但他們仍堅持坐上了最後一趟回老家的車。',
-            en: 'Last year, through my wife\'s and my effort, we finally used the money we\'d earned working to buy a new place in the county town. Once the new place was decorated, the first time my parents walked in they were happier than words could say. My wife suggested leaving a set of keys with my parents, but they refused. That day, my father got drunk, and by the time he woke up it was already late. My wife and I urged them strongly to stay the night in the new place and go back the next day, but they still insisted on catching the last bus back to the old home.'
+            "s": "去年，在我和妻子的努力下，我们终于用打工挣的钱，在县里买了一套新房。新房装修完，父母第一次走进新房时，高兴得不得了。妻子提出留一串钥匙给父母，可他们拒绝了。那天，父亲喝醉了，等他醒时，天色已晚。我和妻子强烈留父母在新房住一夜，第二天再回，但他们仍坚持坐上了最后一趟回老家的车。",
+            "t": "去年，在我和妻子的努力下，我們終於用打工掙的錢，在縣裡買了一套新房。新房裝修完，父母第一次走進新房時，高興得不得了。妻子提出留一串鑰匙給父母，可他們拒絕了。那天，父親喝醉了，等他醒時，天色已晚。我和妻子強烈留父母在新房住一夜，第二天再回，但他們仍堅持坐上了最後一趟回老家的車。",
+            "en": "Last year, through my wife's and my effort, we finally used the money we'd earned working to buy a new place in the county town. Once the new place was decorated, the first time my parents walked in they were happier than words could say. My wife suggested leaving a set of keys with my parents, but they refused. That day, my father got drunk, and by the time he woke up it was already late. My wife and I urged them strongly to stay the night in the new place and go back the next day, but they still insisted on catching the last bus back to the old home.",
+            "sentences": [
+              {
+                "s": "去年，在我和妻子的努力下，我们终于用打工挣的钱，在县里买了一套新房。",
+                "t": "去年，在我和妻子的努力下，我們終於用打工掙的錢，在縣裡買了一套新房。",
+                "en": "Last year, through my wife's and my effort, we finally used the money we'd earned working to buy a new place in the county town."
+              },
+              {
+                "s": "新房装修完，父母第一次走进新房时，高兴得不得了。",
+                "t": "新房裝修完，父母第一次走進新房時，高興得不得了。",
+                "en": "Once the new place was decorated, the first time my parents walked in they were happier than words could say."
+              },
+              {
+                "s": "妻子提出留一串钥匙给父母，可他们拒绝了。",
+                "t": "妻子提出留一串鑰匙給父母，可他們拒絕了。",
+                "en": "My wife suggested leaving a set of keys with my parents, but they refused."
+              },
+              {
+                "s": "那天，父亲喝醉了，等他醒时，天色已晚。",
+                "t": "那天，父親喝醉了，等他醒時，天色已晚。",
+                "en": "That day, my father got drunk, and by the time he woke up it was already late."
+              },
+              {
+                "s": "我和妻子强烈留父母在新房住一夜，第二天再回，但他们仍坚持坐上了最后一趟回老家的车。",
+                "t": "我和妻子強烈留父母在新房住一夜，第二天再回，但他們仍堅持坐上了最後一趟回老家的車。",
+                "en": "My wife and I urged them strongly to stay the night in the new place and go back the next day, but they still insisted on catching the last bus back to the old home."
+              }
+            ]
           },
           {
-            s: '一段时间后，我和妻子又准备去外地打工，新房只能上锁空着。临走那天，父亲从老家赶来送我们。父亲悄悄把我拉到一边说："你妈说了，你还是留一串新房的钥匙给我们，要是我和你妈什么时候想来了，就来住上几天，顺便给你们晒晒被子，打扫打扫卫生。"父亲说这话时，轻声细语，还红着脸，像个害羞的孩子。',
-            t: '一段時間後，我和妻子又準備去外地打工，新房只能上鎖空著。臨走那天，父親從老家趕來送我們。父親悄悄把我拉到一邊說：「你媽說了，你還是留一串新房的鑰匙給我們，要是我和你媽什麼時候想來了，就來住上幾天，順便給你們曬曬被子，打掃打掃衛生。」父親說這話時，輕聲細語，還紅著臉，像個害羞的孩子。',
-            en: 'After a while, my wife and I were getting ready to go work away from home again, so the new place would just have to sit locked and empty. On the day we were about to leave, Father came all the way from the old home to see us off. He quietly pulled me aside and said: "Your mother says you should leave us a set of keys to the new place after all — if she and I ever feel like coming, we can stay a few days, and while we\'re at it, air out your quilts and clean up a bit." As he said this, he spoke softly, his face turning red, like a shy child.'
+            "s": "一段时间后，我和妻子又准备去外地打工，新房只能上锁空着。临走那天，父亲从老家赶来送我们。父亲悄悄把我拉到一边说：\"你妈说了，你还是留一串新房的钥匙给我们，要是我和你妈什么时候想来了，就来住上几天，顺便给你们晒晒被子，打扫打扫卫生。\"父亲说这话时，轻声细语，还红着脸，像个害羞的孩子。",
+            "t": "一段時間後，我和妻子又準備去外地打工，新房只能上鎖空著。臨走那天，父親從老家趕來送我們。父親悄悄把我拉到一邊說：「你媽說了，你還是留一串新房的鑰匙給我們，要是我和你媽什麼時候想來了，就來住上幾天，順便給你們曬曬被子，打掃打掃衛生。」父親說這話時，輕聲細語，還紅著臉，像個害羞的孩子。",
+            "en": "After a while, my wife and I were getting ready to go work away from home again, so the new place would just have to sit locked and empty. On the day we were about to leave, Father came all the way from the old home to see us off. He quietly pulled me aside and said: \"Your mother says you should leave us a set of keys to the new place after all — if she and I ever feel like coming, we can stay a few days, and while we're at it, air out your quilts and clean up a bit.\" As he said this, he spoke softly, his face turning red, like a shy child.",
+            "sentences": [
+              {
+                "s": "一段时间后，我和妻子又准备去外地打工，新房只能上锁空着。",
+                "t": "一段時間後，我和妻子又準備去外地打工，新房只能上鎖空著。",
+                "en": "After a while, my wife and I were getting ready to go work away from home again, so the new place would just have to sit locked and empty."
+              },
+              {
+                "s": "临走那天，父亲从老家赶来送我们。",
+                "t": "臨走那天，父親從老家趕來送我們。",
+                "en": "On the day we were about to leave, Father came all the way from the old home to see us off."
+              },
+              {
+                "s": "父亲悄悄把我拉到一边说：\"你妈说了，你还是留一串新房的钥匙给我们，要是我和你妈什么时候想来了，就来住上几天，顺便给你们晒晒被子，打扫打扫卫生。\"",
+                "t": "父親悄悄把我拉到一邊說：「你媽說了，你還是留一串新房的鑰匙給我們，要是我和你媽什麼時候想來了，就來住上幾天，順便給你們曬曬被子，打掃打掃衛生。」",
+                "en": "He quietly pulled me aside and said: \"Your mother says you should leave us a set of keys to the new place after all — if she and I ever feel like coming, we can stay a few days, and while we're at it, air out your quilts and clean up a bit.\""
+              },
+              {
+                "s": "父亲说这话时，轻声细语，还红着脸，像个害羞的孩子。",
+                "t": "父親說這話時，輕聲細語，還紅著臉，像個害羞的孩子。",
+                "en": "As he said this, he spoke softly, his face turning red, like a shy child."
+              }
+            ]
           },
           {
-            s: '转眼又是半年，我们回家时是一个深冬的夜里。下了长途车，儿子被冻得大哭。我和妻子想象着打开家门满是灰尘、冷冷清清的景象，觉得心里发寒。来到楼下，抬头一看，却发现自家亮着灯光。上了楼，开门的竟是微笑着的父母，温暖的气息立刻扑面而来：室内打扫得干干净净，暖气开着，水已温热，卧室床上的被子已铺好，厨房里飘来阵阵饭菜香……',
-            t: '轉眼又是半年，我們回家時是一個深冬的夜裡。下了長途車，兒子被凍得大哭。我和妻子想像著打開家門滿是灰塵、冷冷清清的景象，覺得心裡發寒。來到樓下，抬頭一看，卻發現自家亮著燈光。上了樓，開門的竟是微笑著的父母，溫暖的氣息立刻撲面而來：室內打掃得乾乾淨淨，暖氣開著，水已溫熱，臥室床上的被子已鋪好，廚房裡飄來陣陣飯菜香……',
-            en: 'In the blink of an eye, another half year had passed, and we came home late one deep-winter night. After getting off the long-distance bus, our son was crying hard from the cold. My wife and I pictured opening our front door onto a dusty, cold, empty scene, and felt a chill in our hearts. But when we got downstairs and looked up, we found our own windows lit up. We went upstairs, and the ones who opened the door turned out to be my smiling parents — a wave of warmth hit us at once: the rooms were spotlessly clean, the heat was on, the water was already warm, the quilt on the bedroom bed was already laid out, and waves of cooking smells drifted from the kitchen...'
+            "s": "转眼又是半年，我们回家时是一个深冬的夜里。下了长途车，儿子被冻得大哭。我和妻子想象着打开家门满是灰尘、冷冷清清的景象，觉得心里发寒。来到楼下，抬头一看，却发现自家亮着灯光。上了楼，开门的竟是微笑着的父母，温暖的气息立刻扑面而来：室内打扫得干干净净，暖气开着，水已温热，卧室床上的被子已铺好，厨房里飘来阵阵饭菜香……",
+            "t": "轉眼又是半年，我們回家時是一個深冬的夜裡。下了長途車，兒子被凍得大哭。我和妻子想像著打開家門滿是灰塵、冷冷清清的景象，覺得心裡發寒。來到樓下，抬頭一看，卻發現自家亮著燈光。上了樓，開門的竟是微笑著的父母，溫暖的氣息立刻撲面而來：室內打掃得乾乾淨淨，暖氣開著，水已溫熱，臥室床上的被子已鋪好，廚房裡飄來陣陣飯菜香……",
+            "en": "In the blink of an eye, another half year had passed, and we came home late one deep-winter night. After getting off the long-distance bus, our son was crying hard from the cold. My wife and I pictured opening our front door onto a dusty, cold, empty scene, and felt a chill in our hearts. But when we got downstairs and looked up, we found our own windows lit up. We went upstairs, and the ones who opened the door turned out to be my smiling parents — a wave of warmth hit us at once: the rooms were spotlessly clean, the heat was on, the water was already warm, the quilt on the bedroom bed was already laid out, and waves of cooking smells drifted from the kitchen...",
+            "sentences": [
+              {
+                "s": "转眼又是半年，我们回家时是一个深冬的夜里。",
+                "t": "轉眼又是半年，我們回家時是一個深冬的夜裡。",
+                "en": "In the blink of an eye, another half year had passed, and we came home late one deep-winter night."
+              },
+              {
+                "s": "下了长途车，儿子被冻得大哭。",
+                "t": "下了長途車，兒子被凍得大哭。",
+                "en": "After getting off the long-distance bus, our son was crying hard from the cold."
+              },
+              {
+                "s": "我和妻子想象着打开家门满是灰尘、冷冷清清的景象，觉得心里发寒。",
+                "t": "我和妻子想像著打開家門滿是灰塵、冷冷清清的景象，覺得心裡發寒。",
+                "en": "My wife and I pictured opening our front door onto a dusty, cold, empty scene, and felt a chill in our hearts."
+              },
+              {
+                "s": "来到楼下，抬头一看，却发现自家亮着灯光。",
+                "t": "來到樓下，抬頭一看，卻發現自家亮著燈光。",
+                "en": "But when we got downstairs and looked up, we found our own windows lit up."
+              },
+              {
+                "s": "上了楼，开门的竟是微笑着的父母，温暖的气息立刻扑面而来：室内打扫得干干净净，暖气开着，水已温热，卧室床上的被子已铺好，厨房里飘来阵阵饭菜香……",
+                "t": "上了樓，開門的竟是微笑著的父母，溫暖的氣息立刻撲面而來：室內打掃得乾乾淨淨，暖氣開著，水已溫熱，臥室床上的被子已鋪好，廚房裡飄來陣陣飯菜香……",
+                "en": "We went upstairs, and the ones who opened the door turned out to be my smiling parents — a wave of warmth hit us at once: the rooms were spotlessly clean, the heat was on, the water was already warm, the quilt on the bedroom bed was already laid out, and waves of cooking smells drifted from the kitchen..."
+              }
+            ]
           },
           {
-            s: '父亲说："你妈昨天接到电话，知道你们今晚回来，今天来新房忙了一天了。"原来父母要我留下串钥匙，只是为了让我们回来时，能立刻感受到家的温暖！我鼻子一酸，流下了热泪……',
-            t: '父親說：「你媽昨天接到電話，知道你們今晚回來，今天來新房忙了一天了。」原來父母要我留下串鑰匙，只是為了讓我們回來時，能立刻感受到家的溫暖！我鼻子一酸，流下了熱淚……',
-            en: 'Father said: "Your mother got a call yesterday, found out you were coming home tonight, so she came to the new place today and worked hard all day." It turned out that the whole reason my parents wanted me to leave them a set of keys was so that when we came back, we could feel the warmth of home right away! My nose stung, and hot tears rolled down my face...'
+            "s": "父亲说：\"你妈昨天接到电话，知道你们今晚回来，今天来新房忙了一天了。\"原来父母要我留下串钥匙，只是为了让我们回来时，能立刻感受到家的温暖！我鼻子一酸，流下了热泪……",
+            "t": "父親說：「你媽昨天接到電話，知道你們今晚回來，今天來新房忙了一天了。」原來父母要我留下串鑰匙，只是為了讓我們回來時，能立刻感受到家的溫暖！我鼻子一酸，流下了熱淚……",
+            "en": "Father said: \"Your mother got a call yesterday, found out you were coming home tonight, so she came to the new place today and worked hard all day.\" It turned out that the whole reason my parents wanted me to leave them a set of keys was so that when we came back, we could feel the warmth of home right away! My nose stung, and hot tears rolled down my face...",
+            "sentences": [
+              {
+                "s": "父亲说：\"你妈昨天接到电话，知道你们今晚回来，今天来新房忙了一天了。\"",
+                "t": "父親說：「你媽昨天接到電話，知道你們今晚回來，今天來新房忙了一天了。」",
+                "en": "Father said: \"Your mother got a call yesterday, found out you were coming home tonight, so she came to the new place today and worked hard all day.\""
+              },
+              {
+                "s": "原来父母要我留下串钥匙，只是为了让我们回来时，能立刻感受到家的温暖！",
+                "t": "原來父母要我留下串鑰匙，只是為了讓我們回來時，能立刻感受到家的溫暖！",
+                "en": "It turned out that the whole reason my parents wanted me to leave them a set of keys was so that when we came back, we could feel the warmth of home right away!"
+              },
+              {
+                "s": "我鼻子一酸，流下了热泪……",
+                "t": "我鼻子一酸，流下了熱淚……",
+                "en": "My nose stung, and hot tears rolled down my face..."
+              }
+            ]
           }
         ]
       },
@@ -569,8 +1108,640 @@ window.CONTENT = {
           answer: 0
         }
       ]
+    },
+    {
+      "id": "u3",
+      "lessonId": "u3",
+      "title": {
+        "s": "人生有选择，一切可改变",
+        "t": "人生有選擇，一切可改變"
+      },
+      "en": "Having Choices in Life Makes Change Possible",
+      "source": "Adapted from 《都市快报》(Metro Express), by 黄小星 — HSK 标准教程 5 (上), Unit 3",
+      "reading": {
+        "paragraphs": [
+          {
+            "s": "翟峰和妻子都是铁路工人，工作稳定，待遇不错。他们有房有车，从不用为生活发愁。可翟峰却不想一辈子过这样平静的生活。通过电视，翟峰迷上了帆船，他觉得帆船能带他撞开“世界之门”：只要有一艘船，就能航行在无边无际的海上，到任何自己想去的地方。",
+            "t": "翟峰和妻子都是鐵路工人，工作穩定，待遇不錯。他們有房有車，從不用為生活發愁。可翟峰卻不想一輩子過這樣平靜的生活。通過電視，翟峰迷上了帆船，他覺得帆船能帶他撞開「世界之門」：只要有一艘船，就能航行在無邊無際的海上，到任何自己想去的地方。",
+            "en": "Zhai Feng and his wife were both railway workers, with steady jobs and decent pay. They owned a home and a car and never had to worry about making a living. But Zhai Feng did not want to spend his whole life in such a quiet, uneventful way. Through TV, Zhai Feng became hooked on sailing. He felt a sailboat could take him crashing through \"the door to the world\": as long as he had a boat, he could sail the boundless sea to any place he wanted to go.",
+            "sentences": [
+              {
+                "s": "翟峰和妻子都是铁路工人，工作稳定，待遇不错。",
+                "t": "翟峰和妻子都是鐵路工人，工作穩定，待遇不錯。",
+                "en": "Zhai Feng and his wife were both railway workers, with steady jobs and decent pay."
+              },
+              {
+                "s": "他们有房有车，从不用为生活发愁。",
+                "t": "他們有房有車，從不用為生活發愁。",
+                "en": "They owned a home and a car and never had to worry about making a living."
+              },
+              {
+                "s": "可翟峰却不想一辈子过这样平静的生活。",
+                "t": "可翟峰卻不想一輩子過這樣平靜的生活。",
+                "en": "But Zhai Feng did not want to spend his whole life in such a quiet, uneventful way."
+              },
+              {
+                "s": "通过电视，翟峰迷上了帆船，他觉得帆船能带他撞开“世界之门”：",
+                "t": "通過電視，翟峰迷上了帆船，他覺得帆船能帶他撞開「世界之門」：",
+                "en": "Through TV, Zhai Feng became hooked on sailing. He felt a sailboat could take him crashing through \"the door to the world\":"
+              },
+              {
+                "s": "只要有一艘船，就能航行在无边无际的海上，到任何自己想去的地方。",
+                "t": "只要有一艘船，就能航行在無邊無際的海上，到任何自己想去的地方。",
+                "en": "as long as he had a boat, he could sail the boundless sea to any place he wanted to go."
+              }
+            ]
+          },
+          {
+            "s": "由于翟峰和妻子没有积蓄，于是卖房卖车，买下了一艘二手船，翟峰叫它“彩虹号”。出发前，翟峰自学了航海知识。然而，包括翟峰的父母，所有人都觉得，翟峰“疯了”。",
+            "t": "由於翟峰和妻子沒有積蓄，於是賣房賣車，買下了一艘二手船，翟峰叫它「彩虹號」。出發前，翟峰自學了航海知識。然而，包括翟峰的父母，所有人都覺得，翟峰「瘋了」。",
+            "en": "Because Zhai Feng and his wife had no savings, they sold their house and car and bought a second-hand boat, which Zhai Feng named \"Rainbow\". Before setting out, Zhai Feng taught himself navigation. However, everyone, including Zhai Feng's own parents, thought he had \"gone crazy.\"",
+            "sentences": [
+              {
+                "s": "由于翟峰和妻子没有积蓄，于是卖房卖车，买下了一艘二手船，翟峰叫它“彩虹号”。",
+                "t": "由於翟峰和妻子沒有積蓄，於是賣房賣車，買下了一艘二手船，翟峰叫它「彩虹號」。",
+                "en": "Because Zhai Feng and his wife had no savings, they sold their house and car and bought a second-hand boat, which Zhai Feng named \"Rainbow\"."
+              },
+              {
+                "s": "出发前，翟峰自学了航海知识。",
+                "t": "出發前，翟峰自學了航海知識。",
+                "en": "Before setting out, Zhai Feng taught himself navigation."
+              },
+              {
+                "s": "然而，包括翟峰的父母，所有人都觉得，翟峰“疯了”。",
+                "t": "然而，包括翟峰的父母，所有人都覺得，翟峰「瘋了」。",
+                "en": "However, everyone, including Zhai Feng's own parents, thought he had \"gone crazy.\""
+              }
+            ]
+          },
+          {
+            "s": "2012年11月24日，辞了职的翟峰和妻子带着休学的女儿，第一次驾驶帆船出海了。白天，翟峰和妻子轮流驾船。女儿在船上看书、学习、画画儿。下午海面平静时，翟峰会和妻子下海游泳或者钓鱼。该吃饭时，妻子会给全家人做一顿美味的海鲜。",
+            "t": "2012年11月24日，辭了職的翟峰和妻子帶著休學的女兒，第一次駕駛帆船出海了。白天，翟峰和妻子輪流駕船。女兒在船上看書、學習、畫畫兒。下午海面平靜時，翟峰會和妻子下海游泳或者釣魚。該吃飯時，妻子會給全家人做一頓美味的海鮮。",
+            "en": "On November 24, 2012, Zhai Feng, who had quit his job, and his wife, taking along their daughter who had taken time off school, set out to sea for the first time in the sailboat. During the day, Zhai Feng and his wife took turns piloting the boat. Their daughter read, studied and drew on board. In the afternoon, when the sea was calm, Zhai Feng and his wife would go into the water to swim or would fish. When it was time to eat, his wife would cook a delicious seafood meal for the whole family.",
+            "sentences": [
+              {
+                "s": "2012年11月24日，辞了职的翟峰和妻子带着休学的女儿，第一次驾驶帆船出海了。",
+                "t": "2012年11月24日，辭了職的翟峰和妻子帶著休學的女兒，第一次駕駛帆船出海了。",
+                "en": "On November 24, 2012, Zhai Feng, who had quit his job, and his wife, taking along their daughter who had taken time off school, set out to sea for the first time in the sailboat."
+              },
+              {
+                "s": "白天，翟峰和妻子轮流驾船。",
+                "t": "白天，翟峰和妻子輪流駕船。",
+                "en": "During the day, Zhai Feng and his wife took turns piloting the boat."
+              },
+              {
+                "s": "女儿在船上看书、学习、画画儿。",
+                "t": "女兒在船上看書、學習、畫畫兒。",
+                "en": "Their daughter read, studied and drew on board."
+              },
+              {
+                "s": "下午海面平静时，翟峰会和妻子下海游泳或者钓鱼。",
+                "t": "下午海面平靜時，翟峰會和妻子下海游泳或者釣魚。",
+                "en": "In the afternoon, when the sea was calm, Zhai Feng and his wife would go into the water to swim or would fish."
+              },
+              {
+                "s": "该吃饭时，妻子会给全家人做一顿美味的海鲜。",
+                "t": "該吃飯時，妻子會給全家人做一頓美味的海鮮。",
+                "en": "When it was time to eat, his wife would cook a delicious seafood meal for the whole family."
+              }
+            ]
+          },
+          {
+            "s": "傍晚是一家人最舒适的时候。干完活儿，一家人坐在一起，用电脑看看电影，或者聊聊天儿。这样的生活，是翟峰盼望已久的。以前陆地上的夜晚，他们在各自的房间，一家人没有更多的交流。",
+            "t": "傍晚是一家人最舒適的時候。幹完活兒，一家人坐在一起，用電腦看看電影，或者聊聊天兒。這樣的生活，是翟峰盼望已久的。以前陸地上的夜晚，他們在各自的房間，一家人沒有更多的交流。",
+            "en": "Evening was the family's most comfortable time of day. After finishing the chores, the family would sit together, watch a movie on the computer, or chat. This was the kind of life Zhai Feng had long hoped for. In the past, on land at night, they were each in their own rooms, and the family had little communication.",
+            "sentences": [
+              {
+                "s": "傍晚是一家人最舒适的时候。",
+                "t": "傍晚是一家人最舒適的時候。",
+                "en": "Evening was the family's most comfortable time of day."
+              },
+              {
+                "s": "干完活儿，一家人坐在一起，用电脑看看电影，或者聊聊天儿。",
+                "t": "幹完活兒，一家人坐在一起，用電腦看看電影，或者聊聊天兒。",
+                "en": "After finishing the chores, the family would sit together, watch a movie on the computer, or chat."
+              },
+              {
+                "s": "这样的生活，是翟峰盼望已久的。",
+                "t": "這樣的生活，是翟峰盼望已久的。",
+                "en": "This was the kind of life Zhai Feng had long hoped for."
+              },
+              {
+                "s": "以前陆地上的夜晚，他们在各自的房间，一家人没有更多的交流。",
+                "t": "以前陸地上的夜晚，他們在各自的房間，一家人沒有更多的交流。",
+                "en": "In the past, on land at night, they were each in their own rooms, and the family had little communication."
+              }
+            ]
+          },
+          {
+            "s": "中国有句老话：可上山，勿下海。美好的时刻过去后是一个个紧张的夜晚。一路上，翟峰一家经历了船身着火、漏水等大大小小十多次险情。他们最怕雷电交加的时刻，因为小船随时有可能被下一道闪电击到，一家三口只能紧紧拥抱在一起，希望闪电快快过去。",
+            "t": "中國有句老話：可上山，勿下海。美好的時刻過去後是一個個緊張的夜晚。一路上，翟峰一家經歷了船身著火、漏水等大大小小十多次險情。他們最怕雷電交加的時刻，因為小船隨時有可能被下一道閃電擊到，一家三口只能緊緊擁抱在一起，希望閃電快快過去。",
+            "en": "There is an old Chinese saying: \"You may go up the mountain, but don't go down to the sea.\" After the beautiful moments passed came night after tense night. Along the way, Zhai Feng's family went through more than ten dangerous situations, big and small, such as the boat catching fire and leaking. What they feared most was when thunder and lightning struck together, because the little boat could be hit by the next bolt at any moment; the family of three could only hold each other tightly and hope the lightning would pass quickly.",
+            "sentences": [
+              {
+                "s": "中国有句老话：可上山，勿下海。",
+                "t": "中國有句老話：可上山，勿下海。",
+                "en": "There is an old Chinese saying: \"You may go up the mountain, but don't go down to the sea.\""
+              },
+              {
+                "s": "美好的时刻过去后是一个个紧张的夜晚。",
+                "t": "美好的時刻過去後是一個個緊張的夜晚。",
+                "en": "After the beautiful moments passed came night after tense night."
+              },
+              {
+                "s": "一路上，翟峰一家经历了船身着火、漏水等大大小小十多次险情。",
+                "t": "一路上，翟峰一家經歷了船身著火、漏水等大大小小十多次險情。",
+                "en": "Along the way, Zhai Feng's family went through more than ten dangerous situations, big and small, such as the boat catching fire and leaking."
+              },
+              {
+                "s": "他们最怕雷电交加的时刻，因为小船随时有可能被下一道闪电击到，",
+                "t": "他們最怕雷電交加的時刻，因為小船隨時有可能被下一道閃電擊到，",
+                "en": "What they feared most was when thunder and lightning struck together, because the little boat could be hit by the next bolt at any moment;"
+              },
+              {
+                "s": "一家三口只能紧紧拥抱在一起，希望闪电快快过去。",
+                "t": "一家三口只能緊緊擁抱在一起，希望閃電快快過去。",
+                "en": "the family of three could only hold each other tightly and hope the lightning would pass quickly."
+              }
+            ]
+          },
+          {
+            "s": "在经历了八个月、航行了4000多海里之后，翟峰一家终于回到了家。",
+            "t": "在經歷了八個月、航行了4000多海里之後，翟峰一家終於回到了家。",
+            "en": "After eight months and more than 4,000 nautical miles, Zhai Feng's family finally made it back home.",
+            "sentences": [
+              {
+                "s": "在经历了八个月、航行了4000多海里之后，翟峰一家终于回到了家。",
+                "t": "在經歷了八個月、航行了4000多海里之後，翟峰一家終於回到了家。",
+                "en": "After eight months and more than 4,000 nautical miles, Zhai Feng's family finally made it back home."
+              }
+            ]
+          },
+          {
+            "s": "翟峰相信，一切只是开始，航海就是他人生道路上一段长长的台阶，通向他想要的未来。“我和太太想要看看这个时代、这个世界到底是什么样子。人生有选择，一切可改变。”下一站，他们想去澳大利亚和新西兰。等待今年11月的北风南下之时，他们将再次出发。",
+            "t": "翟峰相信，一切只是開始，航海就是他人生道路上一段長長的台階，通向他想要的未來。「我和太太想要看看這個時代、這個世界到底是什麼樣子。人生有選擇，一切可改變。」下一站，他們想去澳大利亞和新西蘭。等待今年11月的北風南下之時，他們將再次出發。",
+            "en": "Zhai Feng believes it is only the beginning: sailing is a long flight of steps on his life's road, leading to the future he wants. \"My wife and I want to see what this era and this world are really like. Life has choices, and everything can change.\" Their next stop: they want to go to Australia and New Zealand. When this November's north wind blows southward, they will set out again.",
+            "sentences": [
+              {
+                "s": "翟峰相信，一切只是开始，航海就是他人生道路上一段长长的台阶，通向他想要的未来。",
+                "t": "翟峰相信，一切只是開始，航海就是他人生道路上一段長長的台階，通向他想要的未來。",
+                "en": "Zhai Feng believes it is only the beginning: sailing is a long flight of steps on his life's road, leading to the future he wants."
+              },
+              {
+                "s": "“我和太太想要看看这个时代、这个世界到底是什么样子。",
+                "t": "「我和太太想要看看這個時代、這個世界到底是什麼樣子。",
+                "en": "\"My wife and I want to see what this era and this world are really like."
+              },
+              {
+                "s": "人生有选择，一切可改变。”",
+                "t": "人生有選擇，一切可改變。」",
+                "en": "Life has choices, and everything can change.\""
+              },
+              {
+                "s": "下一站，他们想去澳大利亚和新西兰。",
+                "t": "下一站，他們想去澳大利亞和新西蘭。",
+                "en": "Their next stop: they want to go to Australia and New Zealand."
+              },
+              {
+                "s": "等待今年11月的北风南下之时，他们将再次出发。",
+                "t": "等待今年11月的北風南下之時，他們將再次出發。",
+                "en": "When this November's north wind blows southward, they will set out again."
+              }
+            ]
+          }
+        ]
+      },
+      "background": {
+        "title": "背景分析",
+        "en": "Background",
+        "paragraphs": [
+          {
+            "s": "在多数人眼里，工作、家庭、汽车、住房，这些都是我们生活中不可缺少的东西。当我们想要在人生道路上做出一些选择或改变时，却发现这些东西常常会影响我们的决定。",
+            "t": "在多數人眼裡，工作、家庭、汽車、住房，這些都是我們生活中不可缺少的東西。當我們想要在人生道路上做出一些選擇或改變時，卻發現這些東西常常會影響我們的決定。",
+            "en": "In most people's eyes, work, family, a car and a home are all things we cannot do without in life. But when we want to make some choice or change on life's road, we find that these things often affect our decisions.",
+            "sentences": [
+              {
+                "s": "在多数人眼里，工作、家庭、汽车、住房，这些都是我们生活中不可缺少的东西。",
+                "t": "在多數人眼裡，工作、家庭、汽車、住房，這些都是我們生活中不可缺少的東西。",
+                "en": "In most people's eyes, work, family, a car and a home are all things we cannot do without in life."
+              },
+              {
+                "s": "当我们想要在人生道路上做出一些选择或改变时，却发现这些东西常常会影响我们的决定。",
+                "t": "當我們想要在人生道路上做出一些選擇或改變時，卻發現這些東西常常會影響我們的決定。",
+                "en": "But when we want to make some choice or change on life's road, we find that these things often affect our decisions."
+              }
+            ]
+          },
+          {
+            "s": "在中国，帆船运动现在还不是很普及。帆船的价钱很贵，个人购买帆船的情况还很少。然而，课文中迷上帆船的翟峰做出了一个勇敢的决定，包括翟峰的父母，所有人都觉得他“疯了”。你是怎么看这件事情的呢？",
+            "t": "在中國，帆船運動現在還不是很普及。帆船的價錢很貴，個人購買帆船的情況還很少。然而，課文中迷上帆船的翟峰做出了一個勇敢的決定，包括翟峰的父母，所有人都覺得他「瘋了」。你是怎麼看這件事情的呢？",
+            "en": "In China, sailing is still not very popular. Sailboats are expensive, and individuals buying one is still rare. Yet in the text, Zhai Feng, who fell for sailing, made a brave decision — and everyone, including his parents, thought he had \"gone mad.\" What do you think of this?",
+            "sentences": [
+              {
+                "s": "在中国，帆船运动现在还不是很普及。",
+                "t": "在中國，帆船運動現在還不是很普及。",
+                "en": "In China, sailing is still not very popular."
+              },
+              {
+                "s": "帆船的价钱很贵，个人购买帆船的情况还很少。",
+                "t": "帆船的價錢很貴，個人購買帆船的情況還很少。",
+                "en": "Sailboats are expensive, and individuals buying one is still rare."
+              },
+              {
+                "s": "然而，课文中迷上帆船的翟峰做出了一个勇敢的决定，包括翟峰的父母，所有人都觉得他“疯了”。",
+                "t": "然而，課文中迷上帆船的翟峰做出了一個勇敢的決定，包括翟峰的父母，所有人都覺得他「瘋了」。",
+                "en": "Yet in the text, Zhai Feng, who fell for sailing, made a brave decision — and everyone, including his parents, thought he had \"gone mad.\""
+              },
+              {
+                "s": "你是怎么看这件事情的呢？",
+                "t": "你是怎麼看這件事情的呢？",
+                "en": "What do you think of this?"
+              }
+            ]
+          }
+        ]
+      },
+      "grammar": [
+        {
+          "point": "包括",
+          "py": "bao1 kuo4",
+          "en": "Verb: \"to include.\" It shows that something contains all of its parts (examples 1–2). It can also spotlight one particular part, to give an example, add information or explain (examples 3–4).",
+          "examples": [
+            {
+              "s": "汉语技能教学包括听、说、读、写四个方面。",
+              "t": "漢語技能教學包括聽、說、讀、寫四個方面。",
+              "py": "han4 yu3 ji4 neng2 jiao4 xue2 bao1 kuo4 ting1 shuo1 du2 xie3 si4 ge4 fang1 mian4",
+              "en": "Teaching Chinese skills includes four areas: listening, speaking, reading and writing.",
+              "sense": "includes all parts"
+            },
+            {
+              "s": "“学习”，其实包括“学”与“习”两层意思。学，就是学习知识；习，就是实践、练习。",
+              "t": "「學習」，其實包括「學」與「習」兩層意思。學，就是學習知識；習，就是實踐、練習。",
+              "py": "xue2 xi2 qi2 shi2 bao1 kuo4 xue2 yu3 xi2 liang3 ceng2 yi4 si5 xue2 jiu4 shi4 xue2 xi2 zhi1 shi2 xi2 jiu4 shi4 shi2 jian4 lian4 xi2",
+              "en": "\"学习\" actually contains two layers of meaning, \"学\" and \"习\". 学 means learning knowledge; 习 means putting it into practice and drilling it.",
+              "sense": "includes all parts"
+            },
+            {
+              "s": "然而，包括翟峰的父母，所有人都觉得，翟峰“疯了”。",
+              "t": "然而，包括翟峰的父母，所有人都覺得，翟峰「瘋了」。",
+              "py": "ran2 er2 bao1 kuo4 zhai2 feng1 de5 fu4 mu3 suo3 you3 ren2 dou1 jue2 de5 zhai2 feng1 feng1 le5",
+              "en": "However, everyone — including Zhai Feng's parents — thought he had \"gone mad.\"",
+              "sense": "spotlights one part"
+            },
+            {
+              "s": "我们班所有人，包括最不爱运动的刘方，也都参加了这次运动会。",
+              "t": "我們班所有人，包括最不愛運動的劉方，也都參加了這次運動會。",
+              "py": "wo3 men5 ban1 suo3 you3 ren2 bao1 kuo4 zui4 bu2 ai4 yun4 dong4 de5 liu2 fang1 ye3 dou1 can1 jia1 le5 zhe4 ci4 yun4 dong4 hui4",
+              "en": "Everyone in our class, even Liu Fang, who likes sports the least, took part in the sports meet.",
+              "sense": "spotlights one part"
+            }
+          ]
+        },
+        {
+          "point": "各自",
+          "py": "ge4 zi4",
+          "en": "Pronoun: \"each, respective.\" It points to each person or each side acting for itself. It usually goes together with the group it refers to, as the subject or as a modifier before a noun.",
+          "examples": [
+            {
+              "s": "中场休息时间到了，比赛双方队员各自回场外休息。",
+              "t": "中場休息時間到了，比賽雙方隊員各自回場外休息。",
+              "py": "zhong1 chang3 xiu1 xi1 shi2 jian1 dao4 le5 bi3 sai4 shuang1 fang1 dui4 yuan2 ge4 zi4 hui2 chang3 wai4 xiu1 xi1",
+              "en": "Halftime came, and the players on both sides each went off the field to rest."
+            },
+            {
+              "s": "刘经理认真看了三家广告公司各自提交的计划。",
+              "t": "劉經理認真看了三家廣告公司各自提交的計劃。",
+              "py": "liu2 jing1 li3 ren4 zhen1 kan4 le5 san1 jia1 guang3 gao4 gong1 si1 ge4 zi4 ti2 jiao1 de5 ji4 hua4",
+              "en": "Manager Liu carefully read the plans that each of the three advertising companies had submitted."
+            },
+            {
+              "s": "以前陆地上的夜晚，他们在各自的房间，一家人没有更多的交流。",
+              "t": "以前陸地上的夜晚，他們在各自的房間，一家人沒有更多的交流。",
+              "py": "yi3 qian2 lu4 di4 shang4 de5 ye4 wan3 ta1 men5 zai4 ge4 zi4 de5 fang2 jian1 yi4 jia1 ren2 mei2 you3 geng4 duo1 de5 jiao1 liu2",
+              "en": "In the past, on land at night, they were each in their own rooms, and the family had little communication."
+            }
+          ]
+        },
+        {
+          "point": "勿",
+          "py": "wu4",
+          "en": "Adverb: \"don't.\" It forbids or advises against something. It belongs to written language and is equivalent to 不要. You will see it on signs and hear it in old sayings. 切勿 means \"be sure never to.\"",
+          "examples": [
+            {
+              "s": "非工作人员，请勿入内。",
+              "t": "非工作人員，請勿入內。",
+              "py": "fei1 gong1 zuo4 ren2 yuan2 qing3 wu4 ru4 nei4",
+              "en": "Staff only — please do not enter."
+            },
+            {
+              "s": "网上购票者须注意网站的安全性，切勿上当受骗。",
+              "t": "網上購票者須注意網站的安全性，切勿上當受騙。",
+              "py": "wang3 shang4 gou4 piao4 zhe3 xu1 zhu4 yi4 wang3 zhan4 de5 an1 quan2 xing4 qie4 wu4 shang4 dang4 shou4 pian4",
+              "en": "People buying tickets online must watch the security of the website and be sure never to get taken in by a scam."
+            },
+            {
+              "s": "中国有句老话：可上山，勿下海。",
+              "t": "中國有句老話：可上山，勿下海。",
+              "py": "zhong1 guo2 you3 ju4 lao3 hua4 ke3 shang4 shan1 wu4 xia4 hai3",
+              "en": "There is an old Chinese saying: \"You may go up the mountain, but don't go down to the sea.\""
+            }
+          ]
+        },
+        {
+          "point": "时刻",
+          "py": "shi2 ke4",
+          "en": "Two uses. (1) Noun: \"a moment,\" a point in time or a stretch of time (examples 1–2). (2) Adverb: \"at every moment, constantly.\" As an adverb it can be doubled into 时时刻刻 (examples 3–4).",
+          "examples": [
+            {
+              "s": "在最后时刻，他为本队踢进了赢得比赛的关键一球。",
+              "t": "在最後時刻，他為本隊踢進了贏得比賽的關鍵一球。",
+              "py": "zai4 zui4 hou4 shi2 ke4 ta1 wei4 ben3 dui4 ti1 jin4 le5 ying2 de2 bi3 sai4 de5 guan1 jian4 yi4 qiu2",
+              "en": "At the last moment, he kicked in the key goal that won the match for his team.",
+              "sense": "noun"
+            },
+            {
+              "s": "美好的时刻过去后是一个个紧张的夜晚。",
+              "t": "美好的時刻過去後是一個個緊張的夜晚。",
+              "py": "mei3 hao3 de5 shi2 ke4 guo4 qu4 hou4 shi4 yi2 ge4 ge4 jin3 zhang1 de5 ye4 wan3",
+              "en": "After the beautiful moments passed came night after tense night.",
+              "sense": "noun"
+            },
+            {
+              "s": "我们非常需要你这样的人才，只要你愿意，公司的大门时刻都为你开着。",
+              "t": "我們非常需要你這樣的人才，只要你願意，公司的大門時刻都為你開著。",
+              "py": "wo3 men5 fei1 chang2 xu1 yao4 ni3 zhe4 yang4 de5 ren2 cai2 zhi3 yao4 ni3 yuan4 yi4 gong1 si1 de5 da4 men2 shi2 ke4 dou1 wei4 ni3 kai1 zhe5",
+              "en": "We badly need talented people like you. As long as you are willing, the company's doors are always open to you.",
+              "sense": "adverb"
+            },
+            {
+              "s": "工作中，他时时刻刻提醒自己：乘客的安全是最重要的。",
+              "t": "工作中，他時時刻刻提醒自己：乘客的安全是最重要的。",
+              "py": "gong1 zuo4 zhong1 ta1 shi2 shi2 ke4 ke4 ti2 xing3 zi4 ji3 cheng2 ke4 de5 an1 quan2 shi4 zui4 zhong4 yao4 de5",
+              "en": "At work he reminds himself at every moment: passengers' safety is the most important thing.",
+              "sense": "adverb"
+            }
+          ]
+        },
+        {
+          "point": "舒适 vs. 舒服",
+          "py": "shu1 shi4 · shu1 fu5",
+          "en": "Word discrimination. Both are adjectives meaning relaxed and pleasant, e.g. 饭店为入住的客人准备了舒适/舒服的房间 (\"The hotel prepared comfortable rooms for the guests checking in\"). But they differ in three ways:",
+          "labels": [
+            "舒适",
+            "舒服"
+          ],
+          "discrimination": [
+            {
+              "a": "1. Mostly used in written language.\ne.g. 这款车内部空间宽大，乘坐舒适。(\"This car has roomy interior space, and it is comfortable to ride in.\")",
+              "b": "1. Mostly used in spoken language.\ne.g. 他靠在沙发上舒舒服服地看电视。(\"He leaned back on the sofa and watched TV in comfort.\")"
+            },
+            {
+              "a": "2. Focuses on the overall feeling an environment gives a person.\ne.g. 我们都需要一个轻松舒适的生活环境。(\"We all need a relaxed, comfortable living environment.\")",
+              "b": "2. Focuses on a person's subjective, specific physical or mental feelings.\ne.g. 听了他的话，我心里很不舒服。(\"After hearing what he said, I felt very uneasy inside.\")"
+            },
+            {
+              "a": "3. Rarely reduplicated.",
+              "b": "3. Can be doubled as AABB (舒舒服服), and can also work as a verb, doubled as ABAB.\ne.g. 踢完球了？洗个热水澡舒服舒服吧。(\"Done playing ball? Take a hot shower and freshen up.\")"
+            }
+          ],
+          "examples": []
+        }
+      ],
+      "collocations": [
+        {
+          "verb": "轮流",
+          "objects": "驾船 / 休息 / 照看",
+          "en": "to take turns steering the boat / resting / looking after (someone)"
+        },
+        {
+          "verb": "盼望",
+          "objects": "（好）消息 / 过年 / 成功",
+          "en": "to look forward to (good) news / the New Year / success"
+        },
+        {
+          "verb": "稳定的",
+          "objects": "工作 / 生活 / 关系 / 收入",
+          "en": "a stable job / life / relationship / income"
+        },
+        {
+          "verb": "平静的",
+          "objects": "海面 / 心情 / 生活",
+          "en": "a calm sea surface / a peaceful mood / a quiet life"
+        },
+        {
+          "verb": "为 + 生活 / 工作 / 考试",
+          "objects": "发愁",
+          "en": "to worry about making a living / work / exams"
+        },
+        {
+          "verb": "紧紧（地）/ 热情（地）",
+          "objects": "拥抱",
+          "en": "to hug tightly / warmly"
+        },
+        {
+          "verb": "撞（倒 / 伤 / 断 / 开）",
+          "objects": "— (中心语+补语)",
+          "en": "to bump into and knock over / injure / break / knock open (verb + complement)"
+        },
+        {
+          "verb": "漏（光 / 掉 / 出来）",
+          "objects": "— (中心语+补语)",
+          "en": "to leak out completely / leak away / leak out (verb + complement)"
+        },
+        {
+          "verb": "一顿",
+          "objects": "饭 / 海鲜",
+          "en": "a meal / a seafood meal"
+        },
+        {
+          "verb": "一道",
+          "objects": "闪电",
+          "en": "a bolt of lightning"
+        }
+      ],
+      "reflection": {
+        "prompt_en": "Writing prompt from the book: write a paragraph of at least 100 characters titled \"如果我是翟峰，我会（不会）……\" (If I were Zhai Feng, I would (would not)…), using this chapter's vocabulary. The app does not grade it. Copy your writing and paste it to Claude for feedback.",
+        "questions": [
+          "你有什么爱好吗？它给你的生活带来了什么好处？(Do you have a hobby? What good has it brought to your life?)",
+          "你觉得应该怎么处理爱好和工作、家庭、生活的关系？举例说明。(How do you think a hobby should be balanced with work, family and life? Give examples.)",
+          "如果你的爱好影响了你的正常生活，你会怎么办呢？(If your hobby affected your normal life, what would you do?)"
+        ]
+      },
+      "warmup": {
+        "weather": [
+          {
+            "s": "晴",
+            "t": "晴",
+            "py": "qing2",
+            "en": "sunny, clear",
+            "icon": "☀️"
+          },
+          {
+            "s": "多云",
+            "t": "多雲",
+            "py": "duo1 yun2",
+            "en": "cloudy (partly)",
+            "icon": "⛅"
+          },
+          {
+            "s": "雨转晴",
+            "t": "雨轉晴",
+            "py": "yu3 zhuan3 qing2",
+            "en": "rain turning to sunshine",
+            "icon": "🌦️"
+          },
+          {
+            "s": "雨后彩虹",
+            "t": "雨後彩虹",
+            "py": "yu3 hou4 cai3 hong2",
+            "en": "rainbow after the rain",
+            "icon": "🌈"
+          },
+          {
+            "s": "雷阵雨",
+            "t": "雷陣雨",
+            "py": "lei2 zhen4 yu3",
+            "en": "thunder shower",
+            "icon": "⛈️"
+          },
+          {
+            "s": "阴",
+            "t": "陰",
+            "py": "yin1",
+            "en": "overcast",
+            "icon": "☁️"
+          }
+        ],
+        "questions": [
+          "你喜欢旅行吗？你喜欢什么样的旅行方式？不同的旅行方式你会选择什么交通工具？(Do you like to travel? What kind of travel do you like? For different ways of traveling, what transportation would you choose?)"
+        ]
+      },
+      "cfu": [
+        {
+          "q": "What did Zhai Feng and his wife do for work at the start?",
+          "choices": [
+            "They were sailors",
+            "They were railway workers",
+            "They were TV reporters",
+            "They ran a fishing business"
+          ],
+          "answer": 1
+        },
+        {
+          "q": "Why did they sell their house and car?",
+          "choices": [
+            "They wanted to move overseas",
+            "They had no savings, and needed money to buy a boat",
+            "Their parents made them",
+            "They were tired of driving"
+          ],
+          "answer": 1,
+          "explain": "由于翟峰和妻子没有积蓄，于是卖房卖车，买下了一艘二手船。"
+        },
+        {
+          "q": "What did everyone, even his parents, think of Zhai Feng's plan?",
+          "choices": [
+            "It was a brave and wise idea",
+            "It was too expensive but fun",
+            "He had gone crazy",
+            "They didn't care"
+          ],
+          "answer": 2,
+          "explain": "包括翟峰的父母，所有人都觉得，翟峰“疯了”。"
+        },
+        {
+          "q": "What did the family do in the evening at sea?",
+          "choices": [
+            "They studied navigation",
+            "They sat together, watched movies or chatted",
+            "They fished until midnight",
+            "They went back to shore"
+          ],
+          "answer": 1
+        },
+        {
+          "q": "What scared the family the most on the trip?",
+          "choices": [
+            "Running out of food",
+            "Sharks",
+            "Thunder and lightning together",
+            "Cold weather"
+          ],
+          "answer": 2,
+          "explain": "他们最怕雷电交加的时刻。"
+        },
+        {
+          "q": "How long was the voyage, and how far?",
+          "choices": [
+            "Eight months, over 4,000 nautical miles",
+            "Four months, 8,000 nautical miles",
+            "One year, 400 nautical miles",
+            "Eight days, 4,000 nautical miles"
+          ],
+          "answer": 0
+        },
+        {
+          "q": "Where does the family want to go next?",
+          "choices": [
+            "Japan and Korea",
+            "Australia and New Zealand",
+            "Back to the railway",
+            "Around the world in one trip"
+          ],
+          "answer": 1
+        },
+        {
+          "q": "早晨收拾完房间后，妈妈喜欢____地坐在那把躺椅上休息一下。 Which fits?",
+          "choices": [
+            "舒舒服服 (from 舒服)",
+            "舒舒适适 (from 舒适)"
+          ],
+          "answer": 0,
+          "explain": "舒服 can double as AABB (舒舒服服); 舒适 is rarely doubled."
+        },
+        {
+          "q": "这家餐厅装修精美、环境____。 Which fits?",
+          "choices": [
+            "舒适 (comfortable — about the environment)",
+            "舒服 (comfortable — about a person's feeling)"
+          ],
+          "answer": 0,
+          "explain": "舒适 focuses on the overall feeling an environment gives."
+        },
+        {
+          "q": "我今天脖子有点儿不____，左右转动时有点儿疼。 Which fits?",
+          "choices": [
+            "舒适",
+            "舒服"
+          ],
+          "answer": 1,
+          "explain": "不舒服 is a person's own physical feeling, so it takes 舒服."
+        },
+        {
+          "q": "这艘客船就像高级宾馆一样，除了有____的客舱外，还有餐厅、电影院、商店、舞厅、游泳池等。 Which fits?",
+          "choices": [
+            "舒适",
+            "舒服"
+          ],
+          "answer": 0,
+          "explain": "舒适 is the more written word, and it describes the cabins (the environment)."
+        },
+        {
+          "q": "Which one is the written-language word for \"don't,\" usually seen on signs?",
+          "choices": [
+            "勿",
+            "没",
+            "别"
+          ],
+          "answer": 0,
+          "explain": "勿 is formal and written; in speech people say 不要."
+        }
+      ]
     }
   ],
+
+  /* COLLOCATION MATCH (from the book's 词语搭配 tables): the left word + the words the book pairs it with */
+  collGame: [{"id": "u1-抱怨", "chapter": "u1", "type": "verb", "left": {"s": "抱怨", "t": "抱怨"}, "rights": [{"s": "别人", "t": "別人"}, {"s": "妻子", "t": "妻子"}], "en": "to complain about"}, {"id": "u1-爱护", "chapter": "u1", "type": "verb", "left": {"s": "爱护", "t": "愛護"}, "rights": [{"s": "环境", "t": "環境"}, {"s": "花草树木", "t": "花草樹木"}, {"s": "公物", "t": "公物"}, {"s": "学生", "t": "學生"}], "en": "to take good care of"}, {"id": "u1-电台的", "chapter": "u1", "type": "adj", "left": {"s": "电台的", "t": "電臺的"}, "rights": [{"s": "记者", "t": "記者"}, {"s": "广播", "t": "廣播"}, {"s": "新闻", "t": "新聞"}], "en": "a radio station's …"}, {"id": "u1-一项", "chapter": "u1", "type": "measure", "left": {"s": "一项", "t": "一項"}, "rights": [{"s": "运动", "t": "運動"}, {"s": "工作", "t": "工作"}, {"s": "任务", "t": "任務"}, {"s": "计划", "t": "計劃"}, {"s": "技术", "t": "技術"}, {"s": "研究", "t": "研究"}, {"s": "调查", "t": "調查"}, {"s": "奖项", "t": "獎項"}], "en": "one item of …"}, {"id": "u2-断", "chapter": "u2", "type": "verb", "left": {"s": "断", "t": "斷"}, "rights": [{"s": "水", "t": "水"}, {"s": "电", "t": "電"}, {"s": "联系", "t": "聯繫"}], "en": "to cut off"}, {"id": "u2-晒", "chapter": "u2", "type": "verb", "left": {"s": "晒", "t": "曬"}, "rights": [{"s": "被子", "t": "被子"}, {"s": "衣服", "t": "衣服"}, {"s": "太阳", "t": "太陽"}], "en": "to dry in the sun"}, {"id": "u2-强烈的", "chapter": "u2", "type": "adj", "left": {"s": "强烈的", "t": "強烈的"}, "rights": [{"s": "阳光", "t": "陽光"}, {"s": "感情", "t": "感情"}, {"s": "对比", "t": "對比"}], "en": "strong, intense …"}, {"id": "u2-长途", "chapter": "u2", "type": "adj", "left": {"s": "长途", "t": "長途"}, "rights": [{"s": "旅行", "t": "旅行"}, {"s": "汽车", "t": "汽車"}, {"s": "电话", "t": "電話"}], "en": "long-distance …"}, {"id": "u2-坚决", "chapter": "u2", "type": "verb", "left": {"s": "坚决", "t": "堅決"}, "rights": [{"s": "反对", "t": "反對"}, {"s": "改正", "t": "改正"}], "en": "resolutely …"}, {"id": "u2-一套", "chapter": "u2", "type": "measure", "left": {"s": "一套", "t": "一套"}, "rights": [{"s": "房子", "t": "房子"}, {"s": "家具", "t": "傢俱"}, {"s": "餐具", "t": "餐具"}, {"s": "邮票", "t": "郵票"}, {"s": "西服", "t": "西服"}], "en": "a set / suite of …"}, {"id": "u2-一阵", "chapter": "u2", "type": "measure", "left": {"s": "一阵", "t": "一陣"}, "rights": [{"s": "风", "t": "風"}, {"s": "雨", "t": "雨"}, {"s": "歌声", "t": "歌聲"}, {"s": "香味", "t": "香味"}], "en": "a spell / whiff of …"}, {"id": "u3-轮流", "chapter": "u3", "type": "verb", "left": {"s": "轮流", "t": "輪流"}, "rights": [{"s": "驾船", "t": "駕船"}, {"s": "休息", "t": "休息"}, {"s": "照看", "t": "照看"}], "en": "to take turns …"}, {"id": "u3-盼望", "chapter": "u3", "type": "verb", "left": {"s": "盼望", "t": "盼望"}, "rights": [{"s": "消息", "t": "消息"}, {"s": "过年", "t": "過年"}, {"s": "成功", "t": "成功"}], "en": "to look forward to …"}, {"id": "u3-稳定的", "chapter": "u3", "type": "adj", "left": {"s": "稳定的", "t": "穩定的"}, "rights": [{"s": "工作", "t": "工作"}, {"s": "生活", "t": "生活"}, {"s": "关系", "t": "關係"}, {"s": "收入", "t": "收入"}], "en": "a stable …"}, {"id": "u3-平静的", "chapter": "u3", "type": "adj", "left": {"s": "平静的", "t": "平靜的"}, "rights": [{"s": "海面", "t": "海面"}, {"s": "心情", "t": "心情"}, {"s": "生活", "t": "生活"}], "en": "a calm / peaceful …"}, {"id": "u3-一顿", "chapter": "u3", "type": "measure", "left": {"s": "一顿", "t": "一頓"}, "rights": [{"s": "饭", "t": "飯"}, {"s": "海鲜", "t": "海鮮"}], "en": "a meal of …"}],
 
   /* FILL THE BLANK: short phrases built from this unit's vocabulary and reading passage.
      b = [start, length] pairs (character index into `s`), each one a puzzle (write the missing characters). */
@@ -624,7 +1795,21 @@ window.CONTENT = {
     { s: '他把腿摔断了', t: '他把腿摔斷了', py: 'ta1 ba3 tui3 shuai1 duan4 le5', en: 'He broke his leg falling.', b: [[3, 1]] },
     { s: '我想去打工两个月', t: '我想去打工兩個月', py: 'wo3 xiang3 qu4 da3 gong1 liang3 ge4 yue4', en: 'I want to go work for two months.', b: [[3, 2]] },
     { s: '打工挣点儿钱', t: '打工掙點兒錢', py: 'da3 gong1 zheng4 dianr3 qian2', en: 'work to earn a little money.', b: [[2, 1]] },
-    { s: '这次来北京你们照顾得非常周到', t: '這次來北京你們照顧得非常周到', py: 'zhe4 ci4 lai2 bei3 jing1 ni3 men5 zhao4 gu4 de5 fei1 chang2 zhou1 dao4', en: 'You took such thoughtful care of us this time in Beijing.', b: [[12, 2]] }
+    { s: '这次来北京你们照顾得非常周到', t: '這次來北京你們照顧得非常周到', py: 'zhe4 ci4 lai2 bei3 jing1 ni3 men5 zhao4 gu4 de5 fei1 chang2 zhou1 dao4', en: 'You took such thoughtful care of us this time in Beijing.', b: [[12, 2]] },
+    {"s": "翟峰和妻子都是铁路工人", "t": "翟峰和妻子都是鐵路工人", "py": "zhai2 feng1 he2 qi1 zi3 dou1 shi4 tie3 lu4 gong1 ren2", "en": "Zhai Feng and his wife were both railway workers.", "b": [[9, 2]]},
+    {"s": "他们有房有车从不用为生活发愁", "t": "他們有房有車從不用為生活發愁", "py": "ta1 men5 you3 fang2 you3 che1 cong2 bu2 yong4 wei4 sheng1 huo2 fa1 chou2", "en": "They had a home and a car and never had to worry about making a living.", "b": [[12, 2]]},
+    {"s": "翟峰不想过这样平静的生活", "t": "翟峰不想過這樣平靜的生活", "py": "zhai2 feng1 bu4 xiang3 guo4 zhe4 yang4 ping2 jing4 de5 sheng1 huo2", "en": "Zhai Feng did not want a life this quiet.", "b": [[7, 2]]},
+    {"s": "翟峰迷上了帆船", "t": "翟峰迷上了帆船", "py": "zhai2 feng1 mi2 shang4 le5 fan1 chuan2", "en": "Zhai Feng got hooked on sailing.", "b": [[5, 2]]},
+    {"s": "他们买下了一艘二手船", "t": "他們買下了一艘二手船", "py": "ta1 men5 mai3 xia4 le5 yi4 sou1 er4 shou3 chuan2", "en": "They bought a second-hand boat.", "b": [[7, 2]]},
+    {"s": "翟峰和妻子轮流驾船", "t": "翟峰和妻子輪流駕船", "py": "zhai2 feng1 he2 qi1 zi3 lun2 liu2 jia4 chuan2", "en": "Zhai Feng and his wife took turns piloting the boat.", "b": [[5, 2]]},
+    {"s": "妻子会给全家人做一顿美味的海鲜", "t": "妻子會給全家人做一頓美味的海鮮", "py": "qi1 zi3 hui4 gei3 quan2 jia1 ren2 zuo4 yi2 dun4 mei3 wei4 de5 hai3 xian1", "en": "His wife would cook a delicious seafood meal for the whole family.", "b": [[13, 2]]},
+    {"s": "傍晚是一家人最舒适的时候", "t": "傍晚是一家人最舒適的時候", "py": "bang4 wan3 shi4 yi4 jia1 ren2 zui4 shu1 shi4 de5 shi2 hou4", "en": "Evening was the family's most comfortable time.", "b": [[7, 2]]},
+    {"s": "他们在各自的房间", "t": "他們在各自的房間", "py": "ta1 men5 zai4 ge4 zi4 de5 fang2 jian1", "en": "They were each in their own rooms.", "b": [[3, 2]]},
+    {"s": "中国有句老话可上山勿下海", "t": "中國有句老話可上山勿下海", "py": "zhong1 guo2 you3 ju4 lao3 hua4 ke3 shang4 shan1 wu4 xia4 hai3", "en": "There is an old Chinese saying: go up the mountain, but don't go down to the sea.", "b": [[9, 1]]},
+    {"s": "小船随时有可能被闪电击到", "t": "小船隨時有可能被閃電擊到", "py": "xiao3 chuan2 sui2 shi2 you3 ke3 neng2 bei4 shan3 dian4 ji1 dao4", "en": "The little boat could be struck by lightning at any moment.", "b": [[8, 2]]},
+    {"s": "一家三口紧紧拥抱在一起", "t": "一家三口緊緊擁抱在一起", "py": "yi4 jia1 san1 kou3 jin3 jin3 yong1 bao4 zai4 yi4 qi3", "en": "The family of three held each other tightly.", "b": [[6, 2]]},
+    {"s": "航海通向他想要的未来", "t": "航海通向他想要的未來", "py": "hang2 hai3 tong1 xiang4 ta1 xiang3 yao4 de5 wei4 lai2", "en": "Sailing leads to the future he wants.", "b": [[8, 2]]},
+    {"s": "他们想看看这个时代到底是什么样子", "t": "他們想看看這個時代到底是什麼樣子", "py": "ta1 men5 xiang3 kan4 kan4 zhe4 ge4 shi2 dai4 dao4 di3 shi4 shen2 me5 yang4 zi5", "en": "They want to see what this era is really like.", "b": [[7, 2]]}
   ],
 
   /* SENTENCE BUILDER: complete example sentences from this unit's grammar notes, cut into chunks to put back in order. */
@@ -644,6 +1829,20 @@ window.CONTENT = {
     { chunks: ['这是', '我', '临离开北京的时候', '买的'], tchunks: ['這是', '我', '臨離開北京的時候', '買的'], py: 'zhe4 shi4 wo3 lin2 li2 kai1 bei3 jing1 de5 shi2 hou4 mai3 de5', en: 'I bought this right before I left Beijing.' },
     { chunks: ['临走那天', '父亲', '从老家', '赶来', '送我们'], tchunks: ['臨走那天', '父親', '從老家', '趕來', '送我們'], py: 'lin2 zou3 na4 tian1 fu4 qin1 cong2 lao3 jia1 gan3 lai2 song4 wo3 men5', en: 'On the day we were about to leave, Father came all the way from the old home to see us off.' },
     { chunks: ['温暖的气息', '立刻', '扑面而来'], tchunks: ['溫暖的氣息', '立刻', '撲面而來'], py: 'wen1 nuan3 de5 qi4 xi1 li4 ke4 pu1 mian4 er2 lai2', en: 'A wave of warmth hit us at once.' },
-    { chunks: ['那两只羊', '一见到青草', '就立刻', '去吃草了'], tchunks: ['那兩隻羊', '一見到青草', '就立刻', '去吃草了'], py: 'na4 liang3 zhi1 yang2 yi2 jian4 dao4 qing1 cao3 jiu4 li4 ke4 qu4 chi1 cao3 le5', en: 'As soon as those two goats saw the fresh grass, they immediately went to eat it.' }
+    { chunks: ['那两只羊', '一见到青草', '就立刻', '去吃草了'], tchunks: ['那兩隻羊', '一見到青草', '就立刻', '去吃草了'], py: 'na4 liang3 zhi1 yang2 yi2 jian4 dao4 qing1 cao3 jiu4 li4 ke4 qu4 chi1 cao3 le5', en: 'As soon as those two goats saw the fresh grass, they immediately went to eat it.' },
+    {"chunks": ["翟峰和妻子", "都是", "铁路工人"], "tchunks": ["翟峰和妻子", "都是", "鐵路工人"], "py": "zhai2 feng1 he2 qi1 zi3 dou1 shi4 tie3 lu4 gong1 ren2", "en": "Zhai Feng and his wife were both railway workers."},
+    {"chunks": ["他们有房有车", "从不用", "为生活", "发愁"], "tchunks": ["他們有房有車", "從不用", "為生活", "發愁"], "py": "ta1 men5 you3 fang2 you3 che1 cong2 bu2 yong4 wei4 sheng1 huo2 fa1 chou2", "en": "They had a home and a car and never had to worry about making a living."},
+    {"chunks": ["翟峰", "迷上了", "帆船"], "tchunks": ["翟峰", "迷上了", "帆船"], "py": "zhai2 feng1 mi2 shang4 le5 fan1 chuan2", "en": "Zhai Feng got hooked on sailing."},
+    {"chunks": ["翟峰和妻子", "轮流", "驾船"], "tchunks": ["翟峰和妻子", "輪流", "駕船"], "py": "zhai2 feng1 he2 qi1 zi3 lun2 liu2 jia4 chuan2", "en": "Zhai Feng and his wife took turns piloting the boat."},
+    {"chunks": ["妻子", "会给全家人", "做", "一顿美味的", "海鲜"], "tchunks": ["妻子", "會給全家人", "做", "一頓美味的", "海鮮"], "py": "qi1 zi3 hui4 gei3 quan2 jia1 ren2 zuo4 yi2 dun4 mei3 wei4 de5 hai3 xian1", "en": "His wife would cook a delicious seafood meal for the whole family."},
+    {"chunks": ["傍晚", "是", "一家人", "最舒适的", "时候"], "tchunks": ["傍晚", "是", "一家人", "最舒適的", "時候"], "py": "bang4 wan3 shi4 yi4 jia1 ren2 zui4 shu1 shi4 de5 shi2 hou4", "en": "Evening was the family's most comfortable time."},
+    {"chunks": ["所有人", "都觉得", "翟峰", "疯了"], "tchunks": ["所有人", "都覺得", "翟峰", "瘋了"], "py": "suo3 you3 ren2 dou1 jue2 de5 zhai2 feng1 feng1 le5", "en": "Everyone thought Zhai Feng had gone crazy."},
+    {"chunks": ["他们", "在各自的", "房间"], "tchunks": ["他們", "在各自的", "房間"], "py": "ta1 men5 zai4 ge4 zi4 de5 fang2 jian1", "en": "They were each in their own rooms."},
+    {"chunks": ["中国", "有句", "老话", "可上山", "勿下海"], "tchunks": ["中國", "有句", "老話", "可上山", "勿下海"], "py": "zhong1 guo2 you3 ju4 lao3 hua4 ke3 shang4 shan1 wu4 xia4 hai3", "en": "There is an old Chinese saying: go up the mountain, but don't go down to the sea."},
+    {"chunks": ["翟峰一家", "终于", "回到了", "家"], "tchunks": ["翟峰一家", "終於", "回到了", "家"], "py": "zhai2 feng1 yi4 jia1 zhong1 yu2 hui2 dao4 le5 jia1", "en": "Zhai Feng's family finally made it back home."},
+    {"chunks": ["他们", "将", "再次", "出发"], "tchunks": ["他們", "將", "再次", "出發"], "py": "ta1 men5 jiang1 zai4 ci4 chu1 fa1", "en": "They will set out again."}
   ]
 };
+
+/* EXPRESSIONS: idioms and set phrases worth knowing, found inside each reading (soft-tinted, tap for the card) */
+window.CONTENT.expressions = {"u1": [{"s": "前几年", "t": "前幾年", "py": "qian2 ji3 nian2", "lit": "the previous few years", "mean": "a few years ago", "use": "A casual way to point back at the recent past. It works with other units too: 前几天 (a few days ago), 前几个月 (a few months ago)."}, {"s": "几年如一日", "t": "幾年如一日", "py": "ji3 nian2 ru2 yi1 ri4", "lit": "several years like a single day", "mean": "year after year, with no change and no letting up", "use": "Praise for someone who keeps up the same effort or care for a long time. The classic form is 十年如一日 (ten years like one day). Here 几年 replaces the number, and the phrase takes 地 before the verb."}, {"s": "不知找了多少家医院", "t": "不知找了多少家醫院", "py": "bu4 zhi1 zhao3 le5 duo1 shao3 jia1 yi1 yuan4", "lit": "(he) did not know how many hospitals he sought out", "mean": "he went to countless hospitals", "use": "Pattern 不知 + verb + 多少 + measure word: the speaker will not even guess a number, which makes it mean \"countless\". Compare 不知花了多少钱 (spent who knows how much money)."}, {"s": "十几年", "t": "十幾年", "py": "shi2 ji3 nian2", "lit": "ten-some years", "mean": "more than ten years (somewhere from 11 to 19)", "use": "十几 means 11 to 19: 十几个人 is 11 to 19 people. Close to 十多年 but a bit more specific."}, {"s": "红过脸", "t": "紅過臉", "py": "hong2 guo4 lian3", "lit": "has turned red in the face", "mean": "to have gotten angry, to have had a quarrel", "use": "Nearly always negative: 从来没红过脸 means \"never even had a spat\". Do not confuse it with 红着脸 in Chapter 2, which is blushing from shyness."}, {"s": "相亲相爱", "t": "相親相愛", "py": "xiang1 qin1 xiang1 ai4", "lit": "close to each other, love each other", "mean": "to love each other dearly", "use": "A warm set phrase for couples, families or friends. It sits right next to 相敬如宾 in this text."}, {"s": "看个究竟", "t": "看個究竟", "py": "kan4 ge4 jiu1 jing4", "lit": "take a look at the real story", "mean": "to go and see what is really going on", "use": "The 个 makes the action light and casual: 看个究竟, 问个明白. Here 究竟 is a noun, the real story behind something."}, {"s": "别出声", "t": "別出聲", "py": "bie2 chu1 sheng1", "lit": "do not put out a sound", "mean": "do not make a sound, shh", "use": "出声 means to make a sound or to speak up. A quick, quiet command."}, {"s": "赶蚊子", "t": "趕蚊子", "py": "gan3 wen2 zi5", "lit": "chase mosquitoes", "mean": "to shoo mosquitoes away", "use": "赶 here means to chase or drive away: 赶苍蝇 (shoo flies). It is a different 赶 from 赶火车 (hurry to catch a train)."}], "u2": [{"s": "长年以来", "t": "長年以來", "py": "chang2 nian2 yi3 lai2", "lit": "long years since then", "mean": "for many years now, for years on end", "use": "以来 marks a stretch of time up to the present, and 长年 stresses that it has been years."}, {"s": "外地打工", "t": "外地打工", "py": "wai4 di4 da3 gong1", "lit": "outside place, do labor", "mean": "to work away from home", "use": "外地 means anywhere outside your own hometown or region, and 外地人 is an outsider or migrant. 打工 is the word for working a job for others, often migrant work."}, {"s": "晒晒", "t": "曬曬", "py": "shai4 shai4", "lit": "sun it, sun it", "mean": "to give (it) a good airing in the sun", "use": "Doubling a verb (AA) makes the action light and casual: 看看, 想想. Airing quilts in the sun is a familiar sight in Chinese homes."}, {"s": "打扫打扫", "t": "打掃打掃", "py": "da3 sao3 da3 sao3", "lit": "sweep it, sweep it", "mean": "to tidy up a bit", "use": "ABAB doubling softens the verb, like \"give it a bit of a clean\". Parents use it a lot when offering to help."}, {"s": "轻声细语", "t": "輕聲細語", "py": "qing1 sheng1 xi4 yu3", "lit": "light voice, thin words", "mean": "speaking softly and gently", "use": "A four-character set phrase, usually praise, for a gentle manner of speaking."}, {"s": "红着脸", "t": "紅著臉", "py": "hong2 zhe5 lian3", "lit": "with the face red", "mean": "blushing", "use": "Here it is shyness or embarrassment (compare 红过脸 in Chapter 1, which is anger). 着 shows the state is ongoing."}, {"s": "转眼", "t": "轉眼", "py": "zhuan3 yan3", "lit": "turn the eyes", "mean": "in the blink of an eye", "use": "A time-passing marker, often at the start of a sentence: 转眼又是一年 (in a blink, another year)."}, {"s": "深冬", "t": "深冬", "py": "shen1 dong1", "lit": "deep winter", "mean": "the depth of winter", "use": "深 + season: 深秋 (late autumn), and 深夜 (the dead of night)."}, {"s": "冷冷清清", "t": "冷冷清清", "py": "leng3 leng3 qing1 qing1", "lit": "cold-cold clear-clear", "mean": "desolate, deserted and chilly", "use": "AABB doubling of 冷清. It describes a place with no people and no warmth, like an empty house."}, {"s": "心里发寒", "t": "心裡發寒", "py": "xin1 li3 fa1 han2", "lit": "in the heart, give off cold", "mean": "to feel a chill, a sinking feeling", "use": "发 + feeling: 发冷, 发抖, and 发愁 (Chapter 3). 发寒 covers both a physical chill and unease."}, {"s": "扑面而来", "t": "撲面而來", "py": "pu1 mian4 er2 lai2", "lit": "pounce on the face and come", "mean": "to hit you in the face, to rush at you", "use": "A fixed pattern whose subject is usually air, a smell or a mood: 春风扑面而来 (spring wind on your face)."}, {"s": "干干净净", "t": "乾乾淨淨", "py": "gan1 gan1 jing4 jing4", "lit": "dry-dry clean-clean", "mean": "spotlessly clean", "use": "AABB doubling of 干净 makes it vivid. Same pattern in 高高兴兴 (cheerful) and 舒舒服服 (nice and comfortable)."}, {"s": "天色已晚", "t": "天色已晚", "py": "tian1 se4 yi3 wan3", "lit": "the sky color is already late", "mean": "it was already late (it was getting dark)", "use": "Written and slightly literary. In speech you would say 天已经黑了 or 已经很晚了."}, {"s": "鼻子一酸", "t": "鼻子一酸", "py": "bi2 zi5 yi4 suan1", "lit": "the nose gives one sour", "mean": "to feel a sting in the nose, close to tears, moved", "use": "The body reaction of being touched. 一 + adjective marks a sudden change: 心里一酸."}], "u3": [{"s": "迷上", "t": "迷上", "py": "mi2 shang4", "lit": "fascinated, get on to", "mean": "to get hooked on, to fall for", "use": "迷 means to be fascinated, and 迷上 marks the moment you get hooked: 迷上了篮球 (got hooked on basketball)."}, {"s": "世界之门", "t": "世界之門", "py": "shi4 jie4 zhi1 men2", "lit": "the door of the world", "mean": "the gateway to the world", "use": "Figurative and literary. 之 links two nouns like \"of\", and you will see it in slogans and titles."}, {"s": "无边无际", "t": "無邊無際", "py": "wu2 bian1 wu2 ji4", "lit": "no edge, no border", "mean": "boundless, endless", "use": "A set phrase for the sea, the sky, a desert or something abstract. It follows the 无…无… pattern, like 无穷无尽."}, {"s": "有房有车", "t": "有房有車", "py": "you3 fang2 you3 che1", "lit": "have a house, have a car", "mean": "owning a home and a car", "use": "Shorthand for a comfortable, settled life in China, and often the checklist for a good marriage prospect. Pattern 有A有B."}, {"s": "卖房卖车", "t": "賣房賣車", "py": "mai4 fang2 mai4 che1", "lit": "sell the house, sell the car", "mean": "to sell everything you own, a drastic step", "use": "Two parallel verb-object phrases give a bold, all-in feeling."}, {"s": "大大小小", "t": "大大小小", "py": "da4 da4 xiao3 xiao3", "lit": "big-big small-small", "mean": "big and small, of all sizes", "use": "Doubling both halves means \"all kinds of\": 大大小小的问题 (problems large and small)."}, {"s": "雷电交加", "t": "雷電交加", "py": "lei2 dian4 jiao1 jia1", "lit": "thunder, lightning, join and add", "mean": "thunder and lightning at the same time", "use": "A storm set phrase, often seen next to 风雨交加. 交加 means happening together, usually unpleasant things."}, {"s": "一家三口", "t": "一家三口", "py": "yi4 jia1 san1 kou3", "lit": "one family, three mouths", "mean": "a family of three", "use": "口 counts family members: 一家五口 is a family of five. A warm, everyday way to describe a household."}, {"s": "可上山，勿下海", "t": "可上山，勿下海", "py": "ke3 shang4 shan1 wu4 xia4 hai3", "lit": "may go up the mountain, do not go down to the sea", "mean": "old saying: better the mountain than the sea, because the sea is more dangerous", "use": "It warns about the dangers of the sea. Bonus: 下海 also has a second meaning, \"to quit a secure job and go into business\", which was a buzzword in the 1990s."}, {"s": "北风南下", "t": "北風南下", "py": "bei3 feng1 nan2 xia4", "lit": "the north wind goes south", "mean": "the cold north wind sweeping south", "use": "It is the sailing-season cue in this story: when the northerly winds come in November, it is time to set out. 南下 means to head south."}]};

@@ -140,7 +140,18 @@
       '<button data-theme-btn="light" class="' + (theme === 'light' ? 'on' : '') + '">☀️ Light</button></div>';
   }
   function soundBtn() { return '<button class="iconbtn" id="snd" aria-label="Sound on or off">' + (soundOn ? '🔊' : '🔇') + '</button>'; }
-  function bindTop(after) {
+  function bindTop(afterRaw) {
+    /* re-drawing a screen resets its scroll to the top: remember where the reader was and put them back */
+    function after() {
+      /* the reading lives in an inner scroller (.uscroll); other screens scroll the outer .screen — remember both */
+      var saved = Array.prototype.map.call(app.querySelectorAll('.screen, .uscroll'), function (e) { return [e.className, e.scrollTop]; });
+      afterRaw();
+      saved.forEach(function (sv) {
+        if (!sv[1]) return;
+        var el = Array.prototype.filter.call(app.querySelectorAll('.screen, .uscroll'), function (e) { return e.className === sv[0]; })[0];
+        if (el) el.scrollTop = sv[1];
+      });
+    }
     Array.prototype.forEach.call(app.querySelectorAll('[data-script]'), function (b) {
       b.onclick = function () { script = b.getAttribute('data-script'); store.set('script', script); after(); };
     });

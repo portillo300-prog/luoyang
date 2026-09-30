@@ -35,6 +35,31 @@
     return bad.filter(function (x, i) { return bad.indexOf(x) === i; }).slice(0, 4);
   }
 
+  /* A touch on a big non-button element that has a :active transform makes the whole block shrink under the finger
+     (found 2026-09-30: reading cards shared a class with shop cards, so the page "jumped" on every tap on a phone).
+     Mouse clicks and scripted clicks never show it, so it must be checked by reading the stylesheet. */
+  function activeJump() {
+    var hits = [], vh = window.innerHeight, seen = [];
+    function scan(rules) {
+      Array.prototype.forEach.call(rules, function (r) {
+        if (r.cssRules && !r.selectorText) return scan(r.cssRules);
+        if (!r.selectorText || r.selectorText.indexOf(':active') < 0 || !r.style || !(r.style.transform || r.style.scale)) return;
+        r.selectorText.split(',').forEach(function (sel) {
+          if (sel.indexOf(':active') < 0) return;
+          var base = sel.replace(/:active/g, '').trim(); if (!base) return;
+          var els = []; try { els = document.querySelectorAll(base); } catch (e) { return; }
+          Array.prototype.forEach.call(els, function (el) {
+            if (el.tagName === 'BUTTON' || el.tagName === 'A' || seen.indexOf(el) >= 0) return;
+            var b = el.getBoundingClientRect();
+            if (b.height > vh * 0.3) { seen.push(el); hits.push((el.className && typeof el.className === 'string' ? el.className.split(' ')[0] : el.tagName.toLowerCase()) + ' (' + Math.round(b.height) + 'px tall, rule ' + base + ':active)'); }
+          });
+        });
+      });
+    }
+    Array.prototype.forEach.call(document.styleSheets, function (sh) { try { scan(sh.cssRules); } catch (e) { /* cross-origin sheet */ } });
+    return hits.slice(0, 3);
+  }
+
   async function pass(label, routes) {
     var lines = [], fails = 0;
     for (var i = 0; i < routes.length; i++) {
@@ -44,6 +69,7 @@
       var probs = [];
       if (txt.length < 6) probs.push('BLANK');
       var oe = overflow(); if (oe.length) probs.push('OVERFLOW ' + oe.join(','));
+      var aj = activeJump(); if (aj.length) probs.push('TOUCH-JUMP ' + aj.join(', '));
       var ne = errs.slice(before); if (ne.length) probs.push('CONSOLE ' + ne.join(' || '));
       if (probs.length) fails++;
       lines.push((probs.length ? 'FAIL ' : 'ok   ') + r + (probs.length ? '   ' + probs.join(' | ') : ''));

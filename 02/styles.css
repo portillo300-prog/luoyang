@@ -810,8 +810,9 @@ body {
 .uheroEn { color: var(--muted); font-size: 19px; margin-top: 2px; }
 .usource { color: var(--faint); font-size: 13px; margin-top: 6px; font-style: italic; }
 
-.scard { background: var(--panel); border: 2px solid var(--line); border-radius: 22px; padding: 18px 20px; margin: 0 0 16px; }
-.scard h3 { margin: 0 0 12px; font-size: 20px; color: var(--acc, var(--accent)); }
+/* study cards (reading, grammar...). NOT .scard: that is the Garden shop card, which shrinks when pressed and made the whole reading jump under the finger */
+.usec { background: var(--panel); border: 2px solid var(--line); border-radius: 22px; padding: 18px 20px; margin: 0 0 16px; }
+.usec h3 { margin: 0 0 12px; font-size: 20px; color: var(--acc, var(--accent)); }
 
 .rpara { padding: 10px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
 .rpara:last-child { border-bottom: 0; }

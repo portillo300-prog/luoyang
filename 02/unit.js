@@ -36,7 +36,7 @@
     A.bindTop(renderList);
   }
 
-  function section(title, inner) { return inner ? '<div class="scard"><h3>' + esc(title) + '</h3>' + inner + '</div>' : ''; }
+  function section(title, inner) { return inner ? '<div class="usec"><h3>' + esc(title) + '</h3>' + inner + '</div>' : ''; }
 
   var openEn = {};   // which sentence translations are open (kept across redraws): "unit|sec|para|sentence"
   function renderPara(p, i, uid, sec) {

@@ -100,12 +100,13 @@
     }).join('');
     app.innerHTML =
       '<div class="screen has-tabs wl">' +
-      '<div class="topbar"><span class="title gtitle">🧩 Words</span>' + A.walletPill() + '</div>' +
+      '<div class="topbar"><span class="title gtitle">🧩 Words</span>' + A.scriptToggle() + A.walletPill() + '</div>' +
       '<div class="wl-prog"><div class="wl-count"><b>' + lessonWords.length + '</b> words from your chapters</div></div>' +
-      '<div class="wl-search"><input id="wsearch" type="search" placeholder="Search: 汉字, pinyin or English" autocomplete="off" autocapitalize="off" spellcheck="false"></div>' +
+      '<div class="wl-search"><input id="wsearch" type="search" placeholder="Search: characters, pinyin or English" autocomplete="off" autocapitalize="off" spellcheck="false"></div>' +
       '<div class="wl-modes"><button class="modecard" data-go="#/words/maker"><span class="mi">🧩</span><span class="mt"><b>Word Maker</b><small>Put characters together and see what you get!</small></span></button>' +
       '<button class="modecard" data-go="#/words/puzzles"><span class="mi">🎯</span><span class="mt"><b>Word Puzzles</b><small>8 quick words to build</small></span></button></div>' +
       chapters + '<p class="wl-none" id="wnone" hidden>No words match.</p>' + A.tabbar('words') + '</div>';
+    A.bindTop(hub);
     Array.prototype.forEach.call(app.querySelectorAll('.wcard'), function (b) {
       b.onclick = function () { showCard(ALL[parseInt(b.getAttribute('data-i'), 10)], false); };
     });

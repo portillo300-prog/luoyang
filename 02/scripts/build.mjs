@@ -8,6 +8,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { check as checkContent } from './check-content.mjs';
+import { spawnSync } from 'node:child_process';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const cacheDir = path.join(root, 'scripts', '.cache');
@@ -24,6 +25,31 @@ const C = sandbox.window.CONTENT;
   notes.forEach((n) => console.log('  note: ' + n));
   if (errors.length) { console.error('\nCONTENT ERRORS (' + errors.length + ') - fix these first:\n - ' + errors.join('\n - ')); process.exit(1); }
   console.log('content checks passed');
+  // the published files must not mention AI either (Oscar's discretion rule)
+  const bad = [];
+  for (const f of fs.readdirSync(root)) {
+    if (!/\.(js|html|md|json|webmanifest|txt|css)$/.test(f) || f === 'strokes.js' || f.includes('.bak')) continue;
+    const t = fs.readFileSync(path.join(root, f), 'utf8');
+    if (/\b(claude|alfonso|anthropic|chatgpt|openai)\b/i.test(t)) bad.push(f);
+  }
+  if (bad.length) { console.error('\nDISCRETION ERROR: AI/Claude/Alfonso mentioned in ' + bad.join(', ')); process.exit(1); }
+}
+
+// Traditional twins for every display string that contains Chinese (so Study text, questions and games switch script too).
+// Needs python3 + opencc (see Drive doc 14). Strings under keys s, t, py, chunks, tchunks are skipped: those carry their own forms.
+{
+  const SKIP = new Set(['s', 't', 'py', 'alt', 'chunks', 'tchunks', 'id', 'lessonId', 'icon', 'sticker', 'accent', 'chapter', 'type']);
+  const strings = new Set();
+  (function walk(o, k) {
+    if (typeof o === 'string') { if (/\p{Script=Han}/u.test(o) && !SKIP.has(k)) strings.add(o); }
+    else if (Array.isArray(o)) o.forEach((x) => walk(x, k));
+    else if (o && typeof o === 'object') for (const [kk, v] of Object.entries(o)) walk(v, kk);
+  })(C);
+  const tmp = path.join(cacheDir, 'trad-in.json');
+  fs.writeFileSync(tmp, JSON.stringify([...strings]));
+  const r = spawnSync('python3', [path.join(root, 'scripts', 'make-trad.py'), tmp, path.join(root, 'trad.js')], { encoding: 'utf8' });
+  if (r.status !== 0) { console.error('\nTRADITIONAL STEP FAILED (needs python3 + opencc):\n' + r.stderr); process.exit(1); }
+  console.log(r.stdout.trim());
 }
 
 const SIMP = (c) => `https://cdn.jsdelivr.net/npm/hanzi-writer-data@2/${encodeURIComponent(c)}.json`;
@@ -83,7 +109,7 @@ console.log(`strokes.js: ${Object.keys(out).length} characters (${[...need.value
 
 // stamp a version so devices refresh their offline copy
 const audioFiles = fs.existsSync(path.join(root, 'audio')) ? fs.readdirSync(path.join(root, 'audio')).filter((f) => f.endsWith('.m4a')).sort().map((f) => 'audio/' + f) : [];
-const core = ['index.html', 'styles.css', 'app.js', 'fx.js', 'garden.js', 'games.js', 'games2.js', 'games3.js', 'fill.js', 'unit.js', 'phrases.js', 'words.js', 'content.js', 'strokes.js', 'audio-manifest.js', 'manifest.webmanifest', 'vendor/hanzi-writer.min.js'];
+const core = ['index.html', 'styles.css', 'app.js', 'fx.js', 'garden.js', 'games.js', 'games2.js', 'games3.js', 'fill.js', 'unit.js', 'phrases.js', 'words.js', 'content.js', 'trad.js', 'strokes.js', 'audio-manifest.js', 'manifest.webmanifest', 'vendor/hanzi-writer.min.js'];
 const files = [...core, ...audioFiles];
 const h = crypto.createHash('sha1');
 for (const f of files) h.update(fs.readFileSync(path.join(root, f)));

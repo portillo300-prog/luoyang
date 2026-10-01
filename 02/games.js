@@ -15,11 +15,12 @@
     var list = GAMES.filter(function (g) { return !g.hidden; }).sort(function (a, b) { return (a.order || 50) - (b.order || 50); });
     app.innerHTML =
       '<div class="screen has-tabs">' +
-      '<div class="topbar"><span class="title gtitle">🎮 Games</span>' + A.walletPill() + '</div>' +
+      '<div class="topbar"><span class="title gtitle">🎮 Games</span>' + A.scriptToggle() + A.walletPill() + '</div>' +
       '<p class="shophint">Play, earn ⭐, and spend them in your Garden 🌷</p>' +
       '<div class="gamegrid">' + list.map(function (g, i) {
         return '<button class="gamecard" style="animation-delay:' + (i * 0.05) + 's" data-go="#/g/' + g.id + '"><span class="gicon">' + g.icon + '</span><span class="gname">' + g.name + '</span><span class="gtag">' + g.tag + '</span><span class="gearn">earn up to ⭐ 8</span></button>';
       }).join('') + '</div>' + A.tabbar('games') + '</div>';
+    A.bindTop(renderHub);
   }
 
   /* ---------- helpers shared by the games ---------- */
@@ -51,7 +52,7 @@
     }
     app.innerHTML =
       '<div class="screen">' +
-      '<div class="topbar"><button class="btn" data-go="#/games">‹ Games</button>' + A.walletPill() + '</div>' +
+      '<div class="topbar"><button class="btn" data-go="#/games">‹ Games</button><span class="spacer"></span>' + A.scriptToggle() + A.walletPill() + '</div>' +
       '<div class="hero small"><div class="bigemoji">' + cfg.icon.replace('bubble-ico', 'bubble-ico big') + '</div><h1 class="gh">' + cfg.name + '</h1>' +
       '<p class="shophint">' + cfg.how + '</p></div>' +
       modeHtml +
@@ -60,6 +61,7 @@
         return '<button class="chip' + (sel.indexOf(L.id) >= 0 ? ' on' : '') + '" data-l="' + L.id + '">Chapter ' + L.number + ' ' + L.sticker + '</button>';
       }).join('') + '</div><p class="shophint" id="poolHint"></p>') +
       '<div class="startrow"><button class="btn primary big" id="start">▶ Start</button></div></div>';
+    A.bindTop(function () { A.gameSetup(cfg); });
     function hint() { var h = $('poolHint'); if (h) h.textContent = A.poolFor(A.selectedLessons()).length + ' words in play'; }
     hint();
     Array.prototype.forEach.call(app.querySelectorAll('.chip[data-l]'), function (c) {

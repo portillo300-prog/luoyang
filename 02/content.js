@@ -1560,7 +1560,7 @@ window.CONTENT = {
         }
       ],
       "reflection": {
-        "prompt_en": "Writing prompt from the book: write a paragraph of at least 100 characters titled \"如果我是翟峰，我会（不会）……\" (If I were Zhai Feng, I would (would not)…), using this chapter's vocabulary. The app does not grade it. Copy your writing and paste it to Claude for feedback.",
+        "prompt_en": "Writing prompt from the book: write a paragraph of at least 100 characters titled \"如果我是翟峰，我会（不会）……\" (If I were Zhai Feng, I would (would not)…), using this chapter's vocabulary. The app does not grade it: it is your own reflection.",
         "questions": [
           "你有什么爱好吗？它给你的生活带来了什么好处？(Do you have a hobby? What good has it brought to your life?)",
           "你觉得应该怎么处理爱好和工作、家庭、生活的关系？举例说明。(How do you think a hobby should be balanced with work, family and life? Give examples.)",

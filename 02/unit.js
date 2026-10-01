@@ -95,7 +95,7 @@
     }).join('');
     var disc = '';
     if (g.discrimination) {
-      var lab = g.labels || ['如何', '怎么'];
+      var lab = g.labels || ['如何', A.script() === 't' ? '怎麼' : '怎么'];
       disc = '<div class="disc">' + g.discrimination.map(function (row) {
         return '<div class="drow"><div class="dcell"><b>' + esc(lab[0]) + '</b><br>' + esc(row.a || row.ruhe) + '</div><div class="dcell"><b>' + esc(lab[1]) + '</b><br>' + esc(row.b || row.zenme) + '</div></div>';
       }).join('') + '</div>';
@@ -137,7 +137,7 @@
       '<div class="uhero"><div class="uheroZh">' + esc(scriptText(u.title)) + '</div><div class="uheroEn">' + esc(u.en) + '</div>' + (u.source ? '<div class="usource">' + esc(u.source) + '</div>' : '') + '</div>' +
       (A.exprToggle ? A.exprToggle(u) : '') +
       section('📖 Reading — tap a sentence for English', renderReading(u)) +
-      (u.grammar || []).map(function (g) { return section('💡 ' + g.point, renderGrammarCard(g)); }).join('') +
+      (u.grammar || []).map(function (g) { return section('💡 ' + A.T(g.point), renderGrammarCard(g)); }).join('') +
       section('🧭 ' + ((u.background && u.background.en) || 'Background'), u.background ? renderBackground(u) : '') +
       section('🧩 Word Collocations', u.collocations ? renderCollocations(u) : '') +
       section('✏️ Reflect (write in Chinese — not graded)', renderReflection(u)) +

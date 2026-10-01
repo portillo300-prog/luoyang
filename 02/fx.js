@@ -280,8 +280,8 @@
   FX.praise = bag([
     { zh: '你真棒!', py: 'ni3 zhen1 bang4', en: "You're awesome!", emoji: '👍', anim: 'thumb' },
     { zh: '太棒了!', py: 'tai4 bang4 le5', en: 'Fantastic!', emoji: '🌟', anim: 'spin' },
-    { zh: '真厉害!', py: 'zhen1 li4 hai5', en: 'So impressive!', emoji: '👏', anim: 'clap' },
-    { zh: '好极了!', py: 'hao3 ji2 le5', en: 'Excellent!', emoji: '🎉', anim: 'pop' },
+    { zh: '真厉害!', zt: '真厲害!', py: 'zhen1 li4 hai5', en: 'So impressive!', emoji: '👏', anim: 'clap' },
+    { zh: '好极了!', zt: '好極了!', py: 'hao3 ji2 le5', en: 'Excellent!', emoji: '🎉', anim: 'pop' },
     { en: 'Well done!', emoji: '⭐', anim: 'spin' },
     { en: 'Great job!', emoji: '👍', anim: 'thumb' },
     { en: "You're becoming a pro!", emoji: '🚀', anim: 'rocket' },
@@ -303,6 +303,6 @@
   FX.cheerWin = bag([
     { zh: '太棒了!', py: 'tai4 bang4 le5', en: 'Fantastic!' },
     { zh: '你真棒!', py: 'ni3 zhen1 bang4', en: "You're awesome!" },
-    { zh: '真厉害!', py: 'zhen1 li4 hai5', en: 'So impressive!' }
+    { zh: '真厉害!', zt: '真厲害!', py: 'zhen1 li4 hai5', en: 'So impressive!' }
   ]);
 })();

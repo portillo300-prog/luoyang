@@ -1,5 +1,5 @@
 /* Chapter-based games: Collocation Match, Which Word Fits?, Weather Match.
-   They read the book's own material (词语搭配 tables, word-choice exercises, warm-up) for whichever chapters are switched on. */
+   They read the book's own material (word-pairing tables, word-choice exercises, warm-up) for whichever chapters are switched on. */
 (window.HANZI_MODS = window.HANZI_MODS || []).push(function (A) {
   'use strict';
   var FX = A.FX, $ = A.$, app = A.app, C = window.CONTENT;
@@ -71,7 +71,7 @@
   }
 
   /* ---------------- Collocation Match ---------------- */
-  var collCfg = { id: 'colloc', order: 55, name: 'Collocation Match', icon: '🧩', tag: 'Which word goes with it?', how: "Pick the word the book pairs with the one on top. These come from each chapter's 词语搭配 tables.", done: 'Great pairing!' };
+  var collCfg = { id: 'colloc', order: 55, name: 'Collocation Match', icon: '🧩', tag: 'Which word goes with it?', how: "Pick the word the book pairs with the one on top. These come from each chapter's word-pairing tables.", done: 'Great pairing!' };
   reg(collCfg, collocPlay);
 
   function collocPlay(cfg) {
@@ -111,9 +111,9 @@
     });
     if (qs.length < 3) return A.go('#/games');
     var rounds = pick(qs, ROUNDS).map(function (q) {
-      var zh = q.q, en = '';
-      var paren = q.q.match(/\s*\((".*?")\)\s*$/);
-      if (paren) { zh = q.q.slice(0, paren.index); en = paren[1].replace(/^"|"$/g, ''); }
+      var qq = A.T(q.q), zh = qq, en = '';
+      var paren = qq.match(/\s*\((".*?")\)\s*$/);
+      if (paren) { zh = qq.slice(0, paren.index); en = paren[1].replace(/^"|"$/g, ''); }
       zh = zh.replace(/\s*Which fits\?\s*$/, '').replace(/^(.*?)____(.*)$/, function (_, a, b) { return A.esc(a) + '<span class="gblank"></span>' + A.esc(b); });
       return {
         prompt: '<div class="gq">Which word fits?</div><div class="gqtext">' + zh + '</div>' + (en ? '<div class="gtry gsoft">' + A.esc(en) + '</div>' : ''),

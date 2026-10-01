@@ -60,6 +60,24 @@
     return hits.slice(0, 3);
   }
 
+  /* In the Traditional pass, any character that exists only in Simplified must never appear on screen (found 2026-09-30: games and quiz text stayed Simplified
+     when Oscar switched to Traditional). The set is built from every simplified/traditional pair in the content. */
+  var simpOnly = null;
+  function simpOnlySet() {
+    if (simpOnly) return simpOnly;
+    var S = {}, T = {}, C = window.CONTENT;
+    function add(a, b) { if (typeof a !== 'string' || typeof b !== 'string') return; var A = Array.from(a), B = Array.from(b); if (A.length !== B.length) return; A.forEach(function (c, i) { if (c !== B[i]) S[c] = 1; T[B[i]] = 1; }); }
+    function walk(o) { if (!o || typeof o !== 'object') return; if (typeof o.s === 'string' && typeof o.t === 'string') add(o.s, o.t); if (Array.isArray(o.chunks) && Array.isArray(o.tchunks)) o.chunks.forEach(function (c, i) { add(c, o.tchunks[i]); }); Object.keys(o).forEach(function (k) { walk(o[k]); }); }
+    walk(C);
+    simpOnly = {}; Object.keys(S).forEach(function (c) { if (c !== '简' && !T[c] && /\p{Script=Han}/u.test(c)) simpOnly[c] = 1; });
+    return simpOnly;
+  }
+  function simplifiedLeaks() {
+    var set = simpOnlySet(), txt = (document.getElementById('app') || document.body).innerText, found = {};
+    Array.from(txt).forEach(function (c) { if (set[c]) found[c] = 1; });
+    var l = Object.keys(found); return l.length ? l.slice(0, 8).join('') + (l.length > 8 ? '…' : '') : '';
+  }
+
   async function pass(label, routes) {
     var lines = [], fails = 0;
     for (var i = 0; i < routes.length; i++) {
@@ -67,8 +85,16 @@
       location.hash = r; await wait(750);
       var app = document.getElementById('app') || document.body, txt = app.innerText.replace(/\s+/g, ' ').trim();
       var probs = [];
+      /* games pick random content each play: in the Traditional pass replay each game several times so one unlucky question cannot hide a leak
+         (found 2026-09-30: one 'Which Word Fits?' question stayed Simplified while the sweep happened to draw a clean one) */
+      var extraLeaks = '';
+      if (label === 'traditional' && /^#\/g\/[a-z]+\/play$/.test(r)) {
+        for (var rep = 0; rep < 12; rep++) { location.hash = r.replace('/play', ''); await wait(70); location.hash = r; await wait(220); var l2 = simplifiedLeaks(); if (l2) { extraLeaks = l2; break; } }
+      }
+      if (extraLeaks) probs.push('SIMPLIFIED-IN-TRADITIONAL (replay) ' + extraLeaks);
       if (txt.length < 6) probs.push('BLANK');
       var oe = overflow(); if (oe.length) probs.push('OVERFLOW ' + oe.join(','));
+      if (label === 'traditional') { var sl = simplifiedLeaks(); if (sl) probs.push('SIMPLIFIED-IN-TRADITIONAL ' + sl); }
       var aj = activeJump(); if (aj.length) probs.push('TOUCH-JUMP ' + aj.join(', '));
       var ne = errs.slice(before); if (ne.length) probs.push('CONSOLE ' + ne.join(' || '));
       if (probs.length) fails++;

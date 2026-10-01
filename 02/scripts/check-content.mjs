@@ -79,6 +79,11 @@ export function check(C) {
   }
   for (const u of C.units || []) for (const w of (u.warmup && u.warmup.weather) || []) if (!w.s || !w.t || !w.py || !w.icon) err(`weather item "${w.s}": missing a field`);
 
+  // Oscar's standing rule: nothing public mentions AI, Claude or Alfonso (app text is public)
+  const banned = /\b(claude|alfonso|anthropic|chatgpt|openai|ai-generated|ai assistant)\b/i;
+  const hit = JSON.stringify(C).match(banned);
+  if (hit) err(`content mentions "${hit[0]}" — app text is public and must never mention AI, Claude or Alfonso`);
+
   return { errors, notes };
 }
 

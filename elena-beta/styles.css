@@ -1032,3 +1032,7 @@ body {
   .ph-grid { max-width: 720px; } .ph-zh { font-size: 56px; } .ph-py { font-size: 26px; } .ph-cap { font-size: 22px; }
   .gpet { width: 150px; }
 }
+.swaprow { display: flex; justify-content: center; margin: 0 0 12px; }
+
+.pt-fav { color: #e8478b; font-size: 13px; font-weight: 800; margin-left: 6px; }
+#ptstore .section-title { margin-top: 14px; }

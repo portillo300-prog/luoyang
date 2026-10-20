@@ -120,12 +120,12 @@
     store.set('storydone', sdone);
     nextSet[S.id] = (n + 1) % S.sets.length; store.set('storynext', nextSet);
     A.earn(2 + stars * 2 + (isNew ? 3 : 0));
-    if (firstSet) A.earnGold(stars);                 // readings pay golden stars the first time each question set is finished...
+    var gold = firstSet ? (stars === 3 ? 2 : 1) : 0; if (gold) A.earnGold(gold);                 // readings pay golden stars the first time each question set is finished...
     var meals = A.addKibble ? A.addKibble(firstSet ? stars : 1) : 0;   // ...and feed the pet (kibble comes only from reading; a replay gives 1)
     Q = null;
     A.showWin({
       emoji: stars === 3 ? '🏆' : '🎉', title: 'Great reading!', accent: A.acc(L), stars: stars,
-      lines: ['You got ' + first + ' of ' + total + ' on the first try. Questions ' + SN[n % S.sets.length] + ' done. Next time: Questions ' + SN[(n + 1) % S.sets.length] + '!', (firstSet ? '+' + stars + ' 🌟' : '') + (meals ? (firstSet ? ' and ' : '') + '+' + meals + ' 🥣 for your pup!' : '')],
+      lines: ['You got ' + first + ' of ' + total + ' on the first try. Questions ' + SN[n % S.sets.length] + ' done. Next time: Questions ' + SN[(n + 1) % S.sets.length] + '!', (gold ? '+' + gold + ' 🌟' : '') + (meals ? (firstSet ? ' and ' : '') + '+' + meals + ' 🥣 for your pet!' : '')],
       primary: { label: 'Questions ' + SN[(n + 1) % S.sets.length], fn: function () { A.go('#/s/' + S.id + '/q'); } },
       secondary: { label: 'Back to lesson', fn: function () { A.go('#/l/' + L.id); } }
     });

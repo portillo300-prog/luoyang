@@ -66,7 +66,7 @@
     store.set('wallet', wallet);
   }
   if (typeof wallet.gold !== 'number') wallet.gold = 0;   // golden stars (readings + quizzes), each worth GOLD_WORTH regular stars
-  var GOLD_WORTH = 5;
+  var GOLD_WORTH = 25;
   function updateChips() {
     Array.prototype.forEach.call(document.querySelectorAll('.wnum'), function (e) { e.textContent = wallet.bal; });
     Array.prototype.forEach.call(document.querySelectorAll('.gnum'), function (e) { e.textContent = wallet.gold; });
@@ -85,6 +85,11 @@
     if (!(n > 0)) return;
     wallet.gold += n; store.set('wallet', wallet);
     toast('+' + n + ' 🌟'); updateChips();
+  }
+  // swap n super stars for regular stars (the exchange button)
+  function exchangeGold(n) {
+    n = Math.floor(n); if (!(n > 0) || wallet.gold < n) return false;
+    wallet.gold -= n; wallet.bal += n * GOLD_WORTH; store.set('wallet', wallet); updateChips(); return true;
   }
   // pay with regular stars first, then golden stars (each worth GOLD_WORTH); change comes back as regular stars
   function canAfford(n) { return wallet.bal + wallet.gold * GOLD_WORTH >= n; }
@@ -256,7 +261,7 @@
     if (L.hidden) return;
     var b = badge(L);
     if (b.writer || doneCount(L) < L.items.length) return;
-    b.writer = true; store.set('badges', badges); earn(10);
+    b.writer = true; store.set('badges', badges); earn(10); earnGold(3);
     later(function () {
       showWin({
         emoji: '🎉', title: 'Lesson complete!', accent: acc(L),
@@ -712,12 +717,14 @@
     var L = Q.L, first = Q.res.filter(function (r) { return r === 'first'; }).length;
     var stars = first >= 7 ? 3 : first >= 5 ? 2 : 1;
     var b = badge(L), isNew = !b.quiz, ver = Q.ver;
+    var prevStars = (b.qv && b.qv[ver]) || 0;
     if (!b.quiz || stars > b.quiz) b.quiz = stars;
     b.qv = b.qv || {}; if (!b.qv[ver] || stars > b.qv[ver]) b.qv[ver] = stars;
     qnext[L.id] = (ver + 1) % 3; store.set('qnext', qnext);
     store.set('badges', badges);
     earn(3 + stars * 2 + (isNew ? 5 : 0));
-    if (stars >= 2) earnGold(stars - 1);   // 2 stars = 1 golden, 3 stars = 2 golden
+    var goldFor = function (n) { return n >= 2 ? n - 1 : 0; };
+    earnGold(Math.max(0, goldFor(stars) - goldFor(prevStars)));   // 2 stars = 1 super star, 3 stars = 2; only for beating your best on that quiz
     var msg = stars === 3 ? 'Amazing! You got ' + first + ' of 8 on the first try!' :
               stars === 2 ? 'Great work! ' + first + ' of 8 on the first try.' :
               'You finished the quiz! Every try makes you stronger.';
@@ -817,7 +824,7 @@
     $: $, go: go, later: later, shuffle: shuffle, esc: esc, row: row, glyph: glyph,
     pinyinHTML: pinyinHTML, pinyinText: pinyinText, textOf: textOf, keyOf: keyOf, acc: acc, plain: plainEn,
     say: say, hasVoice: hasVoice, showWin: showWin, showPraise: showPraise, hint: hint, soundBtn: soundBtn, scriptToggle: scriptToggle, themeSeg: themeSeg,
-    bindTop: bindTop, earn: earn, spend: spend, earnGold: earnGold, spendMixed: spendMixed, canAfford: canAfford, goldWorth: GOLD_WORTH, toast: toast, walletPill: walletPill, tabbar: tabbar,
+    bindTop: bindTop, earn: earn, spend: spend, earnGold: earnGold, exchangeGold: exchangeGold, spendMixed: spendMixed, canAfford: canAfford, goldWorth: GOLD_WORTH, toast: toast, walletPill: walletPill, tabbar: tabbar,
     wallet: function () { return wallet; },
     cssVar: cssVar, nudgeHTML: nudgeHTML, clash: clash,
     script: function () { return script; },

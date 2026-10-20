@@ -165,8 +165,8 @@
       }).join('') + '</div></div>';
     }).join('');
     app.innerHTML = '<div class="screen has-tabs garden">' + header('shop') +
-      '<p class="shophint">You have <b>⭐ <span class="wnum">' + bal + '</span></b> and <b>🌟 <span class="gnum">' + A.wallet().gold + '</span></b> (each 🌟 counts as ' + A.goldWorth + ' ⭐). Earn more by practicing, reading and games!</p>' + scenes + cats + A.tabbar('garden') + '</div>';
-    bindHeader();
+      '<p class="shophint">You have <b>⭐ <span class="wnum">' + bal + '</span></b> and <b>🌟 <span class="gnum">' + A.wallet().gold + '</span></b> (each 🌟 counts as ' + A.goldWorth + ' ⭐). Earn more by practicing, reading and games!</p>' + A.swapButton() + scenes + cats + A.tabbar('garden') + '</div>';
+    bindHeader(); A.bindSwap(app, renderShop);
     Array.prototype.forEach.call(app.querySelectorAll('[data-e]'), function (b) {
       b.onclick = function () { confirmBuy({ e: b.getAttribute('data-e'), p: parseInt(b.getAttribute('data-p'), 10), n: b.getAttribute('data-n') }); };
     });
@@ -184,6 +184,20 @@
     return { el: m, close: close };
   }
   A.modal = modal;
+  // exchange: swap super stars 🌟 for regular stars ⭐ (shown on the shop and pet pages)
+  A.swapButton = function () { return '<div class="swaprow"><button class="btn" data-swap="1">🔁 Swap 🌟 for ⭐</button></div>'; };
+  A.bindSwap = function (root, after) {
+    Array.prototype.forEach.call((root || app).querySelectorAll('[data-swap]'), function (b) { b.onclick = function () { A.openExchange(after); }; });
+  };
+  A.openExchange = function (after) {
+    var g = A.wallet().gold, w = A.goldWorth;
+    var m = modal('<div class="me">🔁</div><div class="mn">Swap super stars</div><div class="mm">You have <b>🌟 ' + g + '</b>. Each 🌟 swaps for <b>⭐ ' + w + '</b>.</div>' +
+      '<div class="mb">' + (g > 0 ? '<button class="btn primary" id="x-one">Swap 1 🌟 → ⭐ ' + w + '</button>' : '') + (g > 1 ? '<button class="btn" id="x-all">Swap all ' + g + ' 🌟 → ⭐ ' + (g * w) + '</button>' : '') + '<button class="btn" id="x-no">' + (g > 0 ? 'Not now' : 'OK') + '</button></div>');
+    function done(n) { if (A.exchangeGold(n)) { FX.ding(); FX.confetti({ x: 0.5, y: 0.5, n: 40 }); } m.close(); if (after) after(); }
+    if ($('x-one')) $('x-one').onclick = function () { done(1); };
+    if ($('x-all')) $('x-all').onclick = function () { done(A.wallet().gold); };
+    $('x-no').onclick = m.close;
+  };
 
   function confirmBuy(it) {
     var bal = A.wallet().bal + A.wallet().gold * A.goldWorth;

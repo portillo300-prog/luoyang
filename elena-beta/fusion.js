@@ -177,10 +177,10 @@
     A.say({ s: r.key }, false, true);
   }
   function roomDone() {
-    A.earn(10); A.earnGold(2);
+    A.earn(10); A.earnGold(1);
     A.showWin({
       emoji: R.room.icon, title: 'Room complete!', accent: A.cssVar('--accent'), stars: 3,
-      lines: ['You found every character in ' + R.room.name + '!', '+10 ⭐ and +2 🌟'],
+      lines: ['You found every character in ' + R.room.name + '!', '+10 ⭐ and +1 🌟'],
       primary: { label: 'More rooms', fn: function () { A.go('#/g/fusion'); } },
       secondary: { label: 'Stay here', fn: function () { } }
     });

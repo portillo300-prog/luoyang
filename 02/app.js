@@ -809,9 +809,17 @@
   }).join('');
   document.body.appendChild(nav);
   nav.addEventListener('click', function (e) { var t = e.target.closest ? e.target.closest('[data-go]') : null; if (t) go(t.getAttribute('data-go')); });
+  /* Screens with no bar (games in play, quizzes, writing) get one small home button in the same lower corner, so there is always a one-tap way out. */
+  var homeFab = document.createElement('button');
+  homeFab.className = 'homefab'; homeFab.id = 'homefab'; homeFab.hidden = true; homeFab.setAttribute('aria-label', 'Home');
+  homeFab.innerHTML = '<span class="hi">⌂</span><span class="hl">Home</span>';
+  document.body.appendChild(homeFab);
+  homeFab.addEventListener('click', function () { go('#/'); });
   function syncNav() {
     var m = app.querySelector('.tabmark');
     nav.hidden = !m;
+    homeFab.hidden = !!m || (location.hash || '#/') === '#/';
+    document.body.classList.toggle('fabon', !homeFab.hidden);   // the screen shrinks above the button, so it never covers anything
     if (m) Array.prototype.forEach.call(nav.querySelectorAll('.tab'), function (b) { b.classList.toggle('on', b.getAttribute('data-tab') === m.getAttribute('data-tab')); });
   }
   new MutationObserver(syncNav).observe(app, { childList: true });

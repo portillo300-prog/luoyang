@@ -956,3 +956,24 @@ mark.hl { background: var(--hl); color: inherit; border-radius: 6px; padding: 1p
 /* the English for a tapped sentence sits right under it */
 .ren-inline { display: block; margin: 6px 0 12px; padding: 8px 12px; border-left: 4px solid var(--acc, var(--accent)); border-radius: 4px 12px 12px 4px; background: var(--panel-2); color: var(--muted); font-style: italic; font-size: 16px; line-height: 1.5; -webkit-user-select: none; user-select: none; }
 .rpara.sent .ren { display: none; }
+
+/* small home button on screens that have no bottom bar: the screen shrinks to leave it its own strip */
+body.fabon #app { bottom: calc(60px + env(safe-area-inset-bottom)); }
+.homefab { position: fixed; left: 12px; bottom: calc(8px + env(safe-area-inset-bottom)); z-index: 400; height: 46px; padding: 0 16px 0 12px; border-radius: 999px; gap: 6px; line-height: 1; display: flex; align-items: center; justify-content: center; color: var(--text); background: var(--tab-bg); border: 2px solid var(--line); box-shadow: 0 4px 14px var(--shadow-1); }
+.homefab:active { transform: scale(.94); }
+.homefab[hidden] { display: none !important; }
+.homefab .hi { font-size: 26px; font-weight: 800; }
+.homefab .hl { font-size: 15px; font-weight: 800; letter-spacing: .02em; }
+
+/* short phones (iPhone SE size): the home strip takes 60px, so the tone houses get a compact layout */
+@media (max-height: 740px) {
+  body.fabon .houses { gap: 8px; padding: 6px 0 2px; }
+  body.fabon .house, body.fabon .houses.five .house { min-height: 0; padding: 4px 6px; gap: 0; border-radius: 20px; }
+  body.fabon .houses.five .house:last-child { min-height: 0; }
+  body.fabon .hroof, body.fabon .houses.five .hroof { font-size: 18px; }
+  body.fabon .hmark, body.fabon .houses.five .hmark { font-size: 30px; }
+  body.fabon .hname { font-size: 16px; }
+  body.fabon .hhow { font-size: 12px; }
+  body.fabon .tc-glyph { font-size: clamp(64px, 12vmin, 100px); }
+  body.fabon .tc-py { font-size: clamp(26px, 5vmin, 40px); }
+}

@@ -977,3 +977,10 @@ body.fabon #app { bottom: calc(60px + env(safe-area-inset-bottom)); }
   body.fabon .tc-glyph { font-size: clamp(64px, 12vmin, 100px); }
   body.fabon .tc-py { font-size: clamp(26px, 5vmin, 40px); }
 }
+
+/* story voice: small speaker button beside each reading sentence + the "listen to the whole story" bar */
+.ownsp { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin: 0 6px 0 2px; vertical-align: middle; border-radius: 50%; font-size: 18px; line-height: 1; background: var(--panel-2); border: 2px solid var(--line); -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.ownsp:active { background: var(--press); }
+.ownbar { margin: 4px 0 10px; }
+.ownall { width: 100%; min-height: 52px; }
+.uheroZh .ownsp { width: 48px; height: 48px; font-size: 22px; margin-left: 10px; }

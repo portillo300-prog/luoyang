@@ -38,12 +38,14 @@
 
   function section(title, inner) { return inner ? '<div class="usec"><h3>' + esc(title) + '</h3>' + inner + '</div>' : ''; }
 
+  var curUnitForAudio = null;   // the unit being drawn, so each sentence can find its clip
   var openEn = {};   // which sentence translations are open (kept across redraws): "unit|sec|para|sentence"
   function renderPara(p, i, uid, sec) {
     if (p.sentences && p.sentences.length) {
       return '<div class="rpara sent" data-i="' + i + '" data-sec="' + sec + '"><div class="rzh">' + p.sentences.map(function (x, k) {
         var inner = A.markup ? A.markup(uid, sec, i, k, x) : esc(scriptText(x)), open = openEn[uid + '|' + sec + '|' + i + '|' + k];
-        return '<span class="rsent' + (open ? ' on' : '') + '" data-k="' + k + '" data-en="' + esc(x.en) + '">' + inner + '</span>' +
+        var spk = (sec === 'r' && window.OWNV && curUnitForAudio) ? window.OWNV.btn(window.OWNV.sentId(curUnitForAudio, i, k), 'Hear this sentence') : '';
+        return spk + '<span class="rsent' + (open ? ' on' : '') + '" data-k="' + k + '" data-en="' + esc(x.en) + '">' + inner + '</span>' +
           (open ? '<span class="ren-inline">' + esc(x.en) + '</span>' : '');
       }).join('') + '</div></div>';
     }
@@ -55,7 +57,9 @@
 
   function renderReading(u) {
     var pgs = (u.reading && u.reading.paragraphs) || [];
-    return pgs.map(function (p, i) { return renderPara(p, i, u.id, 'r'); }).join('');
+    var V = window.OWNV, all = V ? V.readingIds(u) : [];
+    var bar = all.length ? '<div class="ownbar"><button type="button" class="btn ownall" data-ownall="' + u.id + '">▶ Listen to the whole story</button></div>' : '';
+    return bar + pgs.map(function (p, i) { return renderPara(p, i, u.id, 'r'); }).join('');
   }
 
   function renderBackground(u) {
@@ -82,6 +86,20 @@
       };
     });
   }
+
+  /* story voice: speaker buttons + "Listen to the whole story" (tap again to stop) */
+  var playingAll = false;
+  function bindOwnAudio(u) {
+    var V = window.OWNV; if (!V) return;
+    V.bind(app);
+    var all = app.querySelector('[data-ownall]');
+    if (all) all.onclick = function () {
+      if (playingAll) { V.stop(); playingAll = false; all.textContent = '▶ Listen to the whole story'; return; }
+      playingAll = true; all.textContent = '■ Stop';
+      V.playAll(V.readingIds(u), true).then(function () { playingAll = false; var b = app.querySelector('[data-ownall]'); if (b) b.textContent = '▶ Listen to the whole story'; });
+    };
+  }
+  window.addEventListener('hashchange', function () { playingAll = false; if (window.OWNV) window.OWNV.stop(); });
 
   function renderGrammarCard(g) {
     var head = '<div class="gpoint">' + esc(g.point) + '</div>' + (g.py ? '<div class="gpy">' + plainPinyin(g.py) + '</div>' : '') +
@@ -130,11 +148,12 @@
   };
 
   function renderUnit(u) {
+    curUnitForAudio = u;
     var L = lessonFor(u);
     app.innerHTML = '<div class="screen study unit has-tabs" style="--acc:' + (L ? A.acc(L) : '#4fd1c5') + '">' +
       '<div class="topbar"><button class="btn" data-go="#/study">‹ Study</button><span class="spacer"></span>' + A.themeSeg() + A.scriptToggle() + A.walletPill() + '</div>' +
       '<div class="uscroll" data-uid="' + u.id + '">' +
-      '<div class="uhero"><div class="uheroZh">' + esc(scriptText(u.title)) + '</div><div class="uheroEn">' + esc(u.en) + '</div>' + (u.source ? '<div class="usource">' + esc(u.source) + '</div>' : '') + '</div>' +
+      '<div class="uhero"><div class="uheroZh">' + esc(scriptText(u.title)) + (window.OWNV ? window.OWNV.btn(window.OWNV.titleId(u.id), 'Hear the title') : '') + '</div><div class="uheroEn">' + esc(u.en) + '</div>' + (u.source ? '<div class="usource">' + esc(u.source) + '</div>' : '') + '</div>' +
       (A.exprToggle ? A.exprToggle(u) : '') +
       section('📖 Reading — tap a sentence for English', renderReading(u)) +
       (u.grammar || []).map(function (g) { return section('💡 ' + A.T(g.point), renderGrammarCard(g)); }).join('') +
@@ -151,6 +170,7 @@
     curUnit = u;
     A.bindTop(function () { renderUnit(u); });
     bindReading();
+    bindOwnAudio(u);
     if (A.afterUnit) A.afterUnit(u);
     var rt = $('rtext');
     if (rt) rt.onblur = function () { A.store.set('reflect.' + u.id, rt.value); };

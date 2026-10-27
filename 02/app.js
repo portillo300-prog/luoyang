@@ -828,5 +828,7 @@
   }
   new MutationObserver(syncNav).observe(app, { childList: true });
 
+  /* opening the app lands on Study (the readings), not Practice; Practice is still the first tab and the Home buttons still go there */
+  if (!location.hash || location.hash === '#' || location.hash === '#/') { try { history.replaceState(null, '', '#/study'); } catch (e) { location.hash = '#/study'; } }
   route();
 })();

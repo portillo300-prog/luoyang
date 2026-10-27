@@ -112,13 +112,14 @@
           var slot = app.querySelector('.wslot[data-i="' + i + '"]');
           if (slot) { slot.innerHTML = A.glyph(ch); slot.classList.remove('current'); slot.classList.add('done'); }
           FX.ding();
+          if (A.hasVoice({ s: ch })) A.say({ s: ch }, false, true);   // this character's own sound
           cur.ci++;
           if (cur.ci < p.len) { A.later(writeChar, 650); return; }
           box.classList.add('celebrate');
           FX.confetti({ x: 0.5, y: 0.5, n: 45 });
           A.showPraise(FX.praise(), false);
           var said = { s: cur.all.slice(p.start, p.start + p.len).join('') };
-          if (A.hasVoice(said)) A.say(said, false);
+          if (A.hasVoice(said)) A.later(function () { A.say(said, false); }, 1300);
           if (cur.miss <= 1 && !cur.peeked) good++;
           idx++;
           A.later(next, 1800);

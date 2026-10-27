@@ -7,6 +7,21 @@
   var V = (window.OWNV = {});
   V.norm = function (t) { return String(t || '').replace(/[\s，。！？、：；,.!?:;“”‘’"'「」()（）…]/g, ''); };
   V.file = function (id) { var e = OWN.byId[id]; return e ? e.f : null; };
+  /* a whole word or single character by its text: one clip, one voice (never glued from parts) */
+  var t2s = null;   // traditional spelling -> simplified, built once from the chapter vocabulary (whole words and aligned characters)
+  function buildT2S() {
+    t2s = {};
+    ((window.CONTENT && window.CONTENT.lessons) || []).forEach(function (L) {
+      (L.words || []).forEach(function (w) {
+        if (!w.t || w.t === w.s) return;
+        t2s[w.t] = w.s;
+        var a = Array.from(w.t), b = Array.from(w.s);
+        if (a.length === b.length) a.forEach(function (c, i) { if (c !== b[i] && !t2s[c]) t2s[c] = b[i]; });
+      });
+    });
+  }
+  V.simp = function (t) { if (!t2s) buildT2S(); t = V.norm(t); return t2s[t] || Array.from(t).map(function (c) { return t2s[c] || c; }).join(''); };
+  V.fileForText = function (t) { var n = V.norm(t), id = OWN.byText[n] || OWN.byText[V.simp(n)]; return id ? V.file(id) : null; };
   V.chap = function (uid) { return String(uid).replace(/\D/g, ''); };
   V.titleId = function (uid) { return 'W' + V.chap(uid) + '-TITLE'; };
   /* sentence number across the reading: paragraph pi, sentence k -> W2-S07 */

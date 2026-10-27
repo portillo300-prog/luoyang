@@ -17,7 +17,7 @@
   function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 
   function discover() {
-    var A = window.HANZI, C = window.CONTENT, r = ['#/', '#/about', '#/games', '#/words', '#/words/maker', '#/words/puzzles', '#/garden', '#/garden/shop', '#/study', '#/phrases'];
+    var A = window.HANZI, C = window.CONTENT, r = ['#/', '#/about', '#/games', '#/words', '#/words/maker', '#/words/puzzles', '#/garden', '#/garden/shop', '#/pet', '#/pet/food', '#/pet/dogs', '#/study', '#/phrases'];
     (A.allLessons || []).forEach(function (L) { if (L.hidden) return; r.push('#/l/' + L.id, '#/w/' + L.id + '/0', '#/r/' + L.id + '/0', '#/q/' + L.id); });
     (C.units || []).forEach(function (u) { r.push('#/study/' + u.id, '#/study/' + u.id + '/quiz'); });
     (A.games || []).forEach(function (g) { r.push('#/g/' + g.id, '#/g/' + g.id + '/play'); });

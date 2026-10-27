@@ -75,14 +75,18 @@
     /* one-sentence translation: tap a sentence and its English opens RIGHT UNDER it; tap again to close.
        Several can stay open at once. Nothing is redrawn, so the page does not jump. */
     Array.prototype.forEach.call(app.querySelectorAll('.rsent'), function (sp) {
-      sp.onclick = function () {
-        var g = window.getSelection && window.getSelection();
-        if (g && !g.isCollapsed) return;                       // the reader is selecting text, not tapping
+      function toggleEn() {
         var para = sp.closest('.rpara'), sc = sp.closest('.uscroll');
         var key = (sc ? sc.getAttribute('data-uid') : '') + '|' + para.getAttribute('data-sec') + '|' + para.getAttribute('data-i') + '|' + sp.getAttribute('data-k');
         var nxt = sp.nextElementSibling;
         if (nxt && nxt.classList.contains('ren-inline')) { nxt.parentNode.removeChild(nxt); sp.classList.remove('on'); delete openEn[key]; }
         else { sp.insertAdjacentHTML('afterend', '<span class="ren-inline">' + esc(sp.getAttribute('data-en')) + '</span>'); sp.classList.add('on'); openEn[key] = 1; }
+      }
+      sp.onclick = function (ev) {
+        var g = window.getSelection && window.getSelection();
+        if (g && !g.isCollapsed) return;                       // the reader is selecting text, not tapping
+        if (A.wordTap && A.wordTap(ev, sp, toggleEn)) return;   // a vocabulary word: hear it + card
+        toggleEn();                                             // anywhere else: the sentence's English
       };
     });
   }
@@ -187,6 +191,7 @@
         alive = false;
         var pts = good * 3;
         if (pts) A.earn(pts);
+        if (A.addKibble) A.addKibble(Math.max(1, Math.ceil(good / 2)));
         app.innerHTML = '<div class="screen study"><div class="topbar"><button class="btn" data-go="#/study/' + u.id + '">‹ ' + esc(u.en) + '</button>' + A.walletPill() + '</div>' +
           '<div class="cfudone"><div class="bigemoji">' + (good === qs.length ? '🏆' : '✅') + '</div><h2>' + good + ' / ' + qs.length + ' correct</h2>' +
           (pts ? '<p>You earned ⭐ ' + pts + '!</p>' : '<p>No points this round — want to try again?</p>') +

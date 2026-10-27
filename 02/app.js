@@ -65,6 +65,7 @@
     wallet = { bal: start, life: start };
     store.set('wallet', wallet);
   }
+  if (typeof wallet.gold !== 'number') wallet.gold = 0;   // pet code reads wallet.gold; this app has no super stars yet
   function updateChips() { Array.prototype.forEach.call(document.querySelectorAll('.wnum'), function (e) { e.textContent = wallet.bal; }); }
   function toast(msg) {
     var d = document.createElement('div'); d.className = 'toast'; d.textContent = msg;
@@ -193,7 +194,7 @@
   }
 
   /* ---------- audio clips (recorded by native speakers) ---------- */
-  function clipFor(it) { return AUDIO[it.s] ? AUDIO[it.s].f : null; }
+  function clipFor(it) { var own = window.OWNV && window.OWNV.fileForText(it.s); if (own) return own; return AUDIO[it.s] ? AUDIO[it.s].f : null; }
   // a word with no recording of its own is read character by character, if every character has a clip
   function charClips(it) {
     var ch = Array.from(it.s);
@@ -451,6 +452,7 @@
     celebrateBoard();
     var total = W.chars.length;
     var count = Object.keys(W.doneSet).length;
+    if (total > 1) { var one = Array.from(W.it.s)[W.ci]; if (one) say({ s: one }, false, true); }   // each character plays ITS OWN sound; the whole word follows at the end
     if (count >= total) {
       showPraise(FX.praise(), false);
       if (total > 1) FX.word(); else FX.ding();
@@ -461,7 +463,7 @@
       hint('');
       $('next').classList.add('pulse');
       var it = W.it, L = W.L;
-      later(function () { if (W && W.it === it) say(it, false); }, 1000);
+      later(function () { if (W && W.it === it) say(it, false); }, total > 1 ? 1500 : 1000);
       checkWriterBadge(L);
     } else {
       showPraise(FX.mini(), true);
@@ -693,6 +695,7 @@
     if (!b.quiz || stars > b.quiz) b.quiz = stars;
     store.set('badges', badges);
     earn(3 + stars * 2 + (isNew ? 5 : 0));
+    if (A && A.addKibble) A.addKibble(stars);
     var msg = stars === 3 ? 'Amazing! You got ' + first + ' of 8 on the first try!' :
               stars === 2 ? 'Great work! ' + first + ' of 8 on the first try.' :
               'You finished the quiz. Keep going, every try helps.';
@@ -727,7 +730,7 @@
       '<div class="topbar"><button class="btn" data-go="#/">‹ Practice</button>' + themeSeg() + '</div>' +
       '<div class="acard"><h2>完蛋 Wándàn</h2><p>A personal app for studying an HSK textbook: readings and grammar notes with English, comprehension checks, character writing practice, fill-in-the-blank, and sentence-order games. It works with no internet, and nothing you do here leaves the device — no accounts, no tracking.</p></div>' +
       (speakers ? '<div class="acard"><h2>Voice recordings</h2><p>The spoken characters and words are real recordings by native speakers, shared on Wikimedia Commons under Creative Commons licenses. Thank you to everyone who lent their voice!</p>' + speakers + '</div>'
-        : '<div class="acard"><h2>Audio</h2><p class="muted">Word audio is planned for a later update.</p></div>') +
+        : '<div class="acard"><h2>Voices</h2><p>Stories, words and sentences are read by the voices Xiaoxi and Dennis, via ElevenLabs. More words are added over time.</p></div>') +
       '<div class="acard"><h2>Words</h2><p>Chapter vocabulary and pinyin come from the textbook, HSK Standard Course 5A. The English sentence translations, expression notes and quiz questions were written for this app.</p></div>' +
       '<div class="acard"><h2>Stroke order</h2><p>Stroke animations use <a href="https://hanziwriter.org" target="_blank" rel="noopener">Hanzi Writer</a> (MIT License), with character data from <a href="https://github.com/skishore/makemeahanzi" target="_blank" rel="noopener">Make Me a Hanzi</a> and <a href="https://github.com/parsimonhi/animCJK" target="_blank" rel="noopener">AnimCJK</a>, based on the Arphic PL fonts (Arphic Public License).</p></div>' +
       '<div class="acard"><h2>Sound check</h2><p>Not hearing the voices or the chimes? Turn the volume up, make sure the device is not on silent, then tap the button.</p><button class="btn primary" id="soundtest">🔊 Play test sound</button><div id="soundout" class="soundout"></div></div>' +
@@ -792,7 +795,8 @@
     $: $, go: go, later: later, shuffle: shuffle, esc: esc, row: row, glyph: glyph,
     pinyinHTML: pinyinHTML, pinyinText: pinyinText, textOf: textOf, keyOf: keyOf, acc: acc, plain: plainEn,
     say: say, hasVoice: hasVoice, showWin: showWin, showPraise: showPraise, hint: hint, soundBtn: soundBtn, scriptToggle: scriptToggle, themeSeg: themeSeg,
-    bindTop: bindTop, earn: earn, spend: spend, walletPill: walletPill, tabbar: tabbar,
+    bindTop: bindTop, earn: earn, spend: spend, walletPill: walletPill, tabbar: tabbar, toast: toast,
+    goldWorth: 25, canAfford: function (n) { return wallet.bal >= n; }, spendMixed: spend, swapButton: function () { return ''; }, bindSwap: function () {},
     wallet: function () { return wallet; },
     T: T, cssVar: cssVar, nudgeHTML: nudgeHTML, clash: clash,
     script: function () { return script; },

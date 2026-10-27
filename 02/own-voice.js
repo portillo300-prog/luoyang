@@ -22,6 +22,19 @@
   }
   V.simp = function (t) { if (!t2s) buildT2S(); t = V.norm(t); return t2s[t] || Array.from(t).map(function (c) { return t2s[c] || c; }).join(''); };
   V.fileForText = function (t) { var n = V.norm(t), id = OWN.byText[n] || OWN.byText[V.simp(n)]; return id ? V.file(id) : null; };
+  /* ---- sounds for a highlighted word or character: returns [{py, url}], empty when there is no recording ----
+     TODO (master sound table, planned): window.SOUND_TABLE = { byText: { '乐': [{py:'yuè', f:'audio/..'}, {py:'lè', f:'audio/..'}], ... } }
+       - one entry per reading; a character with 2+ readings (乐 yuè/lè, 药, 行, 长 ...) returns 2+ options and the bar shows one
+         button per reading, labelled with its pinyin. A single option shows a plain 🔊.
+       - single characters / syllables come from that table (syllable + tone), whole words keep their own clip.
+     Until the table exists this falls back to the clips already in the app (whole word, whole character, story sentences). */
+  V.soundsFor = function (text) {
+    var n = V.norm(text), tb = window.SOUND_TABLE && window.SOUND_TABLE.byText;
+    var hit = tb && (tb[n] || tb[V.simp(n)]);
+    if (hit && hit.length) return hit.filter(function (h) { return h && h.f; }).map(function (h) { return { py: h.py || '', url: h.f }; });
+    var f = V.fileForText(n);
+    return f ? [{ py: '', url: f }] : [];
+  };
   V.chap = function (uid) { return String(uid).replace(/\D/g, ''); };
   V.titleId = function (uid) { return 'W' + V.chap(uid) + '-TITLE'; };
   /* sentence number across the reading: paragraph pi, sentence k -> W2-S07 */

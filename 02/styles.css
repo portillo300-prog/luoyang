@@ -909,12 +909,13 @@ mark.hl { background: var(--hl); color: inherit; border-radius: 6px; padding: 1p
 .xtog { min-height: 40px; padding: 0 16px; border-radius: 999px; background: var(--panel); border: 2px solid var(--line); font-size: 15px; font-weight: 800; color: var(--muted); }
 .xtog.on { background: var(--xp); border-color: var(--xp-line); color: var(--text); }
 .xhint { color: var(--faint); font-size: 13px; line-height: 1.35; flex: 1 1 200px; }
-.selbar { position: fixed; left: 12px; right: 12px; bottom: calc(96px + env(safe-area-inset-bottom)); z-index: 900; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 22px; background: var(--panel); border: 2px solid var(--gold); box-shadow: 0 12px 30px rgba(0, 0, 0, .35); }
+.selbar { flex-wrap: wrap; position: fixed; left: 12px; right: 12px; bottom: calc(96px + env(safe-area-inset-bottom)); z-index: 900; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 22px; background: var(--panel); border: 2px solid var(--gold); box-shadow: 0 12px 30px rgba(0, 0, 0, .35); }
 .selbar[hidden] { display: none !important; }
 .sb-text { flex: 1 1 auto; min-width: 0; font-size: 20px; font-weight: 800; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sb-btns { display: flex; gap: 8px; flex: 0 0 auto; }
+.sb-btns { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; flex: 0 0 auto; max-width: 100%; }
+.sb-snd { display: contents; }
 .sb-btns button, .xc-btns button, .pbtns button, .pchip { min-height: 44px; padding: 0 14px; border-radius: 14px; background: var(--panel-2); border: 2px solid var(--line); color: var(--text); font-size: 15px; font-weight: 800; }
-.sb-btns button:first-child, .xc-btns button:first-child { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.sb-btns > button:first-child, .xc-btns button:first-child { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .xc-btns button:disabled { opacity: .55; }
 .sheet { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: flex-end; }
 .sheet[hidden] { display: none !important; }
@@ -979,11 +980,12 @@ body.fabon #app { bottom: calc(60px + env(safe-area-inset-bottom)); }
 }
 
 /* story voice: small speaker button beside each reading sentence + the "listen to the whole story" bar */
-.ownsp { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin: 0 6px 0 2px; vertical-align: middle; border-radius: 50%; font-size: 18px; line-height: 1; background: var(--panel-2); border: 2px solid var(--line); -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
-.ownsp:active { background: var(--press); }
+.ownsp { position: relative; display: inline-block; width: auto; height: auto; margin: 0 5px 0 2px; padding: 0; vertical-align: .08em; border: 0; background: none; font-size: .62em; line-height: 1; opacity: .55; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+.ownsp::after { content: ''; position: absolute; inset: -9px -8px; }   /* big invisible tap area, small visible icon */
+.ownsp:active { opacity: 1; }
 .ownbar { margin: 4px 0 10px; }
 .ownall { width: 100%; min-height: 52px; }
-.uheroZh .ownsp { width: 48px; height: 48px; font-size: 22px; margin-left: 10px; }
+.uheroZh .ownsp { font-size: .4em; margin-left: 10px; }
 
 /* ====================== PET (pet.js), ported from the home app; every class starts with pt- ====================== */
 .wallet .wsep { opacity: .5; margin: 0 2px; }

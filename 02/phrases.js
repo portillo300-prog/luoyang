@@ -107,7 +107,7 @@
   var bar = document.createElement('div');
   bar.id = 'selbar'; bar.className = 'selbar'; bar.hidden = true;
   bar.innerHTML = '<div class="sb-text" id="sbtext"></div><div class="sb-btns">' +
-    '<button data-a="save" id="sbsave">🖍 Save</button><button data-a="pleco">📖 Pleco</button><button data-a="copy">Copy</button></div>';
+    '<button data-a="save" id="sbsave">🖍 Save</button><span id="sbsnd" class="sb-snd"></span><button data-a="pleco">📖 Pleco</button><button data-a="copy">Copy</button></div>';
   document.body.appendChild(bar);
   var cur = null, tm = 0;
 
@@ -138,6 +138,12 @@
     $('sbtext').textContent = shown.length > 18 ? shown.slice(0, 18) + '…' : shown;
     var ex = existingFor(info);
     $('sbsave').textContent = ex ? '✕ Remove' : '🖍 Save';
+    /* 🔊 only when a recording exists for exactly this text; 2+ readings (a character like 乐) = one button per reading */
+    var snd = window.OWNV ? window.OWNV.soundsFor(info.s) : [];
+    info.snd = snd;
+    $('sbsnd').innerHTML = snd.map(function (o, i) {
+      return '<button type="button" data-a="snd" data-i="' + i + '" aria-label="Hear ' + A.esc(shown) + (o.py ? ' (' + A.esc(o.py) + ')' : '') + '">🔊' + (o.py ? ' ' + A.esc(o.py) : '') + '</button>';
+    }).join('');
     bar.hidden = false;
   }
   document.addEventListener('selectionchange', function () { clearTimeout(tm); tm = setTimeout(refreshBar, 220); });
@@ -145,6 +151,7 @@
   bar.addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b || !cur) return;
     var act = b.getAttribute('data-a'), info = cur, shown = isT() ? info.t : info.s;
+    if (act === 'snd') { var o = (info.snd || [])[parseInt(b.getAttribute('data-i'), 10)]; if (o && window.FX) window.FX.clip(o.url, true, false); return; }
     if (act === 'pleco') { openPleco(shown); return; }
     if (act === 'copy') { copy(shown); toast('Copied'); return; }
     if (act === 'save') {
